@@ -1,6 +1,7 @@
 import { getLocation, getLocationMarketplace } from '$lib/api';
+import type { Resolvers } from 'src/graphql/generated/resolvers';
 
-export const resolvers = {
+export const resolvers: Resolvers = {
 	Query: {
 		location: async (_, { id }) => {
 			const { location } = await getLocation(id);
@@ -10,8 +11,8 @@ export const resolvers = {
 	},
 	Mutation: {},
 	Ship: {
-		location: async ({ location: locationId }) => {
-			const { location } = await getLocation(locationId);
+		location: async ({ location: { id } }) => {
+			const { location } = await getLocation(id);
 			return { ...location, id: location.symbol };
 		}
 	},

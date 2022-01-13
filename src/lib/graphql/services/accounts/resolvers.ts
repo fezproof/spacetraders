@@ -1,6 +1,7 @@
 import { getMe } from '$lib/api';
+import type { Resolvers } from 'src/graphql/generated/resolvers';
 
-export const resolvers = {
+export const resolvers: Resolvers = {
 	Query: {
 		me: async () => {
 			const me = await getMe();
