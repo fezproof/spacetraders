@@ -1,5 +1,5 @@
 import { getStatus } from '$lib/api';
-import type { Resolvers } from 'src/graphql/generated/resolvers';
+import type { Resolvers } from '$lib/graphql/generated/resolvers';
 
 export const resolvers: Resolvers = {
 	Query: {
