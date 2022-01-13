@@ -1,13 +1,13 @@
-export const types = `#graphql
-  type Game {
-    status: String
-  }
+export const types = /* GraphQL */ `
+	type Game {
+		status: String
+	}
 
-  type Query {
-    game: Game
-  }
+	type Query {
+		game: Game
+	}
 
-  type Mutation {
-    game: Game
-  }
+	type Mutation {
+		game: Game
+	}
 `;
