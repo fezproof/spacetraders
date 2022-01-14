@@ -3,9 +3,8 @@ import type { Resolvers } from '$lib/graphql/generated/resolvers';
 
 export const resolvers: Resolvers = {
 	Query: {
-		me: async (_, __, { token }) => {
-			const me = await getMe(token);
-			console.log(me);
+		me: async (_, __, { user }) => {
+			const me = await getMe(user?.token);
 			return me.user;
 		}
 	}

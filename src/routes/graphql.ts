@@ -1,13 +1,9 @@
-import { getTokenFromCookie } from '$lib/auth/cookie';
 import { Context, schema } from '$lib/graphql/schema';
 import { envelop, useLogger, useSchema } from '@envelop/core';
 import type { RequestHandler } from '@sveltejs/kit';
 import type { JSONValue } from '@sveltejs/kit/types/helper';
 import { getGraphQLParameters, processRequest } from 'graphql-helix';
-
-interface Locals {
-	hello: 'world';
-}
+import type { Locals } from 'src/hooks';
 
 const baseHeaders = {
 	'access-control-allow-methods': 'POST',
@@ -15,21 +11,32 @@ const baseHeaders = {
 	'access-control-allow-headers': '*'
 };
 
+const LOG_REQUESTS = false;
+
 const getEnveloped = envelop({
 	plugins: [
 		useSchema(schema),
 		useLogger({
-			logFn: (message, { result, args: { operationName, variableValues } }) =>
-				console.log(message, JSON.stringify({ operationName, variableValues, result }, null, 2)),
+			logFn: (message, { result, args: { operationName, variableValues } }) => {
+				if (LOG_REQUESTS)
+					return console.log(
+						message,
+						JSON.stringify({ operationName, variableValues, result }, null, 2)
+					);
+				return console.log('graphql request', message);
+			},
 			skipIntrospection: true
 		})
 	]
 });
 
-export const post: RequestHandler<Locals, JSONValue> = async ({ headers, body, method }) => {
-	const token = getTokenFromCookie(headers.cookie);
-
-	const { contextFactory, parse, validate, execute, schema } = getEnveloped<Context>({ token });
+export const post: RequestHandler<Locals, JSONValue> = async ({
+	headers,
+	body,
+	method,
+	locals: { user }
+}) => {
+	const { contextFactory, parse, validate, execute, schema } = getEnveloped<Context>({ user });
 
 	const request = {
 		method,

@@ -11,5 +11,8 @@ export const schema: GraphQLSchema = makeExecutableSchema({
 });
 
 export interface Context {
-	token?: string;
+	user?: {
+		token: string;
+		username: string;
+	};
 }
