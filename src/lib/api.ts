@@ -30,7 +30,9 @@ export interface LeaderboardResponse {
 	netWorth: Array<LeaderboardNetWorth>;
 }
 
-export const getLeaderboard = async (token: string): Promise<LeaderboardResponse> =>
+export const getLeaderboard = async (
+	token: string
+): Promise<LeaderboardResponse> =>
 	fetch('https://api.spacetraders.io/game/leaderboard/net-worth', {
 		headers: { Authorization: `Bearer ${token}` }
 	}).then((r) => r.json());
@@ -67,7 +69,10 @@ interface LocationResponse {
 	};
 }
 
-export const getLocation = async (locationId: string, token: string): Promise<LocationResponse> =>
+export const getLocation = async (
+	locationId: string,
+	token: string
+): Promise<LocationResponse> =>
 	fetch(`https://api.spacetraders.io/locations/${locationId}`, {
 		headers: { Authorization: `Bearer ${token}` }
 	}).then((r) => r.json());

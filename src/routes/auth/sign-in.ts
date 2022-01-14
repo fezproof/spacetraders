@@ -4,7 +4,10 @@ import type { RequestHandler } from '@sveltejs/kit';
 import type { ReadOnlyFormData } from '@sveltejs/kit/types/helper';
 import { serialize } from 'cookie';
 
-export const post: RequestHandler<Record<string, never>, ReadOnlyFormData> = async ({ body }) => {
+export const post: RequestHandler<
+	Record<string, never>,
+	ReadOnlyFormData
+> = async ({ body }) => {
 	const token = body.get('token');
 	const user = await getMe(token);
 

@@ -25,6 +25,10 @@ export const types = /* GraphQL */ `
 		location: Location
 	}
 
+	extend type System {
+		locations: [Location!]
+	}
+
 	extend type Query {
 		location(id: ID!): Location
 	}

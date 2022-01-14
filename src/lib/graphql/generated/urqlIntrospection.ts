@@ -112,16 +112,13 @@ export default {
 					{
 						name: 'leaderboard',
 						type: {
-							kind: 'NON_NULL',
+							kind: 'LIST',
 							ofType: {
-								kind: 'LIST',
+								kind: 'NON_NULL',
 								ofType: {
-									kind: 'NON_NULL',
-									ofType: {
-										kind: 'OBJECT',
-										name: 'Rank',
-										ofType: null
-									}
+									kind: 'OBJECT',
+									name: 'Rank',
+									ofType: null
 								}
 							}
 						},
@@ -353,6 +350,26 @@ export default {
 							ofType: null
 						},
 						args: []
+					},
+					{
+						name: 'system',
+						type: {
+							kind: 'OBJECT',
+							name: 'System',
+							ofType: null
+						},
+						args: [
+							{
+								name: 'id',
+								type: {
+									kind: 'NON_NULL',
+									ofType: {
+										kind: 'SCALAR',
+										name: 'Any'
+									}
+								}
+							}
+						]
 					}
 				],
 				interfaces: []
@@ -509,6 +526,47 @@ export default {
 					},
 					{
 						name: 'y',
+						type: {
+							kind: 'SCALAR',
+							name: 'Any'
+						},
+						args: []
+					}
+				],
+				interfaces: []
+			},
+			{
+				kind: 'OBJECT',
+				name: 'System',
+				fields: [
+					{
+						name: 'id',
+						type: {
+							kind: 'NON_NULL',
+							ofType: {
+								kind: 'SCALAR',
+								name: 'Any'
+							}
+						},
+						args: []
+					},
+					{
+						name: 'locations',
+						type: {
+							kind: 'LIST',
+							ofType: {
+								kind: 'NON_NULL',
+								ofType: {
+									kind: 'OBJECT',
+									name: 'Location',
+									ofType: null
+								}
+							}
+						},
+						args: []
+					},
+					{
+						name: 'name',
 						type: {
 							kind: 'SCALAR',
 							name: 'Any'

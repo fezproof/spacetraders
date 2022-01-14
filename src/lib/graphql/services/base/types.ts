@@ -7,7 +7,7 @@ export const types = /* GraphQL */ `
 
 	type Game {
 		status: String!
-		leaderboard: [Rank!]!
+		leaderboard: [Rank!]
 	}
 
 	type Query {

@@ -4,12 +4,14 @@ import type { Resolvers } from '$lib/graphql/generated/resolvers';
 export const resolvers: Resolvers = {
 	Query: {
 		game: async () => {
-			return getStatus();
+			const { status } = await getStatus();
+			return { status };
 		}
 	},
 	Mutation: {
 		game: async () => {
-			return getStatus();
+			const { status } = await getStatus();
+			return { status };
 		}
 	},
 	Game: {

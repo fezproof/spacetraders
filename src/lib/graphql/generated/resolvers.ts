@@ -42,7 +42,7 @@ export type Cargo = {
 
 export type Game = {
 	readonly __typename?: 'Game';
-	readonly leaderboard: ReadonlyArray<Rank>;
+	readonly leaderboard?: Maybe<ReadonlyArray<Rank>>;
 	readonly status: Scalars['String'];
 };
 
@@ -80,9 +80,14 @@ export type Query = {
 	readonly game: Game;
 	readonly location?: Maybe<Location>;
 	readonly me?: Maybe<Account>;
+	readonly system?: Maybe<System>;
 };
 
 export type QueryLocationArgs = {
+	id: Scalars['ID'];
+};
+
+export type QuerySystemArgs = {
 	id: Scalars['ID'];
 };
 
@@ -109,6 +114,13 @@ export type Ship = {
 	readonly weapons?: Maybe<Scalars['Int']>;
 	readonly x?: Maybe<Scalars['Int']>;
 	readonly y?: Maybe<Scalars['Int']>;
+};
+
+export type System = {
+	readonly __typename?: 'System';
+	readonly id: Scalars['ID'];
+	readonly locations?: Maybe<ReadonlyArray<Location>>;
+	readonly name?: Maybe<Scalars['String']>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -231,6 +243,7 @@ export type ResolversTypes = {
 	Rank: ResolverTypeWrapper<Rank>;
 	Ship: ResolverTypeWrapper<Ship>;
 	String: ResolverTypeWrapper<Scalars['String']>;
+	System: ResolverTypeWrapper<System>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -248,6 +261,7 @@ export type ResolversParentTypes = {
 	Rank: Rank;
 	Ship: Ship;
 	String: Scalars['String'];
+	System: System;
 };
 
 export type AccountResolvers<
@@ -286,7 +300,7 @@ export type GameResolvers<
 	ParentType extends ResolversParentTypes['Game'] = ResolversParentTypes['Game']
 > = {
 	leaderboard?: Resolver<
-		ReadonlyArray<ResolversTypes['Rank']>,
+		Maybe<ReadonlyArray<ResolversTypes['Rank']>>,
 		ParentType,
 		ContextType
 	>;
@@ -375,6 +389,12 @@ export type QueryResolvers<
 		RequireFields<QueryLocationArgs, 'id'>
 	>;
 	me?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
+	system?: Resolver<
+		Maybe<ResolversTypes['System']>,
+		ParentType,
+		ContextType,
+		RequireFields<QuerySystemArgs, 'id'>
+	>;
 };
 
 export type RankResolvers<
@@ -424,6 +444,20 @@ export type ShipResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type SystemResolvers<
+	ContextType = Context,
+	ParentType extends ResolversParentTypes['System'] = ResolversParentTypes['System']
+> = {
+	id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+	locations?: Resolver<
+		Maybe<ReadonlyArray<ResolversTypes['Location']>>,
+		ParentType,
+		ContextType
+	>;
+	name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = Context> = {
 	Account?: AccountResolvers<ContextType>;
 	Cargo?: CargoResolvers<ContextType>;
@@ -434,4 +468,5 @@ export type Resolvers<ContextType = Context> = {
 	Query?: QueryResolvers<ContextType>;
 	Rank?: RankResolvers<ContextType>;
 	Ship?: ShipResolvers<ContextType>;
+	System?: SystemResolvers<ContextType>;
 };

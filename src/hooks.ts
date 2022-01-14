@@ -30,7 +30,9 @@ export const handle: Handle<Locals> = async ({ request, resolve }) => {
 	return resolve(request);
 };
 
-export const getSession: GetSession<Locals, unknown, Session> = async (request) => {
+export const getSession: GetSession<Locals, unknown, Session> = async (
+	request
+) => {
 	return {
 		user: request.locals.user
 	};

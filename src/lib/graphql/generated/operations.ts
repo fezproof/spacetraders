@@ -38,7 +38,7 @@ export type Cargo = {
 
 export type Game = {
 	__typename?: 'Game';
-	leaderboard: Array<Rank>;
+	leaderboard?: Maybe<Array<Rank>>;
 	status: Scalars['String'];
 };
 
@@ -76,9 +76,14 @@ export type Query = {
 	game: Game;
 	location?: Maybe<Location>;
 	me?: Maybe<Account>;
+	system?: Maybe<System>;
 };
 
 export type QueryLocationArgs = {
+	id: Scalars['ID'];
+};
+
+export type QuerySystemArgs = {
 	id: Scalars['ID'];
 };
 
@@ -107,6 +112,13 @@ export type Ship = {
 	y?: Maybe<Scalars['Int']>;
 };
 
+export type System = {
+	__typename?: 'System';
+	id: Scalars['ID'];
+	locations?: Maybe<Array<Location>>;
+	name?: Maybe<Scalars['String']>;
+};
+
 export type GameStateQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GameStateQuery = {
@@ -120,12 +132,15 @@ export type LeaderboardQuery = {
 	__typename?: 'Query';
 	game: {
 		__typename?: 'Game';
-		leaderboard: Array<{
-			__typename?: 'Rank';
-			rank?: number | null | undefined;
-			username?: string | null | undefined;
-			netWorth?: number | null | undefined;
-		}>;
+		leaderboard?:
+			| Array<{
+					__typename?: 'Rank';
+					rank?: number | null | undefined;
+					username?: string | null | undefined;
+					netWorth?: number | null | undefined;
+			  }>
+			| null
+			| undefined;
 	};
 };
 

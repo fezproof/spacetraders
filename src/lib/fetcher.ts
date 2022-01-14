@@ -13,7 +13,10 @@ interface GetDataReturn<T> {
 
 type AsyncStore<T> = Readable<GetDataReturn<T>>;
 
-const createAsyncStore = <T = unknown>(key: string, promise: () => Promise<T>): AsyncStore<T> => {
+const createAsyncStore = <T = unknown>(
+	key: string,
+	promise: () => Promise<T>
+): AsyncStore<T> => {
 	const dataStore = writable<Promise<T>>(
 		new Promise(() => {
 			return;
@@ -68,7 +71,10 @@ const createAsyncStore = <T = unknown>(key: string, promise: () => Promise<T>): 
 
 const storeCache = new Map();
 
-export const useQuery = <T = unknown>(key: string, promise: () => Promise<T>): AsyncStore<T> => {
+export const useQuery = <T = unknown>(
+	key: string,
+	promise: () => Promise<T>
+): AsyncStore<T> => {
 	let store: AsyncStore<T>;
 	if (!(store = storeCache.get(key))) {
 		store = createAsyncStore(key, promise);
