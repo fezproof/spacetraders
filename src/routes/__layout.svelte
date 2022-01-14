@@ -1,3 +1,12 @@
+<script lang="ts" context="module">
+	import type { LoadFn } from '$lib/globals';
+
+	export const load: LoadFn = async ({ session }) => {
+		if (!session.user) return { redirect: '/sign-in', status: 301 };
+		return {};
+	};
+</script>
+
 <script>
 	import GameState from '$lib/GameState.svelte';
 	import '../app.css';
@@ -11,6 +20,10 @@
 	</nav>
 
 	<GameState />
+
+	<form method="post" action="/auth/sign-out">
+		<button type="submit" class="bg-gray-500">Sign out</button>
+	</form>
 </header>
 
 <slot />
