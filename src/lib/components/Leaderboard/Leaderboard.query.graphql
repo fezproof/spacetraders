@@ -1,0 +1,9 @@
+query Leaderboard {
+	game {
+		leaderboard {
+			rank
+			username
+			netWorth
+		}
+	}
+}

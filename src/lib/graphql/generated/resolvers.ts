@@ -42,6 +42,7 @@ export type Cargo = {
 
 export type Game = {
 	readonly __typename?: 'Game';
+	readonly leaderboard?: Maybe<ReadonlyArray<Maybe<Rank>>>;
 	readonly status?: Maybe<Scalars['String']>;
 };
 
@@ -83,6 +84,13 @@ export type Query = {
 
 export type QueryLocationArgs = {
 	id: Scalars['ID'];
+};
+
+export type Rank = {
+	readonly __typename?: 'Rank';
+	readonly netWorth?: Maybe<Scalars['Int']>;
+	readonly rank?: Maybe<Scalars['Int']>;
+	readonly username?: Maybe<Scalars['String']>;
 };
 
 export type Ship = {
@@ -220,6 +228,7 @@ export type ResolversTypes = {
 	MarketRecord: ResolverTypeWrapper<MarketRecord>;
 	Mutation: ResolverTypeWrapper<{}>;
 	Query: ResolverTypeWrapper<{}>;
+	Rank: ResolverTypeWrapper<Rank>;
 	Ship: ResolverTypeWrapper<Ship>;
 	String: ResolverTypeWrapper<Scalars['String']>;
 };
@@ -236,6 +245,7 @@ export type ResolversParentTypes = {
 	MarketRecord: MarketRecord;
 	Mutation: {};
 	Query: {};
+	Rank: Rank;
 	Ship: Ship;
 	String: Scalars['String'];
 };
@@ -275,6 +285,11 @@ export type GameResolvers<
 	ContextType = Context,
 	ParentType extends ResolversParentTypes['Game'] = ResolversParentTypes['Game']
 > = {
+	leaderboard?: Resolver<
+		Maybe<ReadonlyArray<Maybe<ResolversTypes['Rank']>>>,
+		ParentType,
+		ContextType
+	>;
 	status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -362,6 +377,16 @@ export type QueryResolvers<
 	me?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
 };
 
+export type RankResolvers<
+	ContextType = Context,
+	ParentType extends ResolversParentTypes['Rank'] = ResolversParentTypes['Rank']
+> = {
+	netWorth?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	rank?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ShipResolvers<
 	ContextType = Context,
 	ParentType extends ResolversParentTypes['Ship'] = ResolversParentTypes['Ship']
@@ -407,5 +432,6 @@ export type Resolvers<ContextType = Context> = {
 	MarketRecord?: MarketRecordResolvers<ContextType>;
 	Mutation?: MutationResolvers<ContextType>;
 	Query?: QueryResolvers<ContextType>;
+	Rank?: RankResolvers<ContextType>;
 	Ship?: ShipResolvers<ContextType>;
 };

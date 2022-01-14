@@ -1,17 +1,8 @@
 <script lang="ts">
-	import { getMyShips } from '$lib/api';
-
-	import { useQuery } from '$lib/fetcher';
-	import GameState from '$lib/GameState.svelte';
-	const ships = useQuery('ships', getMyShips);
-
-	// const ships = useQuery('ships', getMyShips);
+	import GameState from '$lib/components/GameState/GameState.svelte';
+	import MyShips from '$lib/components/MyShips/MyShips.svelte';
 </script>
 
-{#await $ships.data}
-	Loading..
-{:then data}
-	<pre>{JSON.stringify(data, null, 2)}</pre>
-{/await}
+<MyShips />
 
 <GameState />

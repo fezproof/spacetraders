@@ -1,8 +1,9 @@
 overwrite: true
 schema:
-  - './src/lib/graphql/services/**/types.ts':
-      noRequire: true
-documents: 'src/**/query.graphql'
+  - 'http://localhost:3000/graphql'
+documents:
+  - 'src/**/*.query.graphql'
+  - 'src/**/*.mutation.graphql'
 generates:
   ./src/lib/graphql/generated/resolvers.ts:
     plugins:
@@ -20,6 +21,11 @@ generates:
       - typescript
       - typescript-operations
       - typed-document-node
+    config:
+      useTypeImports: true
+  ./src/lib/graphql/generated/urqlIntrospection.ts:
+    plugins:
+      - urql-introspection
     config:
       useTypeImports: true
 

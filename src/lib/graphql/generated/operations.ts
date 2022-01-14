@@ -38,6 +38,7 @@ export type Cargo = {
 
 export type Game = {
 	__typename?: 'Game';
+	leaderboard?: Maybe<Array<Maybe<Rank>>>;
 	status?: Maybe<Scalars['String']>;
 };
 
@@ -81,6 +82,13 @@ export type QueryLocationArgs = {
 	id: Scalars['ID'];
 };
 
+export type Rank = {
+	__typename?: 'Rank';
+	netWorth?: Maybe<Scalars['Int']>;
+	rank?: Maybe<Scalars['Int']>;
+	username?: Maybe<Scalars['String']>;
+};
+
 export type Ship = {
 	__typename?: 'Ship';
 	cargo?: Maybe<Array<Cargo>>;
@@ -105,6 +113,56 @@ export type GameStateQuery = {
 	__typename?: 'Query';
 	game?:
 		| { __typename?: 'Game'; status?: string | null | undefined }
+		| null
+		| undefined;
+};
+
+export type LeaderboardQueryVariables = Exact<{ [key: string]: never }>;
+
+export type LeaderboardQuery = {
+	__typename?: 'Query';
+	game?:
+		| {
+				__typename?: 'Game';
+				leaderboard?:
+					| Array<
+							| {
+									__typename?: 'Rank';
+									rank?: number | null | undefined;
+									username?: string | null | undefined;
+									netWorth?: number | null | undefined;
+							  }
+							| null
+							| undefined
+					  >
+					| null
+					| undefined;
+		  }
+		| null
+		| undefined;
+};
+
+export type MyShipsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MyShipsQuery = {
+	__typename?: 'Query';
+	me?:
+		| {
+				__typename?: 'Account';
+				username: string;
+				ships?:
+					| Array<
+							| {
+									__typename?: 'Ship';
+									id: string;
+									class?: string | null | undefined;
+							  }
+							| null
+							| undefined
+					  >
+					| null
+					| undefined;
+		  }
 		| null
 		| undefined;
 };
@@ -134,3 +192,81 @@ export const GameStateDocument = {
 		}
 	]
 } as unknown as DocumentNode<GameStateQuery, GameStateQueryVariables>;
+export const LeaderboardDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'query',
+			name: { kind: 'Name', value: 'Leaderboard' },
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'game' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'leaderboard' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'rank' } },
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'username' }
+											},
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'netWorth' }
+											}
+										]
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
+} as unknown as DocumentNode<LeaderboardQuery, LeaderboardQueryVariables>;
+export const MyShipsDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'query',
+			name: { kind: 'Name', value: 'MyShips' },
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'me' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'username' } },
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'ships' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'class' } }
+										]
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
+} as unknown as DocumentNode<MyShipsQuery, MyShipsQueryVariables>;

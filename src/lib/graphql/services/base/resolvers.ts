@@ -1,4 +1,4 @@
-import { getStatus } from '$lib/api';
+import { getLeaderboard, getStatus } from '$lib/api';
 import type { Resolvers } from '$lib/graphql/generated/resolvers';
 
 export const resolvers: Resolvers = {
@@ -10,6 +10,12 @@ export const resolvers: Resolvers = {
 	Mutation: {
 		game: async () => {
 			return getStatus();
+		}
+	},
+	Game: {
+		leaderboard: async (_, __, { user }) => {
+			const { netWorth } = await getLeaderboard(user?.token);
+			return netWorth;
 		}
 	}
 };

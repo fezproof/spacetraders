@@ -23,7 +23,6 @@ const getEnveloped = envelop({
 						message,
 						JSON.stringify({ operationName, variableValues, result }, null, 2)
 					);
-				return console.log('graphql request', message);
 			},
 			skipIntrospection: true
 		})
@@ -36,7 +35,8 @@ export const post: RequestHandler<Locals, JSONValue> = async ({
 	method,
 	locals: { user }
 }) => {
-	const { contextFactory, parse, validate, execute, schema } = getEnveloped<Context>({ user });
+	const { contextFactory, parse, validate, execute, schema } =
+		getEnveloped<Context>({ user });
 
 	const request = {
 		method,

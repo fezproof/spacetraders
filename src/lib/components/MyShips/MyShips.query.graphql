@@ -1,0 +1,9 @@
+query MyShips {
+	me {
+		username
+		ships {
+			id
+			class
+		}
+	}
+}
