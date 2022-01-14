@@ -2,12 +2,18 @@ import type { GraphQLResolveInfo } from 'graphql';
 import type { Context } from '$lib/graphql/schema';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & {
-	[P in K]-?: NonNullable<T[P]>;
+export type Exact<T extends { [key: string]: unknown }> = {
+	[K in keyof T]: T[K];
 };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+	[SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+	[SubKey in K]: Maybe<T[SubKey]>;
+};
+export type RequireFields<T, K extends keyof T> = {
+	[X in Exclude<keyof T, K>]?: T[X];
+} & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
 	ID: string;
@@ -134,8 +140,18 @@ export interface SubscriptionSubscriberObject<
 	TContext,
 	TArgs
 > {
-	subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
-	resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
+	subscribe: SubscriptionSubscribeFn<
+		{ [key in TKey]: TResult },
+		TParent,
+		TContext,
+		TArgs
+	>;
+	resolve?: SubscriptionResolveFn<
+		TResult,
+		{ [key in TKey]: TResult },
+		TContext,
+		TArgs
+	>;
 }
 
 export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
@@ -143,7 +159,13 @@ export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
 	resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
 }
 
-export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
+export type SubscriptionObject<
+	TResult,
+	TKey extends string,
+	TParent,
+	TContext,
+	TArgs
+> =
 	| SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
 	| SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
@@ -154,7 +176,9 @@ export type SubscriptionResolver<
 	TContext = {},
 	TArgs = {}
 > =
-	| ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+	| ((
+			...args: any[]
+	  ) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
 	| SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
@@ -171,7 +195,12 @@ export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
 
 export type NextResolverFn<T> = () => Promise<T>;
 
-export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+export type DirectiveResolverFn<
+	TResult = {},
+	TParent = {},
+	TContext = {},
+	TArgs = {}
+> = (
 	next: NextResolverFn<TResult>,
 	parent: TParent,
 	args: TArgs,
@@ -218,8 +247,16 @@ export type AccountResolvers<
 	credits?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 	joinedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	shipCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-	ships?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['Ship']>>>, ParentType, ContextType>;
-	structureCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	ships?: Resolver<
+		Maybe<ReadonlyArray<Maybe<ResolversTypes['Ship']>>>,
+		ParentType,
+		ContextType
+	>;
+	structureCount?: Resolver<
+		Maybe<ResolversTypes['Int']>,
+		ParentType,
+		ContextType
+	>;
 	username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -246,7 +283,11 @@ export type LocationResolvers<
 	ContextType = Context,
 	ParentType extends ResolversParentTypes['Location'] = ResolversParentTypes['Location']
 > = {
-	allowsConstruction?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+	allowsConstruction?: Resolver<
+		Maybe<ResolversTypes['Boolean']>,
+		ParentType,
+		ContextType
+	>;
 	dockedShips?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
 	marketplace?: Resolver<
@@ -255,7 +296,11 @@ export type LocationResolvers<
 		ContextType
 	>;
 	name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-	traits?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+	traits?: Resolver<
+		Maybe<ReadonlyArray<Maybe<ResolversTypes['String']>>>,
+		ParentType,
+		ContextType
+	>;
 	type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	x?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	y?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -266,13 +311,33 @@ export type MarketRecordResolvers<
 	ContextType = Context,
 	ParentType extends ResolversParentTypes['MarketRecord'] = ResolversParentTypes['MarketRecord']
 > = {
-	pricePerUnit?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-	purchasePricePerUnit?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-	quantityAvailable?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-	sellPricePerUnit?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	pricePerUnit?: Resolver<
+		Maybe<ResolversTypes['Int']>,
+		ParentType,
+		ContextType
+	>;
+	purchasePricePerUnit?: Resolver<
+		Maybe<ResolversTypes['Int']>,
+		ParentType,
+		ContextType
+	>;
+	quantityAvailable?: Resolver<
+		Maybe<ResolversTypes['Int']>,
+		ParentType,
+		ContextType
+	>;
+	sellPricePerUnit?: Resolver<
+		Maybe<ResolversTypes['Int']>,
+		ParentType,
+		ContextType
+	>;
 	spread?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	symbol?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-	volumePerUnit?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	volumePerUnit?: Resolver<
+		Maybe<ResolversTypes['Int']>,
+		ParentType,
+		ContextType
+	>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -301,15 +366,31 @@ export type ShipResolvers<
 	ContextType = Context,
 	ParentType extends ResolversParentTypes['Ship'] = ResolversParentTypes['Ship']
 > = {
-	cargo?: Resolver<Maybe<ReadonlyArray<ResolversTypes['Cargo']>>, ParentType, ContextType>;
+	cargo?: Resolver<
+		Maybe<ReadonlyArray<ResolversTypes['Cargo']>>,
+		ParentType,
+		ContextType
+	>;
 	class?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	flightPlanId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
 	id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-	location?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType>;
-	manufacturer?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	location?: Resolver<
+		Maybe<ResolversTypes['Location']>,
+		ParentType,
+		ContextType
+	>;
+	manufacturer?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
 	maxCargo?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	plating?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-	spaceAvailable?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	spaceAvailable?: Resolver<
+		Maybe<ResolversTypes['Int']>,
+		ParentType,
+		ContextType
+	>;
 	speed?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	weapons?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;

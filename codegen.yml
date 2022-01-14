@@ -2,7 +2,7 @@ overwrite: true
 schema:
   - './src/lib/graphql/services/**/types.ts':
       noRequire: true
-# documents: 'src/**/*.graphql'
+documents: 'src/**/query.graphql'
 generates:
   ./src/lib/graphql/generated/resolvers.ts:
     plugins:
@@ -15,6 +15,14 @@ generates:
   ./graphql.schema.json:
     plugins:
       - 'introspection'
+  ./src/lib/graphql/generated/operations.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node
+    config:
+      useTypeImports: true
+
 hooks:
   afterOneFileWrite:
     - prettier --write
