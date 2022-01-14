@@ -112,11 +112,17 @@ export default {
 					{
 						name: 'leaderboard',
 						type: {
-							kind: 'LIST',
+							kind: 'NON_NULL',
 							ofType: {
-								kind: 'OBJECT',
-								name: 'Rank',
-								ofType: null
+								kind: 'LIST',
+								ofType: {
+									kind: 'NON_NULL',
+									ofType: {
+										kind: 'OBJECT',
+										name: 'Rank',
+										ofType: null
+									}
+								}
 							}
 						},
 						args: []
@@ -124,8 +130,11 @@ export default {
 					{
 						name: 'status',
 						type: {
-							kind: 'SCALAR',
-							name: 'Any'
+							kind: 'NON_NULL',
+							ofType: {
+								kind: 'SCALAR',
+								name: 'Any'
+							}
 						},
 						args: []
 					}
@@ -307,9 +316,12 @@ export default {
 					{
 						name: 'game',
 						type: {
-							kind: 'OBJECT',
-							name: 'Game',
-							ofType: null
+							kind: 'NON_NULL',
+							ofType: {
+								kind: 'OBJECT',
+								name: 'Game',
+								ofType: null
+							}
 						},
 						args: []
 					},

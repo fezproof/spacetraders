@@ -38,8 +38,8 @@ export type Cargo = {
 
 export type Game = {
 	__typename?: 'Game';
-	leaderboard?: Maybe<Array<Maybe<Rank>>>;
-	status?: Maybe<Scalars['String']>;
+	leaderboard: Array<Rank>;
+	status: Scalars['String'];
 };
 
 export type Location = {
@@ -73,7 +73,7 @@ export type Mutation = {
 
 export type Query = {
 	__typename?: 'Query';
-	game?: Maybe<Game>;
+	game: Game;
 	location?: Maybe<Location>;
 	me?: Maybe<Account>;
 };
@@ -111,35 +111,22 @@ export type GameStateQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GameStateQuery = {
 	__typename?: 'Query';
-	game?:
-		| { __typename?: 'Game'; status?: string | null | undefined }
-		| null
-		| undefined;
+	game: { __typename?: 'Game'; status: string };
 };
 
 export type LeaderboardQueryVariables = Exact<{ [key: string]: never }>;
 
 export type LeaderboardQuery = {
 	__typename?: 'Query';
-	game?:
-		| {
-				__typename?: 'Game';
-				leaderboard?:
-					| Array<
-							| {
-									__typename?: 'Rank';
-									rank?: number | null | undefined;
-									username?: string | null | undefined;
-									netWorth?: number | null | undefined;
-							  }
-							| null
-							| undefined
-					  >
-					| null
-					| undefined;
-		  }
-		| null
-		| undefined;
+	game: {
+		__typename?: 'Game';
+		leaderboard: Array<{
+			__typename?: 'Rank';
+			rank?: number | null | undefined;
+			username?: string | null | undefined;
+			netWorth?: number | null | undefined;
+		}>;
+	};
 };
 
 export type MyShipsQueryVariables = Exact<{ [key: string]: never }>;
@@ -156,6 +143,17 @@ export type MyShipsQuery = {
 									__typename?: 'Ship';
 									id: string;
 									class?: string | null | undefined;
+									type?: string | null | undefined;
+									spaceAvailable?: number | null | undefined;
+									cargo?:
+										| Array<{
+												__typename?: 'Cargo';
+												good?: string | null | undefined;
+												quantity?: number | null | undefined;
+												totalVolume?: number | null | undefined;
+										  }>
+										| null
+										| undefined;
 							  }
 							| null
 							| undefined
@@ -258,7 +256,33 @@ export const MyShipsDocument = {
 										kind: 'SelectionSet',
 										selections: [
 											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
-											{ kind: 'Field', name: { kind: 'Name', value: 'class' } }
+											{ kind: 'Field', name: { kind: 'Name', value: 'class' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'type' } },
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'cargo' },
+												selectionSet: {
+													kind: 'SelectionSet',
+													selections: [
+														{
+															kind: 'Field',
+															name: { kind: 'Name', value: 'good' }
+														},
+														{
+															kind: 'Field',
+															name: { kind: 'Name', value: 'quantity' }
+														},
+														{
+															kind: 'Field',
+															name: { kind: 'Name', value: 'totalVolume' }
+														}
+													]
+												}
+											},
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'spaceAvailable' }
+											}
 										]
 									}
 								}

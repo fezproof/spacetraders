@@ -42,8 +42,8 @@ export type Cargo = {
 
 export type Game = {
 	readonly __typename?: 'Game';
-	readonly leaderboard?: Maybe<ReadonlyArray<Maybe<Rank>>>;
-	readonly status?: Maybe<Scalars['String']>;
+	readonly leaderboard: ReadonlyArray<Rank>;
+	readonly status: Scalars['String'];
 };
 
 export type Location = {
@@ -77,7 +77,7 @@ export type Mutation = {
 
 export type Query = {
 	readonly __typename?: 'Query';
-	readonly game?: Maybe<Game>;
+	readonly game: Game;
 	readonly location?: Maybe<Location>;
 	readonly me?: Maybe<Account>;
 };
@@ -286,11 +286,11 @@ export type GameResolvers<
 	ParentType extends ResolversParentTypes['Game'] = ResolversParentTypes['Game']
 > = {
 	leaderboard?: Resolver<
-		Maybe<ReadonlyArray<Maybe<ResolversTypes['Rank']>>>,
+		ReadonlyArray<ResolversTypes['Rank']>,
 		ParentType,
 		ContextType
 	>;
-	status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	status?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -367,7 +367,7 @@ export type QueryResolvers<
 	ContextType = Context,
 	ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = {
-	game?: Resolver<Maybe<ResolversTypes['Game']>, ParentType, ContextType>;
+	game?: Resolver<ResolversTypes['Game'], ParentType, ContextType>;
 	location?: Resolver<
 		Maybe<ResolversTypes['Location']>,
 		ParentType,

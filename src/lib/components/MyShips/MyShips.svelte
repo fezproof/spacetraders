@@ -13,7 +13,17 @@
 {:else}
 	<ul>
 		{#each $ships.data?.me?.ships ?? [] as ship (ship.id)}
-			<li>{ship.class}</li>
+			<li>
+				<div>
+					{ship.class}
+				</div>
+				<div>
+					{ship.type}
+				</div>
+				<div>
+					{ship.spaceAvailable}
+				</div>
+			</li>
 		{/each}
 	</ul>
 {/if}

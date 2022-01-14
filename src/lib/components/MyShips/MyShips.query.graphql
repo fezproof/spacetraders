@@ -4,6 +4,13 @@ query MyShips {
 		ships {
 			id
 			class
+			type
+			cargo {
+				good
+				quantity
+				totalVolume
+			}
+			spaceAvailable
 		}
 	}
 }
