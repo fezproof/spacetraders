@@ -1,5 +1,3 @@
-import { TOKEN } from './token';
-
 export interface StatusResponse {
 	status: string;
 }
@@ -17,9 +15,9 @@ interface AccountResponse {
 	};
 }
 
-export const getMe = async (): Promise<AccountResponse> =>
+export const getMe = async (token: string): Promise<AccountResponse> =>
 	fetch('https://api.spacetraders.io/my/account', {
-		headers: { Authorization: `Bearer ${TOKEN}` }
+		headers: { Authorization: `Bearer ${token}` }
 	}).then((r) => r.json());
 
 interface LeaderboardNetWorth {
@@ -32,9 +30,9 @@ export interface LeaderboardResponse {
 	netWorth: Array<LeaderboardNetWorth>;
 }
 
-export const getLeaderboard = async (): Promise<LeaderboardResponse> =>
+export const getLeaderboard = async (token: string): Promise<LeaderboardResponse> =>
 	fetch('https://api.spacetraders.io/game/leaderboard/net-worth', {
-		headers: { Authorization: `Bearer ${TOKEN}` }
+		headers: { Authorization: `Bearer ${token}` }
 	}).then((r) => r.json());
 
 interface ShipInfo {
@@ -42,18 +40,18 @@ interface ShipInfo {
 	location: string;
 }
 
-export const getShip = async (id: string): Promise<ShipInfo> =>
+export const getShip = async (id: string, token: string): Promise<ShipInfo> =>
 	fetch(`https://api.spacetraders.io/ship/${id}`, {
-		headers: { Authorization: `Bearer ${TOKEN}` }
+		headers: { Authorization: `Bearer ${token}` }
 	}).then((r) => r.json());
 
 interface ShipsResponse {
 	ships: Array<ShipInfo>;
 }
 
-export const getMyShips = async (): Promise<ShipsResponse> =>
+export const getMyShips = async (token: string): Promise<ShipsResponse> =>
 	fetch('https://api.spacetraders.io/my/ships', {
-		headers: { Authorization: `Bearer ${TOKEN}` }
+		headers: { Authorization: `Bearer ${token}` }
 	}).then((r) => r.json());
 
 interface LocationResponse {
@@ -69,9 +67,9 @@ interface LocationResponse {
 	};
 }
 
-export const getLocation = async (locationId: string): Promise<LocationResponse> =>
+export const getLocation = async (locationId: string, token: string): Promise<LocationResponse> =>
 	fetch(`https://api.spacetraders.io/locations/${locationId}`, {
-		headers: { Authorization: `Bearer ${TOKEN}` }
+		headers: { Authorization: `Bearer ${token}` }
 	}).then((r) => r.json());
 
 interface LocationMarketplaceResponse {
@@ -87,8 +85,9 @@ interface LocationMarketplaceResponse {
 }
 
 export const getLocationMarketplace = async (
-	locationId: string
+	locationId: string,
+	token: string
 ): Promise<LocationMarketplaceResponse> =>
 	fetch(`https://api.spacetraders.io/locations/${locationId}/marketplace`, {
-		headers: { Authorization: `Bearer ${TOKEN}` }
+		headers: { Authorization: `Bearer ${token}` }
 	}).then((r) => r.json());

@@ -10,8 +10,8 @@ generates:
       - 'typescript-resolvers'
     config:
       useTypeImports: true
-      contextType: unknown
       immutableTypes: true
+      contextType: $lib/graphql/schema#Context
   ./graphql.schema.json:
     plugins:
       - 'introspection'

@@ -1,4 +1,5 @@
-import { schema } from '$lib/graphql/schema';
+import { getTokenFromCookie } from '$lib/auth/cookie';
+import { Context, schema } from '$lib/graphql/schema';
 import { envelop, useLogger, useSchema } from '@envelop/core';
 import type { RequestHandler } from '@sveltejs/kit';
 import type { JSONValue } from '@sveltejs/kit/types/helper';
@@ -26,7 +27,9 @@ const getEnveloped = envelop({
 });
 
 export const post: RequestHandler<Locals, JSONValue> = async ({ headers, body, method }) => {
-	const { contextFactory, parse, validate, execute, schema } = getEnveloped();
+	const token = getTokenFromCookie(headers.cookie);
+
+	const { contextFactory, parse, validate, execute, schema } = getEnveloped<Context>({ token });
 
 	const request = {
 		method,

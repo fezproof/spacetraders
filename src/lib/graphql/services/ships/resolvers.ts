@@ -5,8 +5,8 @@ export const resolvers: Resolvers = {
 	Query: {},
 	Mutation: {},
 	Account: {
-		ships: async () => {
-			const { ships } = await getMyShips();
+		ships: async (_, __, { token }) => {
+			const { ships } = await getMyShips(token);
 
 			return ships.map((ship) => ({ ...ship, location: { id: ship.location } }));
 		}

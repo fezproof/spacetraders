@@ -1,4 +1,5 @@
 import type { GraphQLResolveInfo } from 'graphql';
+import type { Context } from '$lib/graphql/schema';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -211,7 +212,7 @@ export type ResolversParentTypes = {
 };
 
 export type AccountResolvers<
-	ContextType = unknown,
+	ContextType = Context,
 	ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']
 > = {
 	credits?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -224,7 +225,7 @@ export type AccountResolvers<
 };
 
 export type CargoResolvers<
-	ContextType = unknown,
+	ContextType = Context,
 	ParentType extends ResolversParentTypes['Cargo'] = ResolversParentTypes['Cargo']
 > = {
 	good?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -234,7 +235,7 @@ export type CargoResolvers<
 };
 
 export type GameResolvers<
-	ContextType = unknown,
+	ContextType = Context,
 	ParentType extends ResolversParentTypes['Game'] = ResolversParentTypes['Game']
 > = {
 	status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -242,7 +243,7 @@ export type GameResolvers<
 };
 
 export type LocationResolvers<
-	ContextType = unknown,
+	ContextType = Context,
 	ParentType extends ResolversParentTypes['Location'] = ResolversParentTypes['Location']
 > = {
 	allowsConstruction?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
@@ -262,7 +263,7 @@ export type LocationResolvers<
 };
 
 export type MarketRecordResolvers<
-	ContextType = unknown,
+	ContextType = Context,
 	ParentType extends ResolversParentTypes['MarketRecord'] = ResolversParentTypes['MarketRecord']
 > = {
 	pricePerUnit?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -276,14 +277,14 @@ export type MarketRecordResolvers<
 };
 
 export type MutationResolvers<
-	ContextType = unknown,
+	ContextType = Context,
 	ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
 > = {
 	game?: Resolver<Maybe<ResolversTypes['Game']>, ParentType, ContextType>;
 };
 
 export type QueryResolvers<
-	ContextType = unknown,
+	ContextType = Context,
 	ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = {
 	game?: Resolver<Maybe<ResolversTypes['Game']>, ParentType, ContextType>;
@@ -297,7 +298,7 @@ export type QueryResolvers<
 };
 
 export type ShipResolvers<
-	ContextType = unknown,
+	ContextType = Context,
 	ParentType extends ResolversParentTypes['Ship'] = ResolversParentTypes['Ship']
 > = {
 	cargo?: Resolver<Maybe<ReadonlyArray<ResolversTypes['Cargo']>>, ParentType, ContextType>;
@@ -317,7 +318,7 @@ export type ShipResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type Resolvers<ContextType = unknown> = {
+export type Resolvers<ContextType = Context> = {
 	Account?: AccountResolvers<ContextType>;
 	Cargo?: CargoResolvers<ContextType>;
 	Game?: GameResolvers<ContextType>;

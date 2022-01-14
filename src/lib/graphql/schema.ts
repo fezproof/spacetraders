@@ -9,3 +9,7 @@ export const schema: GraphQLSchema = makeExecutableSchema({
 	typeDefs: [baseTypes, accountTypes, shipTypes, locationTypes],
 	resolvers: [baseResolvers, accountResolvers, shipResolvers, locationResolvers]
 });
+
+export interface Context {
+	token?: string;
+}
