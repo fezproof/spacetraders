@@ -1,4 +1,5 @@
-import { Context, schema } from '$lib/graphql/schema';
+import type { Context } from '$lib/graphql/schema';
+import { schema } from '$lib/graphql/schema';
 import { envelop, useLogger, useSchema } from '@envelop/core';
 import type { RequestHandler } from '@sveltejs/kit';
 import type { JSONValue } from '@sveltejs/kit/types/helper';
