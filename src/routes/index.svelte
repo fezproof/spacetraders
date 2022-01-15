@@ -1,8 +1,7 @@
 <script lang="ts">
-	import GameState from '$lib/components/GameState/GameState.svelte';
-	import MyShips from '$lib/components/MyShips/MyShips.svelte';
+	import SystemViewer from '$lib/components/SystemViewer/SystemViewer.svelte';
 </script>
 
-<MyShips />
-
-<GameState />
+<div class="fixed inset-0 mt-20">
+	<SystemViewer />
+</div>
