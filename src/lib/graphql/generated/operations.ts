@@ -60,8 +60,8 @@ export type Location = {
 	name?: Maybe<Scalars['String']>;
 	traits?: Maybe<Array<Maybe<Scalars['String']>>>;
 	type?: Maybe<Scalars['String']>;
-	x?: Maybe<Scalars['Int']>;
-	y?: Maybe<Scalars['Int']>;
+	x: Scalars['Int'];
+	y: Scalars['Int'];
 };
 
 export type MarketRecord = {
@@ -207,11 +207,26 @@ export type SystemDataQuery = {
 							id: string;
 							type?: string | null | undefined;
 							name?: string | null | undefined;
-							x?: number | null | undefined;
-							y?: number | null | undefined;
+							x: number;
+							y: number;
 					  }>
 					| null
 					| undefined;
+		  }
+		| null
+		| undefined;
+};
+
+export type SystemFlightsQueryVariables = Exact<{
+	systemId: Scalars['ID'];
+}>;
+
+export type SystemFlightsQuery = {
+	__typename?: 'Query';
+	system?:
+		| {
+				__typename?: 'System';
+				id: string;
 				activeFlights?:
 					| Array<
 							| {
@@ -223,8 +238,9 @@ export type SystemDataQuery = {
 										| {
 												__typename?: 'Location';
 												id: string;
-												x?: number | null | undefined;
-												y?: number | null | undefined;
+												type?: string | null | undefined;
+												x: number;
+												y: number;
 										  }
 										| null
 										| undefined;
@@ -232,8 +248,9 @@ export type SystemDataQuery = {
 										| {
 												__typename?: 'Location';
 												id: string;
-												x?: number | null | undefined;
-												y?: number | null | undefined;
+												type?: string | null | undefined;
+												x: number;
+												y: number;
 										  }
 										| null
 										| undefined;
@@ -253,8 +270,8 @@ export type LocationDataFragment = {
 	id: string;
 	type?: string | null | undefined;
 	name?: string | null | undefined;
-	x?: number | null | undefined;
-	y?: number | null | undefined;
+	x: number;
+	y: number;
 };
 
 export type SystemFlightPlanFragment = {
@@ -266,8 +283,9 @@ export type SystemFlightPlanFragment = {
 		| {
 				__typename?: 'Location';
 				id: string;
-				x?: number | null | undefined;
-				y?: number | null | undefined;
+				type?: string | null | undefined;
+				x: number;
+				y: number;
 		  }
 		| null
 		| undefined;
@@ -275,8 +293,9 @@ export type SystemFlightPlanFragment = {
 		| {
 				__typename?: 'Location';
 				id: string;
-				x?: number | null | undefined;
-				y?: number | null | undefined;
+				type?: string | null | undefined;
+				x: number;
+				y: number;
 		  }
 		| null
 		| undefined;
@@ -328,6 +347,7 @@ export const SystemFlightPlanFragmentDoc = {
 							kind: 'SelectionSet',
 							selections: [
 								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'type' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
 							]
@@ -340,6 +360,7 @@ export const SystemFlightPlanFragmentDoc = {
 							kind: 'SelectionSet',
 							selections: [
 								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'type' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
 							]
@@ -532,7 +553,56 @@ export const SystemDataDocument = {
 											}
 										]
 									}
-								},
+								}
+							]
+						}
+					}
+				]
+			}
+		},
+		...LocationDataFragmentDoc.definitions
+	]
+} as unknown as DocumentNode<SystemDataQuery, SystemDataQueryVariables>;
+export const SystemFlightsDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'query',
+			name: { kind: 'Name', value: 'SystemFlights' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'systemId' }
+					},
+					type: {
+						kind: 'NonNullType',
+						type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+					}
+				}
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'system' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'id' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'systemId' }
+								}
+							}
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
 								{
 									kind: 'Field',
 									name: { kind: 'Name', value: 'activeFlights' },
@@ -552,7 +622,6 @@ export const SystemDataDocument = {
 				]
 			}
 		},
-		...LocationDataFragmentDoc.definitions,
 		...SystemFlightPlanFragmentDoc.definitions
 	]
-} as unknown as DocumentNode<SystemDataQuery, SystemDataQueryVariables>;
+} as unknown as DocumentNode<SystemFlightsQuery, SystemFlightsQueryVariables>;

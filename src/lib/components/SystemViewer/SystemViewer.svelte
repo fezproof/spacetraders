@@ -3,6 +3,7 @@
 	import { operationStore, query } from '@urql/svelte';
 	import * as SC from 'svelte-cubed';
 	import * as THREE from 'three';
+	import SystemFlights from './SystemFlights.svelte';
 	import SystemObjects from './SystemObjects.svelte';
 
 	const system = operationStore(SystemDataDocument, { systemId: 'OE' });
@@ -20,8 +21,11 @@
 
 <SC.Canvas antialias background={new THREE.Color('#0a0a0a')}>
 	{#if $system.data?.system?.locations}
-		<SystemObjects locations={$system.data?.system?.locations} />
+		<SystemObjects locations={$system.data.system.locations} />
 	{/if}
+
+	<SystemFlights />
+
 	<SC.PerspectiveCamera position={[maxDistance, 100, 0]} />
 	<SC.OrbitControls
 		enableZoom={true}

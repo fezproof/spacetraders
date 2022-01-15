@@ -5,6 +5,12 @@ query SystemData($systemId: ID!) {
 		locations {
 			...LocationData
 		}
+	}
+}
+
+query SystemFlights($systemId: ID!) {
+	system(id: $systemId) {
+		id
 		activeFlights {
 			...SystemFlightPlan
 		}
@@ -25,11 +31,13 @@ fragment SystemFlightPlan on FlightPlan {
 	arrivesAt
 	departure {
 		id
+		type
 		x
 		y
 	}
 	destination {
 		id
+		type
 		x
 		y
 	}

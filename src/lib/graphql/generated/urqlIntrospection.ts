@@ -263,16 +263,22 @@ export default {
 					{
 						name: 'x',
 						type: {
-							kind: 'SCALAR',
-							name: 'Any'
+							kind: 'NON_NULL',
+							ofType: {
+								kind: 'SCALAR',
+								name: 'Any'
+							}
 						},
 						args: []
 					},
 					{
 						name: 'y',
 						type: {
-							kind: 'SCALAR',
-							name: 'Any'
+							kind: 'NON_NULL',
+							ofType: {
+								kind: 'SCALAR',
+								name: 'Any'
+							}
 						},
 						args: []
 					}
