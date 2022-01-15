@@ -11,4 +11,4 @@ export const rateLimit1 = (promoseFunc, msPerOp: number) => {
 	};
 };
 
-export const limitedFetch = rateLimit1(fetch, 500);
+export const limitedFetch = rateLimit1(fetch, 100);
