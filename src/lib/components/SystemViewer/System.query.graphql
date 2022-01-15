@@ -1,0 +1,17 @@
+query SystemData($systemId: ID!) {
+	system(id: $systemId) {
+		id
+		name
+		locations {
+			...LocationData
+		}
+	}
+}
+
+fragment LocationData on Location {
+	id
+	type
+	name
+	x
+	y
+}

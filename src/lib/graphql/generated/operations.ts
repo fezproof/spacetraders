@@ -180,6 +180,65 @@ export type MyShipsQuery = {
 		| undefined;
 };
 
+export type SystemDataQueryVariables = Exact<{
+	systemId: Scalars['ID'];
+}>;
+
+export type SystemDataQuery = {
+	__typename?: 'Query';
+	system?:
+		| {
+				__typename?: 'System';
+				id: string;
+				name?: string | null | undefined;
+				locations?:
+					| Array<{
+							__typename?: 'Location';
+							id: string;
+							type?: string | null | undefined;
+							name?: string | null | undefined;
+							x?: number | null | undefined;
+							y?: number | null | undefined;
+					  }>
+					| null
+					| undefined;
+		  }
+		| null
+		| undefined;
+};
+
+export type LocationDataFragment = {
+	__typename?: 'Location';
+	id: string;
+	type?: string | null | undefined;
+	name?: string | null | undefined;
+	x?: number | null | undefined;
+	y?: number | null | undefined;
+};
+
+export const LocationDataFragmentDoc = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'FragmentDefinition',
+			name: { kind: 'Name', value: 'LocationData' },
+			typeCondition: {
+				kind: 'NamedType',
+				name: { kind: 'Name', value: 'Location' }
+			},
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'type' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
+				]
+			}
+		}
+	]
+} as unknown as DocumentNode<LocationDataFragment, unknown>;
 export const GameStateDocument = {
 	kind: 'Document',
 	definitions: [
@@ -309,3 +368,66 @@ export const MyShipsDocument = {
 		}
 	]
 } as unknown as DocumentNode<MyShipsQuery, MyShipsQueryVariables>;
+export const SystemDataDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'query',
+			name: { kind: 'Name', value: 'SystemData' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'systemId' }
+					},
+					type: {
+						kind: 'NonNullType',
+						type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+					}
+				}
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'system' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'id' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'systemId' }
+								}
+							}
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'locations' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{
+												kind: 'FragmentSpread',
+												name: { kind: 'Name', value: 'LocationData' }
+											}
+										]
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		},
+		...LocationDataFragmentDoc.definitions
+	]
+} as unknown as DocumentNode<SystemDataQuery, SystemDataQueryVariables>;
