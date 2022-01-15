@@ -107,6 +107,58 @@ export default {
 			},
 			{
 				kind: 'OBJECT',
+				name: 'FlightPlan',
+				fields: [
+					{
+						name: 'arrivesAt',
+						type: {
+							kind: 'SCALAR',
+							name: 'Any'
+						},
+						args: []
+					},
+					{
+						name: 'createdAt',
+						type: {
+							kind: 'SCALAR',
+							name: 'Any'
+						},
+						args: []
+					},
+					{
+						name: 'departure',
+						type: {
+							kind: 'OBJECT',
+							name: 'Location',
+							ofType: null
+						},
+						args: []
+					},
+					{
+						name: 'destination',
+						type: {
+							kind: 'OBJECT',
+							name: 'Location',
+							ofType: null
+						},
+						args: []
+					},
+					{
+						name: 'id',
+						type: {
+							kind: 'NON_NULL',
+							ofType: {
+								kind: 'SCALAR',
+								name: 'Any'
+							}
+						},
+						args: []
+					}
+				],
+				interfaces: []
+			},
+			{
+				kind: 'OBJECT',
 				name: 'Game',
 				fields: [
 					{
@@ -539,6 +591,18 @@ export default {
 				kind: 'OBJECT',
 				name: 'System',
 				fields: [
+					{
+						name: 'activeFlights',
+						type: {
+							kind: 'LIST',
+							ofType: {
+								kind: 'OBJECT',
+								name: 'FlightPlan',
+								ofType: null
+							}
+						},
+						args: []
+					},
 					{
 						name: 'id',
 						type: {

@@ -29,6 +29,11 @@ export const types = /* GraphQL */ `
 		locations: [Location!]
 	}
 
+	extend type FlightPlan {
+		destination: Location
+		departure: Location
+	}
+
 	extend type Query {
 		location(id: ID!): Location
 	}

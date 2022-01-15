@@ -40,6 +40,15 @@ export type Cargo = {
 	readonly totalVolume?: Maybe<Scalars['Int']>;
 };
 
+export type FlightPlan = {
+	readonly __typename?: 'FlightPlan';
+	readonly arrivesAt?: Maybe<Scalars['String']>;
+	readonly createdAt?: Maybe<Scalars['String']>;
+	readonly departure?: Maybe<Location>;
+	readonly destination?: Maybe<Location>;
+	readonly id: Scalars['ID'];
+};
+
 export type Game = {
 	readonly __typename?: 'Game';
 	readonly leaderboard?: Maybe<ReadonlyArray<Rank>>;
@@ -118,6 +127,7 @@ export type Ship = {
 
 export type System = {
 	readonly __typename?: 'System';
+	readonly activeFlights?: Maybe<ReadonlyArray<Maybe<FlightPlan>>>;
 	readonly id: Scalars['ID'];
 	readonly locations?: Maybe<ReadonlyArray<Location>>;
 	readonly name?: Maybe<Scalars['String']>;
@@ -233,6 +243,7 @@ export type ResolversTypes = {
 	Account: ResolverTypeWrapper<Account>;
 	Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 	Cargo: ResolverTypeWrapper<Cargo>;
+	FlightPlan: ResolverTypeWrapper<FlightPlan>;
 	Game: ResolverTypeWrapper<Game>;
 	ID: ResolverTypeWrapper<Scalars['ID']>;
 	Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -251,6 +262,7 @@ export type ResolversParentTypes = {
 	Account: Account;
 	Boolean: Scalars['Boolean'];
 	Cargo: Cargo;
+	FlightPlan: FlightPlan;
 	Game: Game;
 	ID: Scalars['ID'];
 	Int: Scalars['Int'];
@@ -292,6 +304,34 @@ export type CargoResolvers<
 	good?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	quantity?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	totalVolume?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type FlightPlanResolvers<
+	ContextType = Context,
+	ParentType extends ResolversParentTypes['FlightPlan'] = ResolversParentTypes['FlightPlan']
+> = {
+	arrivesAt?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	createdAt?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	departure?: Resolver<
+		Maybe<ResolversTypes['Location']>,
+		ParentType,
+		ContextType
+	>;
+	destination?: Resolver<
+		Maybe<ResolversTypes['Location']>,
+		ParentType,
+		ContextType
+	>;
+	id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -448,6 +488,11 @@ export type SystemResolvers<
 	ContextType = Context,
 	ParentType extends ResolversParentTypes['System'] = ResolversParentTypes['System']
 > = {
+	activeFlights?: Resolver<
+		Maybe<ReadonlyArray<Maybe<ResolversTypes['FlightPlan']>>>,
+		ParentType,
+		ContextType
+	>;
 	id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
 	locations?: Resolver<
 		Maybe<ReadonlyArray<ResolversTypes['Location']>>,
@@ -461,6 +506,7 @@ export type SystemResolvers<
 export type Resolvers<ContextType = Context> = {
 	Account?: AccountResolvers<ContextType>;
 	Cargo?: CargoResolvers<ContextType>;
+	FlightPlan?: FlightPlanResolvers<ContextType>;
 	Game?: GameResolvers<ContextType>;
 	Location?: LocationResolvers<ContextType>;
 	MarketRecord?: MarketRecordResolvers<ContextType>;

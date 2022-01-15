@@ -36,6 +36,15 @@ export type Cargo = {
 	totalVolume?: Maybe<Scalars['Int']>;
 };
 
+export type FlightPlan = {
+	__typename?: 'FlightPlan';
+	arrivesAt?: Maybe<Scalars['String']>;
+	createdAt?: Maybe<Scalars['String']>;
+	departure?: Maybe<Location>;
+	destination?: Maybe<Location>;
+	id: Scalars['ID'];
+};
+
 export type Game = {
 	__typename?: 'Game';
 	leaderboard?: Maybe<Array<Rank>>;
@@ -114,6 +123,7 @@ export type Ship = {
 
 export type System = {
 	__typename?: 'System';
+	activeFlights?: Maybe<Array<Maybe<FlightPlan>>>;
 	id: Scalars['ID'];
 	locations?: Maybe<Array<Location>>;
 	name?: Maybe<Scalars['String']>;

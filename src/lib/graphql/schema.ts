@@ -5,15 +5,24 @@ import { accountResolvers, accountTypes } from './services/accounts';
 import { shipResolvers, shipTypes } from './services/ships';
 import { locationResolvers, locationTypes } from './services/locations';
 import { systemResolvers, systemTypes } from './services/systems';
+import { flightPlanResolvers, flightPlanTypes } from './services/flightPlans';
 
 export const schema: GraphQLSchema = makeExecutableSchema({
-	typeDefs: [baseTypes, accountTypes, shipTypes, locationTypes, systemTypes],
+	typeDefs: [
+		baseTypes,
+		accountTypes,
+		shipTypes,
+		locationTypes,
+		systemTypes,
+		flightPlanTypes
+	],
 	resolvers: [
 		baseResolvers,
 		accountResolvers,
 		shipResolvers,
 		locationResolvers,
-		systemResolvers
+		systemResolvers,
+		flightPlanResolvers
 	]
 });
 
