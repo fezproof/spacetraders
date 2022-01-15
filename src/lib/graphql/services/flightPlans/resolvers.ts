@@ -1,4 +1,5 @@
 import type { Resolvers } from '$lib/graphql/generated/resolvers';
+import { getSystemLocations } from '../locations/data';
 import { getSystemFlightPlans } from './data';
 
 export const resolvers: Resolvers = {
@@ -7,11 +8,29 @@ export const resolvers: Resolvers = {
 	System: {
 		activeFlights: async ({ id }, _, { user }) => {
 			const { flightPlans } = await getSystemFlightPlans(id, user?.token);
-			return flightPlans.map(({ id, departure, destination }) => ({
-				id,
-				departure: { id: departure },
-				destination: { id: destination }
-			}));
+			const { locations } = await getSystemLocations(id, user?.token);
+			const activeFlights = flightPlans.map(
+				({ id, arrivesAt, createdAt, departure, destination }) => {
+					const departureLocation = locations.find(
+						(location) => location.symbol === departure
+					);
+					const destinationLocation = locations.find(
+						(location) => location.symbol === destination
+					);
+
+					return {
+						id,
+						arrivesAt,
+						createdAt,
+						departure: { ...departureLocation, id: departure },
+						destination: {
+							...destinationLocation,
+							id: destination
+						}
+					};
+				}
+			);
+			return activeFlights;
 		}
 	}
 };

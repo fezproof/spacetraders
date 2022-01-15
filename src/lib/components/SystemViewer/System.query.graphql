@@ -5,6 +5,9 @@ query SystemData($systemId: ID!) {
 		locations {
 			...LocationData
 		}
+		activeFlights {
+			...SystemFlightPlan
+		}
 	}
 }
 
@@ -14,4 +17,20 @@ fragment LocationData on Location {
 	name
 	x
 	y
+}
+
+fragment SystemFlightPlan on FlightPlan {
+	id
+	createdAt
+	arrivesAt
+	departure {
+		id
+		x
+		y
+	}
+	destination {
+		id
+		x
+		y
+	}
 }

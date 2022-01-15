@@ -212,6 +212,37 @@ export type SystemDataQuery = {
 					  }>
 					| null
 					| undefined;
+				activeFlights?:
+					| Array<
+							| {
+									__typename?: 'FlightPlan';
+									id: string;
+									createdAt?: string | null | undefined;
+									arrivesAt?: string | null | undefined;
+									departure?:
+										| {
+												__typename?: 'Location';
+												id: string;
+												x?: number | null | undefined;
+												y?: number | null | undefined;
+										  }
+										| null
+										| undefined;
+									destination?:
+										| {
+												__typename?: 'Location';
+												id: string;
+												x?: number | null | undefined;
+												y?: number | null | undefined;
+										  }
+										| null
+										| undefined;
+							  }
+							| null
+							| undefined
+					  >
+					| null
+					| undefined;
 		  }
 		| null
 		| undefined;
@@ -224,6 +255,31 @@ export type LocationDataFragment = {
 	name?: string | null | undefined;
 	x?: number | null | undefined;
 	y?: number | null | undefined;
+};
+
+export type SystemFlightPlanFragment = {
+	__typename?: 'FlightPlan';
+	id: string;
+	createdAt?: string | null | undefined;
+	arrivesAt?: string | null | undefined;
+	departure?:
+		| {
+				__typename?: 'Location';
+				id: string;
+				x?: number | null | undefined;
+				y?: number | null | undefined;
+		  }
+		| null
+		| undefined;
+	destination?:
+		| {
+				__typename?: 'Location';
+				id: string;
+				x?: number | null | undefined;
+				y?: number | null | undefined;
+		  }
+		| null
+		| undefined;
 };
 
 export const LocationDataFragmentDoc = {
@@ -249,6 +305,51 @@ export const LocationDataFragmentDoc = {
 		}
 	]
 } as unknown as DocumentNode<LocationDataFragment, unknown>;
+export const SystemFlightPlanFragmentDoc = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'FragmentDefinition',
+			name: { kind: 'Name', value: 'SystemFlightPlan' },
+			typeCondition: {
+				kind: 'NamedType',
+				name: { kind: 'Name', value: 'FlightPlan' }
+			},
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'arrivesAt' } },
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'departure' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
+							]
+						}
+					},
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'destination' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
+							]
+						}
+					}
+				]
+			}
+		}
+	]
+} as unknown as DocumentNode<SystemFlightPlanFragment, unknown>;
 export const GameStateDocument = {
 	kind: 'Document',
 	definitions: [
@@ -431,6 +532,19 @@ export const SystemDataDocument = {
 											}
 										]
 									}
+								},
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'activeFlights' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{
+												kind: 'FragmentSpread',
+												name: { kind: 'Name', value: 'SystemFlightPlan' }
+											}
+										]
+									}
 								}
 							]
 						}
@@ -438,6 +552,7 @@ export const SystemDataDocument = {
 				]
 			}
 		},
-		...LocationDataFragmentDoc.definitions
+		...LocationDataFragmentDoc.definitions,
+		...SystemFlightPlanFragmentDoc.definitions
 	]
 } as unknown as DocumentNode<SystemDataQuery, SystemDataQueryVariables>;
