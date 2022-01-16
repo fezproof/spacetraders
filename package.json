@@ -24,6 +24,7 @@
 		"@sveltejs/kit": "next",
 		"@tailwindcss/forms": "^0.4.0",
 		"@types/cookie": "^0.4.1",
+		"@types/lodash-es": "^4.17.5",
 		"@types/three": "^0.136.1",
 		"@typescript-eslint/eslint-plugin": "^4.31.1",
 		"@typescript-eslint/parser": "^4.31.1",
@@ -51,6 +52,7 @@
 		"cookie": "^0.4.1",
 		"graphql": "^16.2.0",
 		"graphql-helix": "^1.11.0",
+		"lodash-es": "^4.17.21",
 		"svelte-cubed": "^0.2.1",
 		"three": "^0.136.0"
 	}

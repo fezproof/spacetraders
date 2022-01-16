@@ -22,7 +22,9 @@ export const handle: Handle<Locals> = async ({ request, resolve }) => {
 		const { user } = await getMe(token);
 		if (user) {
 			request.locals.user = { username: user.username, token };
-			return resolve(request);
+			return resolve(request, {
+				ssr: request.url.pathname.endsWith('sign-in')
+			});
 		}
 	}
 
