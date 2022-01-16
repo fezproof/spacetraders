@@ -6,7 +6,7 @@ const clamp = (value: number, min: number, max: number) => {
 
 export const lerp = (start: number, end: number, percent: number): number => {
 	const result = start * (1 - percent) + end * percent;
-	return clamp(result, start, end);
+	return clamp(result, Math.min(start, end), Math.max(start, end));
 };
 
 export const lerpPosition = (
