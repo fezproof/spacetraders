@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { SystemDataDocument } from '$lib/graphql/generated/operations';
+	import { target } from '$lib/stores/camera';
+	import { canvasClick, mouseCoords } from '$lib/stores/mouse';
 	import { operationStore, query } from '@urql/svelte';
-	import { meanBy } from 'lodash-es';
 	import * as SC from 'svelte-cubed';
 	import * as THREE from 'three';
+	import ThreeProvider from '../ScExtends/ThreeProvider.svelte';
 	import SystemFlights from './SystemFlights.svelte';
 	import SystemObjects from './SystemObjects.svelte';
 
@@ -14,15 +16,10 @@
 	$: systemPositions =
 		$system.data?.system?.locations?.map(({ x, y }) => ({ x, y })) ?? [];
 
-	$: middle = [
-		meanBy(systemPositions, 'x'),
-		0,
-		meanBy(systemPositions, 'y')
-	] as SC.Position;
-
 	$: maxX = Math.max(...(systemPositions.map(({ x }) => Math.abs(x)) ?? [0]));
 	$: maxY = Math.max(...(systemPositions.map(({ y }) => Math.abs(y)) ?? [0]));
 	$: maxDistance = Math.hypot(maxX, maxY);
+	$: position = [$target[0] + 100, $target[1] + maxDistance, $target[2] + 100];
 
 	const loader = new THREE.CubeTextureLoader();
 	loader.setPath('textures/galaxy/');
@@ -37,25 +34,31 @@
 	]);
 </script>
 
-<SC.Canvas antialias {background}>
-	{#if $system.data?.system?.locations}
-		<SystemObjects locations={$system.data.system.locations} />
-	{/if}
+<div
+	class="fixed inset-0"
+	on:mousemove={(e) => {
+		$mouseCoords.x = (e.clientX / window.innerWidth) * 2 - 1;
+		$mouseCoords.y = -(e.clientY / window.innerHeight) * 2 + 1;
+	}}
+	on:click={() => {
+		canvasClick();
+	}}
+>
+	<SC.Canvas antialias {background}>
+		<ThreeProvider>
+			{#if $system.data?.system?.locations}
+				<SystemObjects locations={$system.data.system.locations} />
+			{/if}
 
-	<SC.Mesh
-		geometry={new THREE.SphereGeometry(1)}
-		position={[0, 0, 0]}
-		material={new THREE.MeshBasicMaterial({ color: 0xae0000 })}
-	/>
+			<SystemFlights />
 
-	<SystemFlights />
-
-	<SC.PerspectiveCamera position={[100, maxDistance, 100]} />
-	<SC.OrbitControls
-		enableZoom={true}
-		enablePan={false}
-		target={middle}
-		maxZoom={100}
-		minZoom={20}
-	/>
-</SC.Canvas>
+			<SC.PerspectiveCamera bind:position target={$target} />
+			<!-- <SC.OrbitControls
+				enableZoom={false}
+        enablePan={false}
+				enableRotate={false}
+				target={$target}
+			/> -->
+		</ThreeProvider>
+	</SC.Canvas>
+</div>
