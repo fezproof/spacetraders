@@ -11,7 +11,7 @@
 	};
 </script>
 
-<script>
+<script lang="ts">
 	setClient(client);
 </script>
 
