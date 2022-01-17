@@ -416,8 +416,8 @@
 						"description": null,
 						"args": [],
 						"type": {
-							"kind": "SCALAR",
-							"name": "String",
+							"kind": "ENUM",
+							"name": "LocationType",
 							"ofType": null
 						},
 						"isDeprecated": false,
@@ -459,6 +459,53 @@
 				"inputFields": null,
 				"interfaces": [],
 				"enumValues": null,
+				"possibleTypes": null
+			},
+			{
+				"kind": "ENUM",
+				"name": "LocationType",
+				"description": null,
+				"fields": null,
+				"inputFields": null,
+				"interfaces": null,
+				"enumValues": [
+					{
+						"name": "ASTEROID",
+						"description": null,
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
+						"name": "GAS_GIANT",
+						"description": null,
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
+						"name": "MOON",
+						"description": null,
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
+						"name": "NEBULA",
+						"description": null,
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
+						"name": "PLANET",
+						"description": null,
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
+						"name": "WORMHOLE",
+						"description": null,
+						"isDeprecated": false,
+						"deprecationReason": null
+					}
+				],
 				"possibleTypes": null
 			},
 			{

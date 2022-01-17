@@ -10,20 +10,22 @@
 	import SystemFlights from './SystemFlights.svelte';
 	import SystemObjects from './SystemObjects.svelte';
 
-	const system = operationStore(SystemDataDocument, { systemId: 'OE' });
+	export let systemId: string;
+
+	const system = operationStore(SystemDataDocument, { systemId });
+
+	$: {
+		$system.variables = { systemId };
+	}
 
 	query(system);
 
-	$: systemPositions =
-		$system.data?.system?.locations?.map(({ x, y }) => ({ x, y })) ?? [];
+	let position = [100, 100, 100] as SC.Position;
 
-	$: maxX = Math.max(...(systemPositions.map(({ x }) => Math.abs(x)) ?? [0]));
-	$: maxY = Math.max(...(systemPositions.map(({ y }) => Math.abs(y)) ?? [0]));
-	$: maxDistance = Math.hypot(maxX, maxY);
-	$: position = [$target[0] + 100, $target[1] + maxDistance, $target[2] + 100];
+	$: position = [$target[0] + 100, $target[1] + 100, $target[2] + 100];
 
 	const loader = new THREE.CubeTextureLoader();
-	loader.setPath('textures/galaxy/');
+	loader.setPath('/textures/galaxy/');
 
 	let background: THREE.CubeTexture;
 
@@ -55,15 +57,9 @@
 				<SystemObjects locations={$system.data.system.locations} />
 			{/if}
 
-			<SystemFlights />
+			<SystemFlights {systemId} />
 
-			<SC.PerspectiveCamera bind:position target={$target} />
-			<!-- <SC.OrbitControls
-				enableZoom={false}
-        enablePan={false}
-				enableRotate={false}
-				target={$target}
-			/> -->
+			<SC.PerspectiveCamera {position} target={$target} />
 		</ThreeProvider>
 	</SC.Canvas>
 </div>

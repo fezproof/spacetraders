@@ -2,4 +2,4 @@
 	import SystemViewer from '$lib/components/SystemViewer/SystemViewer.svelte';
 </script>
 
-<SystemViewer />
+<SystemViewer systemId="OE" />

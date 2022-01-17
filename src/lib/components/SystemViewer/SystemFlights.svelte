@@ -5,9 +5,15 @@
 	import * as SC from 'svelte-cubed';
 	import SystemShip from './SystemShip.svelte';
 
+	export let systemId: string;
+
 	const systemFlights = operationStore(SystemFlightsDocument, {
-		systemId: 'OE'
+		systemId
 	});
+
+	$: {
+		$systemFlights.variables = { systemId };
+	}
 
 	query(systemFlights);
 
