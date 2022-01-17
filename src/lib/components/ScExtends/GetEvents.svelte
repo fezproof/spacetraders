@@ -20,7 +20,12 @@
 		});
 	});
 
-	const dispatch = createEventDispatcher();
+	const dispatch =
+		createEventDispatcher<{
+			mouseenter: THREE.Object3D;
+			mouseleave: THREE.Object3D;
+			click: THREE.Object3D;
+		}>();
 
 	let entered = false;
 	$: {
