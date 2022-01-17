@@ -8,6 +8,7 @@
 	export let endPos: Position;
 	export let startedAt: Date;
 	export let endsAt: Date;
+	export let colour: number | undefined;
 
 	const getTimeAlpha = () => {
 		const result = inverseLerp(
@@ -28,5 +29,5 @@
 <SC.Mesh
 	{position}
 	geometry={new THREE.CylinderGeometry(0.3, 0.3, 0.1)}
-	material={new THREE.MeshBasicMaterial({ color: 'yellow' })}
+	material={new THREE.MeshBasicMaterial({ color: colour || 0xff00ff })}
 />

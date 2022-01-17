@@ -29,6 +29,10 @@ fragment SystemFlightPlan on FlightPlan {
 	id
 	createdAt
 	arrivesAt
+	owner {
+		username
+		colour
+	}
 	departure {
 		id
 		type

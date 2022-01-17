@@ -10,7 +10,7 @@ export const resolvers: Resolvers = {
 			const { flightPlans } = await getSystemFlightPlans(id, user?.token);
 			const { locations } = await getSystemLocations(id, user?.token);
 			const activeFlights = flightPlans.map(
-				({ id, arrivesAt, createdAt, departure, destination }) => {
+				({ id, arrivesAt, createdAt, departure, destination, username }) => {
 					const departureLocation = locations.find(
 						(location) => location.symbol === departure
 					);
@@ -22,6 +22,7 @@ export const resolvers: Resolvers = {
 						id,
 						arrivesAt,
 						createdAt,
+						owner: { username },
 						departure: { ...departureLocation, id: departure },
 						destination: {
 							...destinationLocation,

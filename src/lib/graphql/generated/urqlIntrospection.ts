@@ -14,13 +14,18 @@ export default {
 				name: 'Account',
 				fields: [
 					{
+						name: 'colour',
+						type: {
+							kind: 'SCALAR',
+							name: 'Any'
+						},
+						args: []
+					},
+					{
 						name: 'credits',
 						type: {
-							kind: 'NON_NULL',
-							ofType: {
-								kind: 'SCALAR',
-								name: 'Any'
-							}
+							kind: 'SCALAR',
+							name: 'Any'
 						},
 						args: []
 					},
@@ -151,6 +156,15 @@ export default {
 								kind: 'SCALAR',
 								name: 'Any'
 							}
+						},
+						args: []
+					},
+					{
+						name: 'owner',
+						type: {
+							kind: 'OBJECT',
+							name: 'Account',
+							ofType: null
 						},
 						args: []
 					}

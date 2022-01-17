@@ -14,17 +14,25 @@
 				"description": null,
 				"fields": [
 					{
+						"name": "colour",
+						"description": null,
+						"args": [],
+						"type": {
+							"kind": "SCALAR",
+							"name": "Int",
+							"ofType": null
+						},
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
 						"name": "credits",
 						"description": null,
 						"args": [],
 						"type": {
-							"kind": "NON_NULL",
-							"name": null,
-							"ofType": {
-								"kind": "SCALAR",
-								"name": "Int",
-								"ofType": null
-							}
+							"kind": "SCALAR",
+							"name": "Int",
+							"ofType": null
 						},
 						"isDeprecated": false,
 						"deprecationReason": null
@@ -225,6 +233,18 @@
 								"name": "ID",
 								"ofType": null
 							}
+						},
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
+						"name": "owner",
+						"description": null,
+						"args": [],
+						"type": {
+							"kind": "OBJECT",
+							"name": "Account",
+							"ofType": null
 						},
 						"isDeprecated": false,
 						"deprecationReason": null

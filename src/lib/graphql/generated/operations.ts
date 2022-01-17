@@ -21,7 +21,8 @@ export type Scalars = {
 
 export type Account = {
 	__typename?: 'Account';
-	credits: Scalars['Int'];
+	colour?: Maybe<Scalars['Int']>;
+	credits?: Maybe<Scalars['Int']>;
 	joinedAt?: Maybe<Scalars['String']>;
 	shipCount?: Maybe<Scalars['Int']>;
 	ships?: Maybe<Array<Maybe<Ship>>>;
@@ -43,6 +44,7 @@ export type FlightPlan = {
 	departure?: Maybe<Location>;
 	destination?: Maybe<Location>;
 	id: Scalars['ID'];
+	owner?: Maybe<Account>;
 };
 
 export type Game = {
@@ -234,6 +236,14 @@ export type SystemFlightsQuery = {
 									id: string;
 									createdAt?: string | null | undefined;
 									arrivesAt?: string | null | undefined;
+									owner?:
+										| {
+												__typename?: 'Account';
+												username: string;
+												colour?: number | null | undefined;
+										  }
+										| null
+										| undefined;
 									departure?:
 										| {
 												__typename?: 'Location';
@@ -279,6 +289,14 @@ export type SystemFlightPlanFragment = {
 	id: string;
 	createdAt?: string | null | undefined;
 	arrivesAt?: string | null | undefined;
+	owner?:
+		| {
+				__typename?: 'Account';
+				username: string;
+				colour?: number | null | undefined;
+		  }
+		| null
+		| undefined;
 	departure?:
 		| {
 				__typename?: 'Location';
@@ -340,6 +358,17 @@ export const SystemFlightPlanFragmentDoc = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'arrivesAt' } },
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'owner' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'username' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'colour' } }
+							]
+						}
+					},
 					{
 						kind: 'Field',
 						name: { kind: 'Name', value: 'departure' },

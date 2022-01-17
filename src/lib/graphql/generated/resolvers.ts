@@ -25,7 +25,8 @@ export type Scalars = {
 
 export type Account = {
 	readonly __typename?: 'Account';
-	readonly credits: Scalars['Int'];
+	readonly colour?: Maybe<Scalars['Int']>;
+	readonly credits?: Maybe<Scalars['Int']>;
 	readonly joinedAt?: Maybe<Scalars['String']>;
 	readonly shipCount?: Maybe<Scalars['Int']>;
 	readonly ships?: Maybe<ReadonlyArray<Maybe<Ship>>>;
@@ -47,6 +48,7 @@ export type FlightPlan = {
 	readonly departure?: Maybe<Location>;
 	readonly destination?: Maybe<Location>;
 	readonly id: Scalars['ID'];
+	readonly owner?: Maybe<Account>;
 };
 
 export type Game = {
@@ -280,7 +282,8 @@ export type AccountResolvers<
 	ContextType = Context,
 	ParentType extends ResolversParentTypes['Account'] = ResolversParentTypes['Account']
 > = {
-	credits?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+	colour?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	credits?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	joinedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	shipCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	ships?: Resolver<
@@ -332,6 +335,7 @@ export type FlightPlanResolvers<
 		ContextType
 	>;
 	id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+	owner?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

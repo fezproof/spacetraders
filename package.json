@@ -53,6 +53,7 @@
 		"graphql": "^16.2.0",
 		"graphql-helix": "^1.11.0",
 		"lodash-es": "^4.17.21",
+		"seedrandom": "^3.0.5",
 		"svelte-cubed": "^0.2.1",
 		"three": "^0.136.0"
 	}
