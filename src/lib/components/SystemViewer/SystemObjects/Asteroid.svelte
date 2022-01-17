@@ -9,8 +9,7 @@
 </script>
 
 <SC.Mesh
-	geometry={new THREE.BoxGeometry()}
+	geometry={new THREE.BoxGeometry(asteroidScale, asteroidScale, asteroidScale)}
 	position={[x, 0, y]}
-	material={new THREE.MeshBasicMaterial({ color: '#4e342e' })}
-	scale={[asteroidScale, asteroidScale, asteroidScale]}
+	material={new THREE.MeshBasicMaterial({ color: 0x4e342e })}
 />

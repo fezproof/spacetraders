@@ -9,8 +9,7 @@
 </script>
 
 <SC.Mesh
-	geometry={new THREE.SphereGeometry(1)}
+	geometry={new THREE.SphereGeometry(scale)}
 	position={[x, 0, y]}
-	material={new THREE.MeshBasicMaterial({ color: 'red' })}
-	scale={[scale, scale, scale]}
+	material={new THREE.MeshBasicMaterial({ color: 0xff0000 })}
 />

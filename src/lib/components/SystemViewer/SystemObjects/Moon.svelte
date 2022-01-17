@@ -9,8 +9,7 @@
 </script>
 
 <SC.Mesh
-	geometry={new THREE.SphereGeometry(1)}
+	geometry={new THREE.SphereGeometry(moonScale)}
 	position={[x, 0, y]}
-	material={new THREE.MeshBasicMaterial({ color: '#fefefe' })}
-	scale={[moonScale, moonScale, moonScale]}
+	material={new THREE.MeshBasicMaterial({ color: 0xfefefe })}
 />
