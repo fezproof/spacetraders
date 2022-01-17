@@ -61,10 +61,19 @@ export type Location = {
 	marketplace?: Maybe<Array<Maybe<MarketRecord>>>;
 	name?: Maybe<Scalars['String']>;
 	traits?: Maybe<Array<Maybe<Scalars['String']>>>;
-	type?: Maybe<Scalars['String']>;
+	type?: Maybe<LocationType>;
 	x: Scalars['Int'];
 	y: Scalars['Int'];
 };
+
+export enum LocationType {
+	Asteroid = 'ASTEROID',
+	GasGiant = 'GAS_GIANT',
+	Moon = 'MOON',
+	Nebula = 'NEBULA',
+	Planet = 'PLANET',
+	Wormhole = 'WORMHOLE'
+}
 
 export type MarketRecord = {
 	__typename?: 'MarketRecord';
@@ -156,6 +165,40 @@ export type LeaderboardQuery = {
 	};
 };
 
+export type LocationDetailsQueryVariables = Exact<{
+	locationId: Scalars['ID'];
+}>;
+
+export type LocationDetailsQuery = {
+	__typename?: 'Query';
+	location?:
+		| {
+				__typename?: 'Location';
+				id: string;
+				name?: string | null | undefined;
+				type?: LocationType | null | undefined;
+				traits?: Array<string | null | undefined> | null | undefined;
+				x: number;
+				y: number;
+				marketplace?:
+					| Array<
+							| {
+									__typename?: 'MarketRecord';
+									symbol?: string | null | undefined;
+									volumePerUnit?: number | null | undefined;
+									pricePerUnit?: number | null | undefined;
+									quantityAvailable?: number | null | undefined;
+							  }
+							| null
+							| undefined
+					  >
+					| null
+					| undefined;
+		  }
+		| null
+		| undefined;
+};
+
 export type MyShipsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MyShipsQuery = {
@@ -207,7 +250,7 @@ export type SystemDataQuery = {
 					| Array<{
 							__typename?: 'Location';
 							id: string;
-							type?: string | null | undefined;
+							type?: LocationType | null | undefined;
 							name?: string | null | undefined;
 							x: number;
 							y: number;
@@ -248,7 +291,7 @@ export type SystemFlightsQuery = {
 										| {
 												__typename?: 'Location';
 												id: string;
-												type?: string | null | undefined;
+												type?: LocationType | null | undefined;
 												x: number;
 												y: number;
 										  }
@@ -258,7 +301,7 @@ export type SystemFlightsQuery = {
 										| {
 												__typename?: 'Location';
 												id: string;
-												type?: string | null | undefined;
+												type?: LocationType | null | undefined;
 												x: number;
 												y: number;
 										  }
@@ -278,7 +321,7 @@ export type SystemFlightsQuery = {
 export type LocationDataFragment = {
 	__typename?: 'Location';
 	id: string;
-	type?: string | null | undefined;
+	type?: LocationType | null | undefined;
 	name?: string | null | undefined;
 	x: number;
 	y: number;
@@ -301,7 +344,7 @@ export type SystemFlightPlanFragment = {
 		| {
 				__typename?: 'Location';
 				id: string;
-				type?: string | null | undefined;
+				type?: LocationType | null | undefined;
 				x: number;
 				y: number;
 		  }
@@ -311,7 +354,7 @@ export type SystemFlightPlanFragment = {
 		| {
 				__typename?: 'Location';
 				id: string;
-				type?: string | null | undefined;
+				type?: LocationType | null | undefined;
 				x: number;
 				y: number;
 		  }
@@ -467,6 +510,87 @@ export const LeaderboardDocument = {
 		}
 	]
 } as unknown as DocumentNode<LeaderboardQuery, LeaderboardQueryVariables>;
+export const LocationDetailsDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'query',
+			name: { kind: 'Name', value: 'LocationDetails' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'locationId' }
+					},
+					type: {
+						kind: 'NonNullType',
+						type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+					}
+				}
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'location' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'id' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'locationId' }
+								}
+							}
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'type' } },
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'marketplace' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'symbol' }
+											},
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'volumePerUnit' }
+											},
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'pricePerUnit' }
+											},
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'quantityAvailable' }
+											}
+										]
+									}
+								},
+								{ kind: 'Field', name: { kind: 'Name', value: 'traits' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
+							]
+						}
+					}
+				]
+			}
+		}
+	]
+} as unknown as DocumentNode<
+	LocationDetailsQuery,
+	LocationDetailsQueryVariables
+>;
 export const MyShipsDocument = {
 	kind: 'Document',
 	definitions: [

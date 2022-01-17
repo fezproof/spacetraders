@@ -1,0 +1,16 @@
+query LocationDetails($locationId: ID!) {
+	location(id: $locationId) {
+		id
+		name
+		type
+		marketplace {
+			symbol
+			volumePerUnit
+			pricePerUnit
+			quantityAvailable
+		}
+		traits
+		x
+		y
+	}
+}
