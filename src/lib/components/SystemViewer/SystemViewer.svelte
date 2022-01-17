@@ -3,6 +3,7 @@
 	import { target } from '$lib/stores/camera';
 	import { canvasClick, mouseCoords } from '$lib/stores/mouse';
 	import { operationStore, query } from '@urql/svelte';
+	import { onMount } from 'svelte';
 	import * as SC from 'svelte-cubed';
 	import * as THREE from 'three';
 	import ThreeProvider from '../ScExtends/ThreeProvider.svelte';
@@ -24,14 +25,18 @@
 	const loader = new THREE.CubeTextureLoader();
 	loader.setPath('textures/galaxy/');
 
-	const background = loader.load([
-		'px.png',
-		'nx.png',
-		'py.png',
-		'ny.png',
-		'pz.png',
-		'nz.png'
-	]);
+	let background: THREE.CubeTexture;
+
+	onMount(() => {
+		background = loader.load([
+			'px.png',
+			'nx.png',
+			'py.png',
+			'ny.png',
+			'pz.png',
+			'nz.png'
+		]);
+	});
 </script>
 
 <div
