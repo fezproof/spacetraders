@@ -8,7 +8,7 @@
 
 	const interval = setInterval(() => {
 		$gameStatus.reexecute();
-	}, 5000);
+	}, 60000);
 
 	onDestroy(() => {
 		clearInterval(interval);
