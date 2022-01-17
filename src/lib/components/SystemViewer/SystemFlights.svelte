@@ -12,7 +12,6 @@
 	query(systemFlights);
 
 	const interval = setInterval(() => {
-		console.log('executed');
 		$systemFlights.reexecute({ requestPolicy: 'network-only' });
 	}, 10000);
 
