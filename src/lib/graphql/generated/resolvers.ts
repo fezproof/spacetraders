@@ -65,10 +65,19 @@ export type Location = {
 	readonly marketplace?: Maybe<ReadonlyArray<Maybe<MarketRecord>>>;
 	readonly name?: Maybe<Scalars['String']>;
 	readonly traits?: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
-	readonly type?: Maybe<Scalars['String']>;
+	readonly type?: Maybe<LocationType>;
 	readonly x: Scalars['Int'];
 	readonly y: Scalars['Int'];
 };
+
+export enum LocationType {
+	Asteroid = 'ASTEROID',
+	GasGiant = 'GAS_GIANT',
+	Moon = 'MOON',
+	Nebula = 'NEBULA',
+	Planet = 'PLANET',
+	Wormhole = 'WORMHOLE'
+}
 
 export type MarketRecord = {
 	readonly __typename?: 'MarketRecord';
@@ -250,6 +259,7 @@ export type ResolversTypes = {
 	ID: ResolverTypeWrapper<Scalars['ID']>;
 	Int: ResolverTypeWrapper<Scalars['Int']>;
 	Location: ResolverTypeWrapper<Location>;
+	LocationType: LocationType;
 	MarketRecord: ResolverTypeWrapper<MarketRecord>;
 	Mutation: ResolverTypeWrapper<{}>;
 	Query: ResolverTypeWrapper<{}>;
@@ -374,7 +384,11 @@ export type LocationResolvers<
 		ParentType,
 		ContextType
 	>;
-	type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	type?: Resolver<
+		Maybe<ResolversTypes['LocationType']>,
+		ParentType,
+		ContextType
+	>;
 	x?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 	y?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

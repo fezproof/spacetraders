@@ -9,9 +9,18 @@ export const types = /* GraphQL */ `
 		quantityAvailable: Int
 	}
 
+	enum LocationType {
+		PLANET
+		MOON
+		ASTEROID
+		GAS_GIANT
+		WORMHOLE
+		NEBULA
+	}
+
 	type Location {
 		id: ID!
-		type: String
+		type: LocationType
 		name: String
 		x: Int!
 		y: Int!
