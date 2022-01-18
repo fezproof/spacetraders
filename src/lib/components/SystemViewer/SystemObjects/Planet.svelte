@@ -1,11 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-
 	import GetEvents from '$lib/components/ScExtends/GetEvents.svelte';
 	import type { LocationDataFragment } from '$lib/graphql/generated/operations';
-	import { target } from '$lib/stores/camera';
-
 	import * as SC from 'svelte-cubed';
 	import * as THREE from 'three';
 
@@ -13,32 +10,17 @@
 
 	const originalColour = 0x00ff00;
 
-	export let x: number;
-	export let y: number;
+	let color = originalColour;
 
-	const mouseEnterHandler = (e: CustomEvent<THREE.Object3D>) => {
-		const obj = e.detail as THREE.Mesh<
-			THREE.SphereGeometry,
-			THREE.MeshBasicMaterial
-		>;
-
-		obj.material.color.setHex(0xff00ff);
+	const mouseEnterHandler = () => {
+		color = 0xff00ff;
 	};
 
-	const mouseExitHandler = (e: CustomEvent<THREE.Object3D>) => {
-		const obj = e.detail as THREE.Mesh<
-			THREE.SphereGeometry,
-			THREE.MeshBasicMaterial
-		>;
-		obj?.material?.color?.setHex(originalColour);
+	const mouseExitHandler = () => {
+		color = originalColour;
 	};
 
-	const clickHandler = (e: CustomEvent<THREE.Object3D>) => {
-		const obj = e.detail as THREE.Mesh<
-			THREE.SphereGeometry,
-			THREE.MeshBasicMaterial
-		>;
-		$target = obj.position.toArray();
+	const clickHandler = () => {
 		goto(`/map/${$page.params.systemId}/${location.id}`);
 	};
 </script>
@@ -50,7 +32,7 @@
 >
 	<SC.Mesh
 		geometry={new THREE.SphereGeometry(1)}
-		position={[x, 0, y]}
-		material={new THREE.MeshBasicMaterial({ color: originalColour })}
+		position={[location.x, 0, location.y]}
+		material={new THREE.MeshBasicMaterial({ color })}
 	/>
 </GetEvents>

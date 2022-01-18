@@ -25,11 +25,6 @@
 
 <SC.Group position={[0, 0, 0]}>
 	{#each locations as location (location.id)}
-		<svelte:component
-			this={SystemObjectMap[location.type]}
-			{location}
-			x={location.x}
-			y={location.y}
-		/>
+		<svelte:component this={SystemObjectMap[location.type]} {location} />
 	{/each}
 </SC.Group>

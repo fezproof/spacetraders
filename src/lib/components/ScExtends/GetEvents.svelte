@@ -8,7 +8,7 @@
 	import { createEventDispatcher, onDestroy } from 'svelte';
 	import type { Object3D } from 'three';
 
-	let child: Object3D;
+	let child: Object3D = null;
 
 	// TODO make more robust
 	$: if (child) mouseEventSet.update((set) => set.add(child));
@@ -20,12 +20,11 @@
 		});
 	});
 
-	const dispatch =
-		createEventDispatcher<{
-			mouseenter: THREE.Object3D;
-			mouseleave: THREE.Object3D;
-			click: THREE.Object3D;
-		}>();
+	const dispatch = createEventDispatcher<{
+		mouseenter: THREE.Object3D;
+		mouseleave: THREE.Object3D;
+		click: THREE.Object3D;
+	}>();
 
 	let entered = false;
 	$: {
