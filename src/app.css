@@ -3,6 +3,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+	/* width */
+	::-webkit-scrollbar {
+		width: 1rem;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		padding: 0.5rem;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		@apply bg-orange-300 border-solid border-4 border-transparent bg-clip-padding;
+	}
+}
+
 @layer components {
 	.btn {
 		@apply inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring focus:ring-offset-0 focus:ring-orange-600;

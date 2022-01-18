@@ -1,13 +1,18 @@
 const forms = require('@tailwindcss/forms');
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 const config = {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+  content: ['./src/**/*.{html,js,svelte,ts}'],
 
-	theme: {
-		extend: {}
-	},
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Space Grotesk', ...defaultTheme.fontFamily.sans],
+      },
+    }
+  },
 
-	plugins: [forms]
+  plugins: [forms]
 };
 
 module.exports = config;
