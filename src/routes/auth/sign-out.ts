@@ -6,7 +6,7 @@ export const post: RequestHandler = async () => {
 	return {
 		status: 301,
 		headers: {
-			'Set-Cookie': serialize(SESSION_COOKIE_ID, '', {
+			'set-cookie': serialize(SESSION_COOKIE_ID, '', {
 				path: '/',
 				expires: new Date(0)
 			}),

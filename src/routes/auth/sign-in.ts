@@ -23,7 +23,7 @@ export const post: RequestHandler<
 	return {
 		status: 301,
 		headers: {
-			'Set-Cookie': serialize(SESSION_COOKIE_ID, token, {
+			'set-cookie': serialize(SESSION_COOKIE_ID, token, {
 				path: '/',
 				httpOnly: true,
 				sameSite: 'strict',
