@@ -1,4 +1,3 @@
-import { dev } from '$app/env';
 import schema from '$lib/graphql/generated/urqlIntrospection';
 import { devtoolsExchange } from '@urql/devtools';
 import { cacheExchange } from '@urql/exchange-graphcache';
@@ -28,7 +27,7 @@ const exchanges = [
 	fetchExchange
 ];
 
-if (dev) exchanges.unshift(devtoolsExchange);
+if (process.env.NODE_ENV === 'production') exchanges.unshift(devtoolsExchange);
 
 export const client = createClient({
 	url: '/graphql',
