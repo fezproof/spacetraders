@@ -16,7 +16,7 @@ export interface Session {
 }
 
 export const handle: Handle<Locals> = async ({ request, resolve }) => {
-	// const token = getTokenFromCookie(request.headers.cookie);
+	const token = getTokenFromCookie(request.headers.cookie);
 
 	// if (token) {
 	// 	const { user } = await getMe(token);
