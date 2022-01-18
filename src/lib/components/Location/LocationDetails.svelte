@@ -34,9 +34,13 @@
 >
 	<div class="px-4 pt-4">
 		<h2 class="font-heading font-bold text-xl">
-			{locationId}:
+			{locationId} -
 			<span class="text-orange-300">
-				{$locationDetails?.data?.location?.name}
+				{#if $locationDetails.fetching}
+					Loading...
+				{:else}
+					{$locationDetails?.data?.location?.name}
+				{/if}
 			</span>
 		</h2>
 	</div>
