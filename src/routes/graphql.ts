@@ -8,7 +8,7 @@ import type { Locals } from 'src/hooks';
 
 const baseHeaders = {
 	'access-control-allow-methods': 'POST',
-	'access-control-allow-origin': 'https://studio.apollographql.com',
+	// 'access-control-allow-origin': 'https://studio.apollographql.com',
 	'access-control-allow-headers': '*'
 };
 
