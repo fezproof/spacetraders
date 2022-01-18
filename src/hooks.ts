@@ -23,15 +23,17 @@ export const handle: Handle<Locals> = async ({ request, resolve }) => {
 			const { user } = await getMe(token);
 			if (user) {
 				request.locals.user = { username: user.username, token };
-				return resolve(request);
 			}
 		}
+		request.locals.user = undefined;
+		return resolve(request);
 	} catch (error) {
-		throw new Error('Failed to get user'.concat(error.message));
+		return {
+			status: 500,
+			body: JSON.stringify(error),
+			headers: {}
+		};
 	}
-
-	request.locals.user = undefined;
-	return resolve(request);
 };
 
 export const getSession: GetSession<Locals, unknown, Session> = async (
