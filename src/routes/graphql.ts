@@ -76,7 +76,7 @@ export const post: RequestHandler<Locals, JSONValue> = async ({
 
 	return {
 		body: JSON.stringify(result.payload),
-		headers: resultHeaders,
+		// headers: resultHeaders,
 		status: result.status
 	};
 };
