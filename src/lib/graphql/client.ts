@@ -20,7 +20,8 @@ const exchanges = [
 		keys: {
 			Game: () => null,
 			Rank: () => null,
-			Account: ({ username }) => username as string
+			Account: ({ username }) => username as string,
+			MarketRecord: () => null
 		}
 	}),
 	retryExchange({}),
