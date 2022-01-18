@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { SystemDataDocument } from '$lib/graphql/generated/operations';
-	import { target } from '$lib/stores/camera';
+	import { offset, target } from '$lib/stores/camera';
 	import { canvasClick, mouseCoords } from '$lib/stores/mouse';
 	import { operationStore, query } from '@urql/svelte';
 	import { onMount } from 'svelte';
@@ -22,7 +22,11 @@
 
 	let position = [100, 100, 100] as SC.Position;
 
-	$: position = [$target[0] + 100, $target[1] + 100, $target[2] + 100];
+	$: position = [
+		$target[0] + $offset[0],
+		$target[1] + $offset[1],
+		$target[2] + $offset[2]
+	];
 
 	const loader = new THREE.CubeTextureLoader();
 	loader.setPath('/textures/galaxy/');
