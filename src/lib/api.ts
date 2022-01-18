@@ -1,9 +1,46 @@
+import type { HttpMethod } from '@sveltejs/kit/types/internal';
+
+const BASE_URL = 'https://api.spacetraders.io';
+
+const waitTime = async (time: number) => {
+	await new Promise((resolve) => setTimeout(resolve, time));
+};
+
+export const fetchSpacetraders = async <T = unknown>({
+	path,
+	method = 'get',
+	headers
+}: {
+	path: string;
+	method?: HttpMethod;
+	headers?: HeadersInit;
+}): Promise<T> => {
+	let response = await fetch(BASE_URL.concat(path), {
+		method,
+		headers
+	});
+
+	if (response.status === 409 || response.status === 429) {
+		// Retry incase hit rate limiting
+		// Added randomness to reduce simultaneous request
+		await waitTime(500 + Math.random() * 200);
+		response = await fetch(BASE_URL.concat(path), {
+			method,
+			headers
+		});
+	}
+
+	const result = await response.json();
+
+	return result;
+};
+
 export interface StatusResponse {
 	status: string;
 }
 
 export const getStatus = async (): Promise<StatusResponse> =>
-	fetch('https://api.spacetraders.io/game/status').then((r) => r.json());
+	fetchSpacetraders({ path: '/game/status' });
 
 interface AccountResponse {
 	user: {
@@ -16,9 +53,10 @@ interface AccountResponse {
 }
 
 export const getMe = async (token: string): Promise<AccountResponse> =>
-	fetch('https://api.spacetraders.io/my/account', {
+	fetchSpacetraders({
+		path: '/my/account',
 		headers: { Authorization: `Bearer ${token}` }
-	}).then((r) => r.json());
+	});
 
 interface LeaderboardNetWorth {
 	netWorth: number;
@@ -33,9 +71,10 @@ export interface LeaderboardResponse {
 export const getLeaderboard = async (
 	token: string
 ): Promise<LeaderboardResponse> =>
-	fetch('https://api.spacetraders.io/game/leaderboard/net-worth', {
+	fetchSpacetraders({
+		path: '/game/leaderboard/net-worth',
 		headers: { Authorization: `Bearer ${token}` }
-	}).then((r) => r.json());
+	});
 
 interface ShipInfo {
 	id: string;
@@ -43,18 +82,20 @@ interface ShipInfo {
 }
 
 export const getShip = async (id: string, token: string): Promise<ShipInfo> =>
-	fetch(`https://api.spacetraders.io/ship/${id}`, {
+	fetchSpacetraders({
+		path: `/${id}`,
 		headers: { Authorization: `Bearer ${token}` }
-	}).then((r) => r.json());
+	});
 
 interface ShipsResponse {
 	ships: Array<ShipInfo>;
 }
 
 export const getMyShips = async (token: string): Promise<ShipsResponse> =>
-	fetch('https://api.spacetraders.io/my/ships', {
+	fetchSpacetraders({
+		path: '/my/ships',
 		headers: { Authorization: `Bearer ${token}` }
-	}).then((r) => r.json());
+	});
 
 interface LocationResponse {
 	location: {
@@ -73,9 +114,10 @@ export const getLocation = async (
 	locationId: string,
 	token: string
 ): Promise<LocationResponse> =>
-	fetch(`https://api.spacetraders.io/locations/${locationId}`, {
+	fetchSpacetraders({
+		path: `/locations/${locationId}`,
 		headers: { Authorization: `Bearer ${token}` }
-	}).then((r) => r.json());
+	});
 
 interface LocationMarketplaceResponse {
 	marketplace: {
@@ -93,6 +135,7 @@ export const getLocationMarketplace = async (
 	locationId: string,
 	token: string
 ): Promise<LocationMarketplaceResponse> =>
-	fetch(`https://api.spacetraders.io/locations/${locationId}/marketplace`, {
+	fetchSpacetraders({
+		path: `/locations/${locationId}/marketplace`,
 		headers: { Authorization: `Bearer ${token}` }
-	}).then((r) => r.json());
+	});

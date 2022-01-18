@@ -1,3 +1,5 @@
+import { fetchSpacetraders } from '$lib/api';
+
 interface SystemLocationResponse {
 	locations: {
 		symbol: string;
@@ -14,6 +16,7 @@ export const getSystemLocations = async (
 	systemId: string,
 	token: string
 ): Promise<SystemLocationResponse> =>
-	fetch(`https://api.spacetraders.io/systems/${systemId}/locations`, {
+	fetchSpacetraders({
+		path: `/systems/${systemId}/locations`,
 		headers: { Authorization: `Bearer ${token}` }
-	}).then((r) => r.json());
+	});

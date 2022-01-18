@@ -1,3 +1,5 @@
+import { fetchSpacetraders } from '$lib/api';
+
 interface SystemFlightPlanResponse {
 	flightPlans: {
 		id: string;
@@ -15,6 +17,7 @@ export const getSystemFlightPlans = (
 	systemId: string,
 	token: string
 ): Promise<SystemFlightPlanResponse> =>
-	fetch(`https://api.spacetraders.io/systems/${systemId}/flight-plans`, {
+	fetchSpacetraders({
+		path: `/systems/${systemId}/flight-plans`,
 		headers: { Authorization: `Bearer ${token}` }
-	}).then((r) => r.json());
+	});

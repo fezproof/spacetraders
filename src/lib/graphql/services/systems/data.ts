@@ -1,3 +1,5 @@
+import { fetchSpacetraders } from '$lib/api';
+
 export interface SystemInfo {
 	symbol: string;
 	name: string;
@@ -11,6 +13,7 @@ export const getSystemInfo = (
 	systemId: string,
 	token: string
 ): Promise<SystemInfoResponse> =>
-	fetch(`https://api.spacetraders.io/systems/${systemId}`, {
+	fetchSpacetraders({
+		path: `/systems/${systemId}`,
 		headers: { Authorization: `Bearer ${token}` }
-	}).then((r) => r.json());
+	});
