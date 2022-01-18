@@ -23,7 +23,7 @@ export const mouseEventSet = writable<Set<THREE.Object3D<THREE.Event>>>(
 export const mouseIntersects = derived(
 	[mouseRaycaster, mouseEventSet],
 	([ray, hoverSet]) => {
-		const intersects = ray.intersectObjects([...hoverSet.values()], false);
+		const intersects = ray.intersectObjects(Array.from(hoverSet), false);
 		return intersects;
 	}
 );
