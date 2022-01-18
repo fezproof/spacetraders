@@ -26,7 +26,7 @@ export const post: RequestHandler<
 			'set-cookie': serialize(SESSION_COOKIE_ID, token, {
 				path: '/',
 				// httpOnly: true,
-				sameSite: 'strict',
+				// sameSite: 'strict',
 				secure: process.env.NODE_ENV === 'production',
 				maxAge: 60 * 60 * 24 * 7 // one week
 			}),
