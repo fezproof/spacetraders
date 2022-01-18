@@ -21,7 +21,7 @@ export const post: RequestHandler<
 	}
 
 	return {
-		status: 301,
+		status: 302,
 		headers: {
 			'set-cookie': serialize(SESSION_COOKIE_ID, token, {
 				path: '/',
