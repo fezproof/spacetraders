@@ -8,6 +8,7 @@ const config = {
     extend: {
       fontFamily: {
         sans: ['Space Grotesk', ...defaultTheme.fontFamily.sans],
+        heading: ['Orbitron', ...defaultTheme.fontFamily.sans],
       },
     }
   },

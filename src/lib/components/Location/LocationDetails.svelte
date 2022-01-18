@@ -3,6 +3,7 @@
 	import { offset, target } from '$lib/stores/camera';
 	import { isPosition } from '$lib/utils/position';
 	import { operationStore, query } from '@urql/svelte';
+	import { lowerCase, upperFirst } from 'lodash-es';
 
 	export let locationId: string;
 
@@ -29,22 +30,59 @@
 </script>
 
 <div
-	class="max-h-96 max-w-3xl left-0 bottom-0 absolute flex flex-col bg-opacity-60 backdrop-filter backdrop-blur-lg border-t-2 border-b-2 border-cyan-200 text-cyan-200"
+	class="max-h-96 max-w-3xl w-full left-0 bottom-0 absolute flex flex-col bg-opacity-60 backdrop-filter backdrop-blur-xl border-t-2 border-b-2 border-cyan-200 text-cyan-200 bg-black/60"
 >
-	<div class="p-4 font-bold text-xl">
-		<h2>
-			{locationId}
+	<div class="px-4 pt-4">
+		<h2 class="font-heading font-bold text-xl">
+			{locationId}:
+			<span class="text-orange-300">
+				{$locationDetails?.data?.location?.name}
+			</span>
 		</h2>
 	</div>
-	<div class="p-4 overflow-auto">
+	<div class="p-4 overflow-auto" class:text-cyan-500={$locationDetails.stale}>
 		{#if $locationDetails.fetching}
 			Loading...
 		{:else if $locationDetails.error}
 			{$locationDetails.error.message}
+		{:else if !$locationDetails?.data?.location}
+			<p>No location data found</p>
 		{:else}
-			<pre class:text-gray-400={$locationDetails.stale}>
-        {JSON.stringify($locationDetails.data, null, 2)}
-      </pre>
+			<h3 class="uppercase font-bold text-lg mb-4">
+				{$locationDetails.data?.location?.type}
+			</h3>
+			<div class="mb-2">
+				<h4 class="uppercase font-bold">Marketplace</h4>
+				<ul>
+					{#if $locationDetails?.data?.location?.marketplace}
+						{#each $locationDetails?.data?.location?.marketplace as market}
+							<li>
+								<span>{market.symbol}</span>
+							</li>
+						{/each}
+					{:else if $locationDetails.stale}
+						Loading...
+					{:else}
+						<p>No markplace</p>
+					{/if}
+				</ul>
+			</div>
+			<div>
+				<h4 class="uppercase font-bold">Traits</h4>
+				<ul>
+					{#if $locationDetails?.data?.location?.traits}
+						{#each $locationDetails?.data?.location?.traits as trait}
+							<li>
+								<span>{upperFirst(lowerCase(trait))}</span>
+							</li>
+						{/each}
+					{:else if $locationDetails.stale}
+						Loading...
+					{:else}
+						<p>No traits</p>
+					{/if}
+				</ul>
+			</div>
 		{/if}
 	</div>
 </div>
