@@ -16,16 +16,15 @@ export interface Session {
 }
 
 export const handle: Handle<Locals> = async ({ request, resolve }) => {
-	const token = getTokenFromCookie(request.headers.cookie);
-
 	try {
+		const token = getTokenFromCookie(request.headers.cookie);
+		request.locals.user = undefined;
 		if (token) {
 			const { user } = await getMe(token);
 			if (user) {
 				request.locals.user = { username: user.username, token };
 			}
 		}
-		request.locals.user = undefined;
 		return resolve(request);
 	} catch (error) {
 		return {
