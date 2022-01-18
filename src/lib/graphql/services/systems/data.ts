@@ -1,5 +1,3 @@
-import { limitedFetch } from '$lib/utils/rateLimiting';
-
 export interface SystemInfo {
 	symbol: string;
 	name: string;
@@ -13,6 +11,6 @@ export const getSystemInfo = (
 	systemId: string,
 	token: string
 ): Promise<SystemInfoResponse> =>
-	limitedFetch(`https://api.spacetraders.io/systems/${systemId}`, {
+	fetch(`https://api.spacetraders.io/systems/${systemId}`, {
 		headers: { Authorization: `Bearer ${token}` }
 	}).then((r) => r.json());

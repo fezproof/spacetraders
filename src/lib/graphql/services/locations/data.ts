@@ -1,5 +1,3 @@
-import { limitedFetch } from '$lib/utils/rateLimiting';
-
 interface SystemLocationResponse {
 	locations: {
 		symbol: string;
@@ -16,6 +14,6 @@ export const getSystemLocations = async (
 	systemId: string,
 	token: string
 ): Promise<SystemLocationResponse> =>
-	limitedFetch(`https://api.spacetraders.io/systems/${systemId}/locations`, {
+	fetch(`https://api.spacetraders.io/systems/${systemId}/locations`, {
 		headers: { Authorization: `Bearer ${token}` }
 	}).then((r) => r.json());
