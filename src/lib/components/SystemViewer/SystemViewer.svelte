@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { SystemDataDocument } from '$lib/graphql/generated/operations';
-	import { offset, target } from '$lib/stores/camera';
+	import { enablePanning, offset, target } from '$lib/stores/camera';
 	import { canvasClick, mouseCoords } from '$lib/stores/mouse';
 	import { operationStore, query } from '@urql/svelte';
 	import { onMount } from 'svelte';
@@ -65,7 +65,7 @@
 
 			<SC.PerspectiveCamera {position} target={$target} />
 			<SC.OrbitControls
-				enablePan={true}
+				enablePan={$enablePanning}
 				screenSpacePanning={false}
 				enableRotate={false}
 				enableZoom={false}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { LocationDetailsDocument } from '$lib/graphql/generated/operations';
-	import { offset, target } from '$lib/stores/camera';
+	import { enablePanning, offset, target } from '$lib/stores/camera';
 	import { isPosition } from '$lib/utils/position';
 	import { operationStore, query } from '@urql/svelte';
 	import { lowerCase, upperFirst } from 'lodash-es';
@@ -27,6 +27,7 @@
 	$: if (isPosition(position)) {
 		target.set(position);
 		offset.set([1, 10, 1]);
+		enablePanning.set(false);
 	}
 </script>
 

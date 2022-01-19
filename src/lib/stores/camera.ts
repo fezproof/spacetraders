@@ -15,3 +15,5 @@ export const offset = tweened<Position>([100, 100, 100], {
 	duration: 300,
 	easing: quadInOut
 });
+
+export const enablePanning = writable<boolean>(true);
