@@ -26,7 +26,7 @@
 
 	$: if (isPosition(position)) {
 		target.set(position);
-		offset.set([1, 10, 1]);
+		offset.set([10, 3, 10]);
 		enablePanning.set(false);
 	}
 </script>

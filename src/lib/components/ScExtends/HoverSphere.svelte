@@ -33,7 +33,8 @@
 		material={new THREE.MeshBasicMaterial({
 			color,
 			transparent: true,
-			opacity
+			opacity,
+			depthWrite: false
 		})}
 	>
 		<slot />
