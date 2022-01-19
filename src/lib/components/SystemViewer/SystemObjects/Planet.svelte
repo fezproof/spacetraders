@@ -8,15 +8,19 @@
 
 	export let location: LocationDataFragment;
 
-	const originalColour = 0x00ff00;
+	const originalColour = 0x00cccc;
+	const highlightColor = 0x00d9d9;
+	let opacity = 0.8;
 
 	let color = originalColour;
 
 	const mouseEnterHandler = () => {
-		color = 0xff00ff;
+		opacity = 1;
+		color = highlightColor;
 	};
 
 	const mouseExitHandler = () => {
+		opacity = 0.8;
 		color = originalColour;
 	};
 
@@ -33,6 +37,10 @@
 	<SC.Mesh
 		geometry={new THREE.SphereGeometry(1)}
 		position={[location.x, 0, location.y]}
-		material={new THREE.MeshBasicMaterial({ color })}
+		material={new THREE.MeshBasicMaterial({
+			color,
+			transparent: true,
+			opacity
+		})}
 	/>
 </GetEvents>
