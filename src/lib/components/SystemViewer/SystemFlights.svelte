@@ -3,7 +3,7 @@
 	import { operationStore, query } from '@urql/svelte';
 	import { onDestroy } from 'svelte';
 	import * as SC from 'svelte-cubed';
-	import SystemShip from './SystemShip.svelte';
+	import SystemShip from '../Ship/SystemShip.svelte';
 
 	export let systemId: string;
 
