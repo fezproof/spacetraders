@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { inverseLerp, lerpPosition } from '$lib/utils/lerp';
+	import { isEqual } from 'lodash-es';
 	import * as SC from 'svelte-cubed';
 	import type { Position } from 'svelte-cubed/types/common';
 	import * as THREE from 'three';
@@ -24,10 +25,24 @@
 	SC.onFrame(() => {
 		position = lerpPosition(startPos, endPos, getTimeAlpha());
 	});
+
+	$: rotation = new THREE.Euler()
+		.setFromQuaternion(
+			new THREE.Quaternion().setFromUnitVectors(
+				new THREE.Vector3(0, 1, 0),
+				new THREE.Vector3(...endPos)
+					.sub(new THREE.Vector3(...startPos))
+					.normalize()
+			)
+		)
+		.toArray() as SC.Rotation;
 </script>
 
-<SC.Mesh
-	{position}
-	geometry={new THREE.CylinderGeometry(0.3, 0.3, 0.1)}
-	material={new THREE.MeshBasicMaterial({ color: colour || 0xff00ff })}
-/>
+{#if !isEqual(endPos, position)}
+	<SC.Mesh
+		{position}
+		geometry={new THREE.ConeGeometry(0.2, 0.5, 3)}
+		material={new THREE.MeshBasicMaterial({ color: colour || 0xff00ff })}
+		{rotation}
+	/>
+{/if}
