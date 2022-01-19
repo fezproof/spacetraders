@@ -64,6 +64,23 @@
 			<SystemFlights {systemId} />
 
 			<SC.PerspectiveCamera {position} target={$target} />
+			<SC.OrbitControls
+				enablePan={true}
+				screenSpacePanning={false}
+				enableRotate={false}
+				enableZoom={false}
+				enableDamping={false}
+				mouseButtons={{
+					LEFT: THREE.MOUSE.PAN,
+					MIDDLE: null,
+					RIGHT: null
+				}}
+				touches={{
+					ONE: THREE.TOUCH.PAN,
+					TWO: null
+				}}
+				target={$target}
+			/>
 		</ThreeProvider>
 	</SC.Canvas>
 </div>
