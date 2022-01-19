@@ -17,4 +17,12 @@
 
 <SystemViewer {systemId} />
 
+<nav class="fixed top-4 left-4">
+	<div class="blur-container bg-black/60 p-4 border-2 border-cyan-200">
+		<h1 class="text-2xl font-extrabold font-heading inline-block">
+			{systemId}
+		</h1>
+	</div>
+</nav>
+
 <slot />

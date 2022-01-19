@@ -30,7 +30,7 @@
 </script>
 
 <div
-	class="max-h-96 max-w-3xl w-full left-0 bottom-0 absolute flex flex-col bg-opacity-60 backdrop-filter backdrop-blur-xl border-t-2 border-b-2 border-cyan-200 text-cyan-200 bg-black/60"
+	class="max-h-96 max-w-3xl w-full left-0 bottom-0 absolute flex flex-col blur-container border-t-2 border-b-2 border-cyan-200 text-cyan-200 bg-black/60"
 >
 	<div class="px-4 pt-4">
 		<h2 class="font-heading font-bold text-xl">
