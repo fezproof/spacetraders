@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SystemViewer from '$lib/components/SystemViewer/SystemViewer.svelte';
+	// import SystemViewer from '$lib/components/SystemViewer/SystemViewer.svelte';
 </script>
 
-<SystemViewer systemId="OE" />
+<!-- <SystemViewer systemId="OE" /> -->

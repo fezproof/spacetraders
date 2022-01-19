@@ -15,9 +15,11 @@
 	setClient(client);
 </script>
 
-<header class="flex flex-row items-center p-4 bg-gray-200 gap-8 h-20">
-	<h1>Spacetraders</h1>
-	<nav class="flex flex-row items-center gap-2">
+<header
+	class="flex flex-row items-center p-4 bg-black gap-8 h-20 border-b-2 border-cyan-200"
+>
+	<h1 class="font-heading">Spacetraders</h1>
+	<nav class="flex flex-row items-center gap-4 ml-auto">
 		<a class="btn" href="/">Home</a>
 		<a class="btn" href="/leaderboard">Leaderboard</a>
 	</nav>

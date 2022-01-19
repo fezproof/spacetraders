@@ -22,6 +22,6 @@
 
 @layer components {
 	.btn {
-		@apply inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring focus:ring-offset-0 focus:ring-orange-600;
+		@apply inline-flex items-center px-4 py-2 border border-cyan-200 text-base font-medium rounded-none text-cyan-200 hover:bg-orange-800 focus:outline-none focus:ring focus:ring-offset-0 focus:ring-cyan-200;
 	}
 }
