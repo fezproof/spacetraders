@@ -5,7 +5,7 @@
 
 <script lang="ts">
 	onMount(() => {
-		$offset = [100, 100, 100];
+		$offset = [50, 50, 50];
 		$enablePanning = true;
 	});
 </script>

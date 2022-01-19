@@ -9,6 +9,7 @@ const config = {
       fontFamily: {
         sans: ['Space Grotesk', ...defaultTheme.fontFamily.sans],
         heading: ['Orbitron', ...defaultTheme.fontFamily.sans],
+        mono: ['Azeret Mono', ...defaultTheme.fontFamily.mono]
       },
     }
   },

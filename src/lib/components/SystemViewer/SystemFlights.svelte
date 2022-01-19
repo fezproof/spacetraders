@@ -32,6 +32,7 @@
 	{#each activeFlights as { departure, destination, id, arrivesAt, createdAt, owner } (id)}
 		{#if departure && destination}
 			<SystemShip
+				shipId={id}
 				startPos={[departure.x, 0, departure.y]}
 				endPos={[destination.x, 0, destination.y]}
 				startedAt={new Date(createdAt)}

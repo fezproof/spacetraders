@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { SystemDataDocument } from '$lib/graphql/generated/operations';
-	import { enablePanning, offset, target } from '$lib/stores/camera';
+	import {
+		cameraPosition,
+		enablePanning,
+		offset,
+		softTarget,
+		target
+	} from '$lib/stores/camera';
 	import { canvasClick, mouseCoords } from '$lib/stores/mouse';
 	import { operationStore, query } from '@urql/svelte';
 	import { onMount } from 'svelte';
@@ -20,13 +26,13 @@
 
 	query(system);
 
-	let position = [100, 100, 100] as SC.Position;
-
-	$: position = [
+	$: $cameraPosition = [
 		$target[0] + $offset[0],
 		$target[1] + $offset[1],
 		$target[2] + $offset[2]
 	];
+
+	$: $softTarget = $target;
 
 	const loader = new THREE.CubeTextureLoader();
 	loader.setPath('/textures/galaxy/');
@@ -63,7 +69,7 @@
 
 			<SystemFlights {systemId} />
 
-			<SC.PerspectiveCamera {position} target={$target} />
+			<SC.PerspectiveCamera position={$cameraPosition} target={$softTarget} />
 			<SC.OrbitControls
 				enablePan={$enablePanning}
 				screenSpacePanning={false}
@@ -79,7 +85,7 @@
 					ONE: THREE.TOUCH.PAN,
 					TWO: null
 				}}
-				target={$target}
+				target={$softTarget}
 			/>
 		</ThreeProvider>
 	</SC.Canvas>

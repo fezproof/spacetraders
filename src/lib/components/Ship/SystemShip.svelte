@@ -1,10 +1,15 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { inverseLerp, lerpPosition } from '$lib/utils/lerp';
 	import { isEqual } from 'lodash-es';
 	import * as SC from 'svelte-cubed';
 	import type { Position } from 'svelte-cubed/types/common';
 	import * as THREE from 'three';
+	import HoverSphere from '../ScExtends/HoverSphere.svelte';
+	import { shipPosition } from '$lib/stores/ships';
 
+	export let shipId: string;
 	export let startPos: Position;
 	export let endPos: Position;
 	export let startedAt: Date;
@@ -20,10 +25,16 @@
 		return result;
 	};
 
-	let position: SC.Position = lerpPosition(startPos, endPos, getTimeAlpha());
+	const clickHandler = () => {
+		goto(`/map/${$page.params.systemId}/ship/${shipId}`);
+	};
+
+	const position = shipPosition(shipId);
+
+	$: $position = lerpPosition(startPos, endPos, getTimeAlpha());
 
 	SC.onFrame(() => {
-		position = lerpPosition(startPos, endPos, getTimeAlpha());
+		$position = lerpPosition(startPos, endPos, getTimeAlpha());
 	});
 
 	$: rotation = new THREE.Euler()
@@ -39,10 +50,13 @@
 </script>
 
 {#if !isEqual(endPos, position)}
-	<SC.Mesh
-		{position}
-		geometry={new THREE.ConeGeometry(0.2, 0.5, 3)}
-		material={new THREE.MeshBasicMaterial({ color: colour || 0xff00ff })}
-		{rotation}
-	/>
+	<SC.Group position={$position}>
+		<HoverSphere radius={0.5} on:click={clickHandler}>
+			<SC.Mesh
+				geometry={new THREE.ConeGeometry(0.2, 0.5, 3)}
+				material={new THREE.MeshBasicMaterial({ color: colour || 0xff00ff })}
+				{rotation}
+			/>
+		</HoverSphere>
+	</SC.Group>
 {/if}
