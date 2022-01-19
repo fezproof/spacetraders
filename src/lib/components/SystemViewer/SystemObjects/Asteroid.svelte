@@ -25,7 +25,7 @@
 				asteroidScale,
 				asteroidScale
 			)}
-			material={new THREE.MeshBasicMaterial({ color: 0xeeeeee })}
+			material={new THREE.MeshBasicMaterial({ color: 0x4e342e })}
 		/>
 	</HoverSphere>
 </SC.Group>

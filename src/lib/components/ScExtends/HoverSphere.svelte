@@ -8,7 +8,7 @@
 
 	const originalColour = 0x00d9d9;
 	const hoverOpacity = 0.5;
-	const blurOpacity = 0.1;
+	const blurOpacity = 0;
 
 	let opacity = blurOpacity;
 	let color = originalColour;

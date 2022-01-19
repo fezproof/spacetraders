@@ -8,3 +8,5 @@ export const isPosition = (pos: unknown[]): pos is Position => {
 
 	return true;
 };
+
+export const getRandomOneMinusOne = (): number => Math.random() * 2 - 1;
