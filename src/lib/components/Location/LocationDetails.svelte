@@ -32,7 +32,7 @@
 </script>
 
 <div
-	class="max-h-96 max-w-3xl w-full left-0 bottom-0 absolute flex flex-col blur-container border-t-2 border-b-2 border-cyan-200 text-cyan-200 bg-black/60"
+	class="max-h-96 max-w-3xl w-full left-0 bottom-0 absolute flex flex-col blur-container border-t-2 border-b-2 border-cyan-200 text-cyan-200"
 >
 	<div
 		class="px-4 pt-4 flex flex-row justify-between align-baseline text-xl font-heading "
@@ -62,19 +62,19 @@
 			</h3>
 			<div class="mb-2">
 				<h4 class="uppercase font-bold">Marketplace</h4>
-				<ul>
-					{#if $locationDetails?.data?.location?.marketplace}
+				{#if $locationDetails?.data?.location?.marketplace}
+					<ul>
 						{#each $locationDetails?.data?.location?.marketplace as market}
 							<li>
 								<span>{market.symbol}</span>
 							</li>
 						{/each}
-					{:else if $locationDetails.stale}
-						Loading...
-					{:else}
-						<p>No markplace</p>
-					{/if}
-				</ul>
+					</ul>
+				{:else if $locationDetails.stale}
+					Loading...
+				{:else}
+					<p>No ships at market</p>
+				{/if}
 			</div>
 			<div>
 				<h4 class="uppercase font-bold">Traits</h4>

@@ -16,15 +16,15 @@
 </script>
 
 <header
-	class="flex flex-row items-center p-4 bg-black gap-8 h-20 border-b-2 border-cyan-200"
+	class="flex flex-row items-center p-4 blur-container gap-4 h-20 border-b-2 border-cyan-200 z-10 fixed top-0 left-0 right-0"
 >
-	<h1 class="font-heading">Spacetraders</h1>
+	<h2 class="font-heading">Spacetraders</h2>
 	<nav class="flex flex-row items-center gap-4 ml-auto">
 		<a class="btn" href="/">Home</a>
 		<a class="btn" href="/leaderboard">Leaderboard</a>
 	</nav>
 
-	<GameState />
+	<!-- <GameState /> -->
 
 	<form method="post" action="/auth/sign-out">
 		<button class="btn" type="submit">Sign out</button>

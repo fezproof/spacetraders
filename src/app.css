@@ -26,6 +26,6 @@
 	}
 
 	.blur-container {
-		@apply backdrop-filter backdrop-blur-xl;
+		@apply backdrop-filter backdrop-blur-xl bg-cyan-900/20;
 	}
 }
