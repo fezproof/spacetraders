@@ -6,12 +6,6 @@ import type { JSONValue } from '@sveltejs/kit/types/helper';
 import { getGraphQLParameters, processRequest } from 'graphql-helix';
 import type { Locals } from 'src/hooks';
 
-const baseHeaders = {
-	'access-control-allow-methods': 'POST',
-	// 'access-control-allow-origin': 'https://studio.apollographql.com',
-	'access-control-allow-headers': '*'
-};
-
 const LOG_REQUESTS = false;
 
 const getEnveloped = envelop({
@@ -69,14 +63,8 @@ export const post: RequestHandler<Locals, JSONValue> = async ({
 		};
 	}
 
-	const resultHeaders = { ...baseHeaders };
-	for (const { name, value } of result.headers) {
-		resultHeaders[name] = value;
-	}
-
 	return {
 		body: JSON.stringify(result.payload),
-		// headers: resultHeaders,
 		status: result.status
 	};
 };
