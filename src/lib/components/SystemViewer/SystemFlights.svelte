@@ -3,7 +3,7 @@
 	import { operationStore, query } from '@urql/svelte';
 	import { onDestroy } from 'svelte';
 	import * as SC from 'svelte-cubed';
-	import SystemShip from '../Ship/SystemShip.svelte';
+	import SystemFlightShip from '../Ship/SystemShipFlight.svelte';
 
 	export let systemId: string;
 
@@ -31,8 +31,8 @@
 <SC.Group position={[0, 0, 0]}>
 	{#each activeFlights as { departure, destination, id, arrivesAt, createdAt, owner } (id)}
 		{#if departure && destination}
-			<SystemShip
-				shipId={id}
+			<SystemFlightShip
+				flightId={id}
 				startPos={[departure.x, 0, departure.y]}
 				endPos={[destination.x, 0, destination.y]}
 				startedAt={new Date(createdAt)}

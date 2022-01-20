@@ -7,9 +7,9 @@
 	import type { Position } from 'svelte-cubed/types/common';
 	import * as THREE from 'three';
 	import HoverSphere from '../ScExtends/HoverSphere.svelte';
-	import { shipPosition } from '$lib/stores/ships';
+	import { shipFlightPosition } from '$lib/stores/ships';
 
-	export let shipId: string;
+	export let flightId: string;
 	export let startPos: Position;
 	export let endPos: Position;
 	export let startedAt: Date;
@@ -26,10 +26,10 @@
 	};
 
 	const clickHandler = () => {
-		goto(`/map/${$page.params.systemId}/ship/${shipId}`);
+		goto(`/map/${$page.params.systemId}/flight-plan/${flightId}`);
 	};
 
-	const position = shipPosition(shipId);
+	const position = shipFlightPosition(flightId);
 
 	$: $position = lerpPosition(startPos, endPos, getTimeAlpha());
 

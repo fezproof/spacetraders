@@ -4,7 +4,7 @@ import { writable } from 'svelte/store';
 
 const shipLocationMap = new Map<string, Writable<Position>>();
 
-export const shipPosition = (shipId: string): Writable<Position> => {
+export const shipFlightPosition = (shipId: string): Writable<Position> => {
 	let store: Writable<Position>;
 	if (!(store = shipLocationMap.get(shipId))) {
 		store = writable<Position>([0, 0, 0]);

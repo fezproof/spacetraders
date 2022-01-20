@@ -1,20 +1,12 @@
-<script lang="ts" context="module">
-	import type { LoadFn } from '$lib/globals';
-	import { offset, target } from '$lib/stores/camera';
-	import { shipPosition } from '$lib/stores/ships';
-
-	export const load: LoadFn = ({ params: { shipId, systemId } }) => {
-		return {
-			props: { shipId, systemId }
-		};
-	};
-</script>
-
 <script lang="ts">
-	export let shipId: string;
+	import { offset, target } from '$lib/stores/camera';
+
+	import { shipFlightPosition } from '$lib/stores/ships';
+
+	export let planId: string;
 	export let systemId: string;
 
-	$: position = shipPosition(shipId);
+	$: position = shipFlightPosition(planId);
 
 	$: {
 		target.set($position);
@@ -30,7 +22,7 @@
 			class="px-4 pt-4 flex flex-row justify-between align-baseline text-xl font-heading "
 		>
 			<h2 class="font-bold">
-				{shipId} -
+				{planId}
 			</h2>
 			<a href={`/map/${systemId}`} class="uppercase">back</a>
 		</div>
