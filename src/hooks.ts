@@ -15,29 +15,29 @@ export interface Session {
 	user?: UserData;
 }
 
-export const handle: Handle<Locals> = async ({ request, resolve }) => {
+export const handle: Handle<Locals> = async ({ event, resolve }) => {
+	const { request, locals } = event;
 	try {
-		const token = getTokenFromCookie(request.headers.cookie);
-		request.locals.user = undefined;
+		const token = getTokenFromCookie(request.headers.get('cookie'));
+		locals.user = undefined;
 		if (token) {
 			const { user } = await getMe(token);
 			if (user) {
-				request.locals.user = { username: user.username, token };
+				locals.user = { username: user.username, token };
 			}
 		}
-		return resolve(request);
+		return resolve(event);
 	} catch (error) {
-		return {
+		return new Response(JSON.stringify(error), {
 			status: 500,
-			body: JSON.stringify(error),
-			headers: {}
-		};
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
 	}
 };
 
-export const getSession: GetSession<Locals, unknown, Session> = async (
-	request
-) => {
+export const getSession: GetSession<Locals, Session> = async (request) => {
 	return {
 		user: request.locals.user
 	};

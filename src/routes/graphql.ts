@@ -25,18 +25,18 @@ const getEnveloped = envelop({
 });
 
 export const post: RequestHandler<Locals, JSONValue> = async ({
-	headers,
-	body,
-	method,
+	request: rawRequest,
 	locals: { user }
 }) => {
 	const { contextFactory, parse, validate, execute, schema } =
 		getEnveloped<Context>({ user });
 
+	const body = await rawRequest.json();
+
 	const request = {
-		method,
+		method: rawRequest.method,
 		body,
-		headers,
+		headers: {},
 		query: {}
 	};
 
