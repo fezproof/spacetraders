@@ -28,7 +28,7 @@
 
 	let entered = false;
 	$: {
-		if ($mouseIntersects.find(({ object }) => object === child)) {
+		if ($mouseIntersects[0]?.object === child) {
 			if (!entered) {
 				dispatch('mouseenter', child);
 				entered = true;
