@@ -1,14 +1,13 @@
 import { getMe } from '$lib/api';
 import { SESSION_COOKIE_ID } from '$lib/auth/cookie';
 import type { RequestHandler } from '@sveltejs/kit';
-import type { ReadOnlyFormData } from '@sveltejs/kit/types/helper';
 import { serialize } from 'cookie';
 
-export const post: RequestHandler<
-	Record<string, never>,
-	ReadOnlyFormData
-> = async ({ body }) => {
-	const token = body.get('token');
+export const post: RequestHandler<Record<string, never>> = async ({
+	request
+}) => {
+	const body = await request.formData();
+	const token = body.get('token') as string;
 	const user = await getMe(token);
 
 	if (!user.user) {
