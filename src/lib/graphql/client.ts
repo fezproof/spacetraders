@@ -13,6 +13,10 @@ const exchanges = [
 				location: (_, args) => ({
 					__typename: 'Location',
 					id: args.id
+				}),
+				flightPlan: (_, args) => ({
+					__typename: 'FlightPlan',
+					id: args.id
 				})
 			}
 		},

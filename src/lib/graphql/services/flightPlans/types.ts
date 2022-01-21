@@ -8,4 +8,8 @@ export const types = /* GraphQL */ `
 	extend type System {
 		activeFlights: [FlightPlan]
 	}
+
+	extend type Query {
+		flightPlan(id: ID!, systemId: ID!): FlightPlan
+	}
 `;

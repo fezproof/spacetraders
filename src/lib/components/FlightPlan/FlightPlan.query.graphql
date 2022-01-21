@@ -1,0 +1,25 @@
+query FlightPlanDetails($flightPlanId: ID!, $systemId: ID!) {
+	flightPlan(id: $flightPlanId, systemId: $systemId) {
+		id
+		owner {
+			username
+			colour
+		}
+		ship {
+			id
+			type
+		}
+		destination {
+			id
+			name
+			x
+			y
+		}
+		departure {
+			id
+			name
+			x
+			y
+		}
+	}
+}

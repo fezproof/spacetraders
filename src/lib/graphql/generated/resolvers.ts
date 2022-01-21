@@ -49,6 +49,7 @@ export type FlightPlan = {
 	readonly destination?: Maybe<Location>;
 	readonly id: Scalars['ID'];
 	readonly owner?: Maybe<Account>;
+	readonly ship?: Maybe<Ship>;
 };
 
 export type Game = {
@@ -97,10 +98,16 @@ export type Mutation = {
 
 export type Query = {
 	readonly __typename?: 'Query';
+	readonly flightPlan?: Maybe<FlightPlan>;
 	readonly game: Game;
 	readonly location?: Maybe<Location>;
 	readonly me?: Maybe<Account>;
 	readonly system?: Maybe<System>;
+};
+
+export type QueryFlightPlanArgs = {
+	id: Scalars['ID'];
+	systemId: Scalars['ID'];
 };
 
 export type QueryLocationArgs = {
@@ -346,6 +353,7 @@ export type FlightPlanResolvers<
 	>;
 	id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
 	owner?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType>;
+	ship?: Resolver<Maybe<ResolversTypes['Ship']>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -439,6 +447,12 @@ export type QueryResolvers<
 	ContextType = Context,
 	ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = {
+	flightPlan?: Resolver<
+		Maybe<ResolversTypes['FlightPlan']>,
+		ParentType,
+		ContextType,
+		RequireFields<QueryFlightPlanArgs, 'id' | 'systemId'>
+	>;
 	game?: Resolver<ResolversTypes['Game'], ParentType, ContextType>;
 	location?: Resolver<
 		Maybe<ResolversTypes['Location']>,

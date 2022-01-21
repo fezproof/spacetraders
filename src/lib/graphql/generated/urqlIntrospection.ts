@@ -167,6 +167,15 @@ export default {
 							ofType: null
 						},
 						args: []
+					},
+					{
+						name: 'ship',
+						type: {
+							kind: 'OBJECT',
+							name: 'Ship',
+							ofType: null
+						},
+						args: []
 					}
 				],
 				interfaces: []
@@ -382,6 +391,36 @@ export default {
 				kind: 'OBJECT',
 				name: 'Query',
 				fields: [
+					{
+						name: 'flightPlan',
+						type: {
+							kind: 'OBJECT',
+							name: 'FlightPlan',
+							ofType: null
+						},
+						args: [
+							{
+								name: 'id',
+								type: {
+									kind: 'NON_NULL',
+									ofType: {
+										kind: 'SCALAR',
+										name: 'Any'
+									}
+								}
+							},
+							{
+								name: 'systemId',
+								type: {
+									kind: 'NON_NULL',
+									ofType: {
+										kind: 'SCALAR',
+										name: 'Any'
+									}
+								}
+							}
+						]
+					},
 					{
 						name: 'game',
 						type: {

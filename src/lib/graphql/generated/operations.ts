@@ -45,6 +45,7 @@ export type FlightPlan = {
 	destination?: Maybe<Location>;
 	id: Scalars['ID'];
 	owner?: Maybe<Account>;
+	ship?: Maybe<Ship>;
 };
 
 export type Game = {
@@ -93,10 +94,16 @@ export type Mutation = {
 
 export type Query = {
 	__typename?: 'Query';
+	flightPlan?: Maybe<FlightPlan>;
 	game: Game;
 	location?: Maybe<Location>;
 	me?: Maybe<Account>;
 	system?: Maybe<System>;
+};
+
+export type QueryFlightPlanArgs = {
+	id: Scalars['ID'];
+	systemId: Scalars['ID'];
 };
 
 export type QueryLocationArgs = {
@@ -138,6 +145,58 @@ export type System = {
 	id: Scalars['ID'];
 	locations?: Maybe<Array<Location>>;
 	name?: Maybe<Scalars['String']>;
+};
+
+export type FlightPlanDetailsQueryVariables = Exact<{
+	flightPlanId: Scalars['ID'];
+	systemId: Scalars['ID'];
+}>;
+
+export type FlightPlanDetailsQuery = {
+	__typename?: 'Query';
+	flightPlan?:
+		| {
+				__typename?: 'FlightPlan';
+				id: string;
+				owner?:
+					| {
+							__typename?: 'Account';
+							username: string;
+							colour?: number | null | undefined;
+					  }
+					| null
+					| undefined;
+				ship?:
+					| {
+							__typename?: 'Ship';
+							id: string;
+							type?: string | null | undefined;
+					  }
+					| null
+					| undefined;
+				destination?:
+					| {
+							__typename?: 'Location';
+							id: string;
+							name?: string | null | undefined;
+							x: number;
+							y: number;
+					  }
+					| null
+					| undefined;
+				departure?:
+					| {
+							__typename?: 'Location';
+							id: string;
+							name?: string | null | undefined;
+							x: number;
+							y: number;
+					  }
+					| null
+					| undefined;
+		  }
+		| null
+		| undefined;
 };
 
 export type GameStateQueryVariables = Exact<{ [key: string]: never }>;
@@ -443,6 +502,127 @@ export const SystemFlightPlanFragmentDoc = {
 		}
 	]
 } as unknown as DocumentNode<SystemFlightPlanFragment, unknown>;
+export const FlightPlanDetailsDocument = {
+	kind: 'Document',
+	definitions: [
+		{
+			kind: 'OperationDefinition',
+			operation: 'query',
+			name: { kind: 'Name', value: 'FlightPlanDetails' },
+			variableDefinitions: [
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'flightPlanId' }
+					},
+					type: {
+						kind: 'NonNullType',
+						type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+					}
+				},
+				{
+					kind: 'VariableDefinition',
+					variable: {
+						kind: 'Variable',
+						name: { kind: 'Name', value: 'systemId' }
+					},
+					type: {
+						kind: 'NonNullType',
+						type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } }
+					}
+				}
+			],
+			selectionSet: {
+				kind: 'SelectionSet',
+				selections: [
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'flightPlan' },
+						arguments: [
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'id' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'flightPlanId' }
+								}
+							},
+							{
+								kind: 'Argument',
+								name: { kind: 'Name', value: 'systemId' },
+								value: {
+									kind: 'Variable',
+									name: { kind: 'Name', value: 'systemId' }
+								}
+							}
+						],
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'owner' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'username' }
+											},
+											{ kind: 'Field', name: { kind: 'Name', value: 'colour' } }
+										]
+									}
+								},
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'ship' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'type' } }
+										]
+									}
+								},
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'destination' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
+										]
+									}
+								},
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'departure' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
+										]
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
+} as unknown as DocumentNode<
+	FlightPlanDetailsQuery,
+	FlightPlanDetailsQueryVariables
+>;
 export const GameStateDocument = {
 	kind: 'Document',
 	definitions: [
