@@ -3,7 +3,6 @@ import { schema } from '$lib/graphql/schema';
 import { createLocationDataLoader } from '$lib/graphql/services/locations/data';
 import { envelop, useLogger, useSchema } from '@envelop/core';
 import type { RequestHandler } from '@sveltejs/kit';
-import type { JSONValue } from '@sveltejs/kit/types/helper';
 import { getGraphQLParameters, processRequest } from 'graphql-helix';
 import type { Locals } from 'src/hooks';
 
@@ -25,7 +24,7 @@ const getEnveloped = envelop({
 	]
 });
 
-export const post: RequestHandler<Locals, JSONValue> = async ({
+export const post: RequestHandler<Locals> = async ({
 	request: rawRequest,
 	locals: { user }
 }) => {

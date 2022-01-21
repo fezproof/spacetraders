@@ -1,5 +1,4 @@
 <script lang="ts" context="module">
-	import GameState from '$lib/components/GameState/GameState.svelte';
 	import type { LoadFn } from '$lib/globals';
 	import { client } from '$lib/graphql/client';
 	import { setClient } from '@urql/svelte';
@@ -23,8 +22,6 @@
 		<a class="btn" href="/">Home</a>
 		<a class="btn" href="/leaderboard">Leaderboard</a>
 	</nav>
-
-	<!-- <GameState /> -->
 
 	<form method="post" action="/auth/sign-out">
 		<button class="btn" type="submit">Sign out</button>
