@@ -1,5 +1,5 @@
 import type { HttpMethod } from '@sveltejs/kit/types/internal';
-import PromiseThrottle from 'promise-throttle';
+// import PromiseThrottle from 'promise-throttle';
 
 const BASE_URL = 'https://api.spacetraders.io';
 
@@ -7,7 +7,7 @@ const waitTime = async (time: number) => {
 	await new Promise((resolve) => setTimeout(resolve, time));
 };
 
-const fetchThrottle = new PromiseThrottle({ requestsPerSecond: 2 });
+// const fetchThrottle = new PromiseThrottle({ requestsPerSecond: 2 });
 
 export const fetchSpacetraders = async <T = unknown>({
 	path,
@@ -18,23 +18,23 @@ export const fetchSpacetraders = async <T = unknown>({
 	method?: HttpMethod;
 	headers?: HeadersInit;
 }): Promise<T> => {
-	let response = await fetchThrottle.add(() =>
-		fetch(BASE_URL.concat(path), {
-			method,
-			headers
-		})
-	);
+	// let response = await fetchThrottle.add(() =>
+	let response = await fetch(BASE_URL.concat(path), {
+		method,
+		headers
+	});
+	// );
 
 	if (response.status === 409 || response.status === 429) {
 		// Retry incase hit rate limiting
 		// Added randomness to reduce simultaneous request
 		await waitTime(500 + Math.random() * 200);
-		response = await fetchThrottle.add(() =>
-			fetch(BASE_URL.concat(path), {
-				method,
-				headers
-			})
-		);
+		// response = await fetchThrottle.add(() =>
+		response = await fetch(BASE_URL.concat(path), {
+			method,
+			headers
+		});
+		// );
 	}
 
 	const result = await response.json();
