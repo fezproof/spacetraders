@@ -21,6 +21,10 @@ export const types = /* GraphQL */ `
 		y: Int
 	}
 
+	extend type FlightPlan {
+		ship: Ship
+	}
+
 	extend type Account {
 		ships: [Ship]
 	}

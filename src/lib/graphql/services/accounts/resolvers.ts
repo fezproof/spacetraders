@@ -5,6 +5,7 @@ import seedRandom from 'seedrandom';
 export const resolvers: Resolvers = {
 	Account: {
 		colour: ({ username }) => {
+			if (username === 'sebs0r') return 0xffffff;
 			const rng = seedRandom(username);
 			const colour = rng() * 0xffffff;
 			return Math.floor(colour);

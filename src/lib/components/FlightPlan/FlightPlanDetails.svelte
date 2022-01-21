@@ -1,10 +1,24 @@
 <script lang="ts">
+	import { FlightPlanDetailsDocument } from '$lib/graphql/generated/operations';
+
 	import { offset, target } from '$lib/stores/camera';
 
 	import { shipFlightPosition } from '$lib/stores/ships';
+	import { operationStore, query } from '@urql/svelte';
 
 	export let planId: string;
 	export let systemId: string;
+
+	const flightPlanDetails = operationStore(FlightPlanDetailsDocument, {
+		flightPlanId: planId,
+		systemId
+	});
+
+	$: {
+		$flightPlanDetails.variables = { flightPlanId: planId, systemId };
+	}
+
+	query(flightPlanDetails);
 
 	$: position = shipFlightPosition(planId);
 
@@ -26,11 +40,35 @@
 			</h2>
 			<a href={`/map/${systemId}`} class="uppercase">back</a>
 		</div>
-		<div>
+		<div class="px-4">
 			<p class="font-mono">
 				{$position[0].toFixed(2)}
 				{$position[2].toFixed(2)}
 			</p>
+		</div>
+		<div class="p-4">
+			{#if $flightPlanDetails.fetching}
+				<div>Loading...</div>
+			{:else}
+				<h2>
+					{$flightPlanDetails.data?.flightPlan?.owner.username}
+				</h2>
+				<h3>
+					{$flightPlanDetails.data?.flightPlan?.ship?.type}
+				</h3>
+				<div>
+					<p>
+						From: {$flightPlanDetails.data?.flightPlan?.departure.name} at
+						{$flightPlanDetails.data?.flightPlan?.departure.x}
+						{$flightPlanDetails.data?.flightPlan?.departure.y}
+					</p>
+					<p>
+						To: {$flightPlanDetails.data?.flightPlan?.destination.name} at
+						{$flightPlanDetails.data?.flightPlan?.destination.x}
+						{$flightPlanDetails.data?.flightPlan?.destination.y}
+					</p>
+				</div>
+			{/if}
 		</div>
 	</div>
 </main>
