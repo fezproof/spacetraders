@@ -66,8 +66,8 @@ export type Location = {
 	readonly name?: Maybe<Scalars['String']>;
 	readonly traits?: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
 	readonly type?: Maybe<LocationType>;
-	readonly x: Scalars['Int'];
-	readonly y: Scalars['Int'];
+	readonly x?: Maybe<Scalars['Int']>;
+	readonly y?: Maybe<Scalars['Int']>;
 };
 
 export enum LocationType {
@@ -389,8 +389,8 @@ export type LocationResolvers<
 		ParentType,
 		ContextType
 	>;
-	x?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-	y?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+	x?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	y?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

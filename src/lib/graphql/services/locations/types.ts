@@ -22,8 +22,8 @@ export const types = /* GraphQL */ `
 		id: ID!
 		type: LocationType
 		name: String
-		x: Int!
-		y: Int!
+		x: Int
+		y: Int
 		allowsConstruction: Boolean
 		traits: [String]
 		dockedShips: Int

@@ -62,8 +62,8 @@ export type Location = {
 	name?: Maybe<Scalars['String']>;
 	traits?: Maybe<Array<Maybe<Scalars['String']>>>;
 	type?: Maybe<LocationType>;
-	x: Scalars['Int'];
-	y: Scalars['Int'];
+	x?: Maybe<Scalars['Int']>;
+	y?: Maybe<Scalars['Int']>;
 };
 
 export enum LocationType {
@@ -178,8 +178,8 @@ export type LocationDetailsQuery = {
 				name?: string | null | undefined;
 				type?: LocationType | null | undefined;
 				traits?: Array<string | null | undefined> | null | undefined;
-				x: number;
-				y: number;
+				x?: number | null | undefined;
+				y?: number | null | undefined;
 				marketplace?:
 					| Array<
 							| {
@@ -252,8 +252,8 @@ export type SystemDataQuery = {
 							id: string;
 							type?: LocationType | null | undefined;
 							name?: string | null | undefined;
-							x: number;
-							y: number;
+							x?: number | null | undefined;
+							y?: number | null | undefined;
 					  }>
 					| null
 					| undefined;
@@ -292,8 +292,8 @@ export type SystemFlightsQuery = {
 												__typename?: 'Location';
 												id: string;
 												type?: LocationType | null | undefined;
-												x: number;
-												y: number;
+												x?: number | null | undefined;
+												y?: number | null | undefined;
 										  }
 										| null
 										| undefined;
@@ -302,8 +302,8 @@ export type SystemFlightsQuery = {
 												__typename?: 'Location';
 												id: string;
 												type?: LocationType | null | undefined;
-												x: number;
-												y: number;
+												x?: number | null | undefined;
+												y?: number | null | undefined;
 										  }
 										| null
 										| undefined;
@@ -323,8 +323,8 @@ export type LocationDataFragment = {
 	id: string;
 	type?: LocationType | null | undefined;
 	name?: string | null | undefined;
-	x: number;
-	y: number;
+	x?: number | null | undefined;
+	y?: number | null | undefined;
 };
 
 export type SystemFlightPlanFragment = {
@@ -345,8 +345,8 @@ export type SystemFlightPlanFragment = {
 				__typename?: 'Location';
 				id: string;
 				type?: LocationType | null | undefined;
-				x: number;
-				y: number;
+				x?: number | null | undefined;
+				y?: number | null | undefined;
 		  }
 		| null
 		| undefined;
@@ -355,8 +355,8 @@ export type SystemFlightPlanFragment = {
 				__typename?: 'Location';
 				id: string;
 				type?: LocationType | null | undefined;
-				x: number;
-				y: number;
+				x?: number | null | undefined;
+				y?: number | null | undefined;
 		  }
 		| null
 		| undefined;
