@@ -1,6 +1,5 @@
 import type { Context } from '$lib/graphql/schema';
 import { schema } from '$lib/graphql/schema';
-import { createLocationDataLoader } from '$lib/graphql/services/locations/data';
 import { envelop, useLogger, useSchema } from '@envelop/core';
 import type { RequestHandler } from '@sveltejs/kit';
 import { getGraphQLParameters, processRequest } from 'graphql-helix';
@@ -28,10 +27,8 @@ export const post: RequestHandler<Locals> = async ({
 	request: rawRequest,
 	locals: { user }
 }) => {
-	const dataloaders = { location: createLocationDataLoader(user?.token) };
-
 	const { contextFactory, parse, validate, execute, schema } =
-		getEnveloped<Context>({ user, dataloaders });
+		getEnveloped<Context>({ user });
 
 	const body = await rawRequest.json();
 
