@@ -5,6 +5,7 @@
 
 	import { shipFlightPosition } from '$lib/stores/ships';
 	import { operationStore, query } from '@urql/svelte';
+	import LoadingText from '../General/LoadingText.svelte';
 
 	export let planId: string;
 	export let systemId: string;
@@ -50,23 +51,41 @@
 			{#if $flightPlanDetails.fetching}
 				<div>Loading...</div>
 			{:else}
-				<h2>
-					{$flightPlanDetails.data?.flightPlan?.owner.username}
-				</h2>
-				<h3>
-					{$flightPlanDetails.data?.flightPlan?.ship?.type}
-				</h3>
+				<LoadingText
+					loading={$flightPlanDetails.stale}
+					text="Loading ship owner"
+				>
+					<h2>
+						{$flightPlanDetails.data?.flightPlan?.owner.username}
+					</h2>
+				</LoadingText>
+				<LoadingText
+					loading={$flightPlanDetails.stale}
+					text="Loading ship type"
+				>
+					<p>{$flightPlanDetails.data?.flightPlan?.ship?.type}</p>
+				</LoadingText>
 				<div>
-					<p>
-						From: {$flightPlanDetails.data?.flightPlan?.departure.name} at
-						{$flightPlanDetails.data?.flightPlan?.departure.x}
-						{$flightPlanDetails.data?.flightPlan?.departure.y}
-					</p>
-					<p>
-						To: {$flightPlanDetails.data?.flightPlan?.destination.name} at
-						{$flightPlanDetails.data?.flightPlan?.destination.x}
-						{$flightPlanDetails.data?.flightPlan?.destination.y}
-					</p>
+					<LoadingText
+						loading={$flightPlanDetails.stale}
+						text="From: loading location"
+					>
+						<p>
+							From: {$flightPlanDetails.data?.flightPlan?.departure.name} at
+							{$flightPlanDetails.data?.flightPlan?.departure.x}
+							{$flightPlanDetails.data?.flightPlan?.departure.y}
+						</p>
+					</LoadingText>
+					<LoadingText
+						loading={$flightPlanDetails.stale}
+						text="To: loading location"
+					>
+						<p>
+							To: {$flightPlanDetails.data?.flightPlan?.destination.name} at
+							{$flightPlanDetails.data?.flightPlan?.destination.x}
+							{$flightPlanDetails.data?.flightPlan?.destination.y}
+						</p>
+					</LoadingText>
 				</div>
 			{/if}
 		</div>
