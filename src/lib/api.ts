@@ -97,28 +97,6 @@ export const getMyShips = async (token: string): Promise<ShipsResponse> =>
 		headers: { Authorization: `Bearer ${token}` }
 	});
 
-interface LocationResponse {
-	location: {
-		symbol: string;
-		type: string;
-		name: string;
-		x: number;
-		y: number;
-		allowsConstruction: boolean;
-		traits: [string];
-		dockedShips: number;
-	};
-}
-
-export const getLocation = async (
-	locationId: string,
-	token: string
-): Promise<LocationResponse> =>
-	fetchSpacetraders({
-		path: `/locations/${locationId}`,
-		headers: { Authorization: `Bearer ${token}` }
-	});
-
 interface LocationMarketplaceResponse {
 	marketplace: {
 		symbol: string;

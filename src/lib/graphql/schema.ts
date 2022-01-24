@@ -1,11 +1,12 @@
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import type { GraphQLSchema } from 'graphql';
-import { baseResolvers, baseTypes } from './services/base';
 import { accountResolvers, accountTypes } from './services/accounts';
-import { shipResolvers, shipTypes } from './services/ships';
-import { locationResolvers, locationTypes } from './services/locations';
-import { systemResolvers, systemTypes } from './services/systems';
+import { baseResolvers, baseTypes } from './services/base';
 import { flightPlanResolvers, flightPlanTypes } from './services/flightPlans';
+import { locationResolvers, locationTypes } from './services/locations';
+import type { locationDataLoader } from './services/locations/data';
+import { shipResolvers, shipTypes } from './services/ships';
+import { systemResolvers, systemTypes } from './services/systems';
 
 export const schema: GraphQLSchema = makeExecutableSchema({
 	typeDefs: [
@@ -27,6 +28,9 @@ export const schema: GraphQLSchema = makeExecutableSchema({
 });
 
 export interface Context {
+	dataloaders: {
+		location: ReturnType<typeof locationDataLoader>;
+	};
 	user?: {
 		token: string;
 		username: string;
