@@ -1,7 +1,7 @@
 import { fetchSpacetraders } from '$lib/api';
 import type { LocationType } from '$lib/graphql/generated/resolvers';
-import DataLoader, { CacheMap } from 'dataloader';
-
+import type { CacheMap } from 'dataloader';
+import DataLoader from 'dataloader';
 interface LocationResult {
 	symbol: string;
 	type: LocationType;
@@ -42,7 +42,7 @@ export const locationDataLoader = (
 	token: string,
 	cacheMap: CacheMap<string, Promise<LocationResult>>
 ): DataLoader<string, LocationResult> =>
-	new DataLoader(
+	new DataLoader<string, LocationResult>(
 		async (keys) => {
 			const locationPromises: Array<Promise<GetLocationResponse | Error>> = [];
 
@@ -54,8 +54,6 @@ export const locationDataLoader = (
 
 			const locationResults = await Promise.all(locationPromises);
 
-			console.log(keys);
-
 			return locationResults.map((result) => {
 				if (result instanceof Error || !result?.location) {
 					return new Error('Failed to get location');
@@ -63,5 +61,5 @@ export const locationDataLoader = (
 				return result.location;
 			});
 		},
-		{ cacheMap }
+		{ batchScheduleFn: (callback) => setTimeout(callback), cacheMap }
 	);
