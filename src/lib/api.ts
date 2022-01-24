@@ -35,6 +35,11 @@ export const fetchSpacetraders = async <T = unknown>({
 	return result;
 };
 
+export interface SpacetradersError {
+	message: string;
+	code: number;
+}
+
 export interface StatusResponse {
 	status: string;
 }

@@ -1,4 +1,4 @@
-import { fetchSpacetraders } from '$lib/api';
+import { fetchSpacetraders, SpacetradersError } from '$lib/api';
 import type { LocationType } from '$lib/graphql/generated/resolvers';
 
 export interface LocationResult {
@@ -17,7 +17,7 @@ interface SystemLocationResponse {
 
 interface GetLocationResponse {
 	location?: LocationResult;
-	error?: string;
+	error?: SpacetradersError;
 }
 
 export const getLocation = async (
@@ -51,7 +51,7 @@ export const batchGetLocations =
 			locationPromises.push(
 				getLocation(key, token)
 					.then((r) => {
-						return r?.location ? r.location : new Error(r.error);
+						return r?.location ? r.location : new Error(r?.error.message);
 					})
 					.catch((e) => new Error(e))
 			);
