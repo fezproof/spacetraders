@@ -265,6 +265,15 @@ export default {
 						args: []
 					},
 					{
+						name: 'parent',
+						type: {
+							kind: 'UNION',
+							name: 'LocationParent',
+							ofType: null
+						},
+						args: []
+					},
+					{
 						name: 'traits',
 						type: {
 							kind: 'LIST',
@@ -286,27 +295,35 @@ export default {
 					{
 						name: 'x',
 						type: {
-							kind: 'NON_NULL',
-							ofType: {
-								kind: 'SCALAR',
-								name: 'Any'
-							}
+							kind: 'SCALAR',
+							name: 'Any'
 						},
 						args: []
 					},
 					{
 						name: 'y',
 						type: {
-							kind: 'NON_NULL',
-							ofType: {
-								kind: 'SCALAR',
-								name: 'Any'
-							}
+							kind: 'SCALAR',
+							name: 'Any'
 						},
 						args: []
 					}
 				],
 				interfaces: []
+			},
+			{
+				kind: 'UNION',
+				name: 'LocationParent',
+				possibleTypes: [
+					{
+						kind: 'OBJECT',
+						name: 'Location'
+					},
+					{
+						kind: 'OBJECT',
+						name: 'System'
+					}
+				]
 			},
 			{
 				kind: 'OBJECT',
@@ -678,12 +695,9 @@ export default {
 						type: {
 							kind: 'LIST',
 							ofType: {
-								kind: 'NON_NULL',
-								ofType: {
-									kind: 'OBJECT',
-									name: 'Location',
-									ofType: null
-								}
+								kind: 'OBJECT',
+								name: 'Location',
+								ofType: null
 							}
 						},
 						args: []

@@ -61,11 +61,14 @@ export type Location = {
 	id: Scalars['ID'];
 	marketplace?: Maybe<Array<Maybe<MarketRecord>>>;
 	name?: Maybe<Scalars['String']>;
+	parent?: Maybe<LocationParent>;
 	traits?: Maybe<Array<Maybe<Scalars['String']>>>;
 	type?: Maybe<LocationType>;
-	x: Scalars['Int'];
-	y: Scalars['Int'];
+	x?: Maybe<Scalars['Int']>;
+	y?: Maybe<Scalars['Int']>;
 };
+
+export type LocationParent = Location | System;
 
 export enum LocationType {
 	Asteroid = 'ASTEROID',
@@ -143,7 +146,7 @@ export type System = {
 	__typename?: 'System';
 	activeFlights?: Maybe<Array<Maybe<FlightPlan>>>;
 	id: Scalars['ID'];
-	locations?: Maybe<Array<Location>>;
+	locations?: Maybe<Array<Maybe<Location>>>;
 	name?: Maybe<Scalars['String']>;
 };
 
@@ -179,8 +182,8 @@ export type FlightPlanDetailsQuery = {
 							__typename?: 'Location';
 							id: string;
 							name?: string | null | undefined;
-							x: number;
-							y: number;
+							x?: number | null | undefined;
+							y?: number | null | undefined;
 					  }
 					| null
 					| undefined;
@@ -189,8 +192,8 @@ export type FlightPlanDetailsQuery = {
 							__typename?: 'Location';
 							id: string;
 							name?: string | null | undefined;
-							x: number;
-							y: number;
+							x?: number | null | undefined;
+							y?: number | null | undefined;
 					  }
 					| null
 					| undefined;
@@ -237,8 +240,9 @@ export type LocationDetailsQuery = {
 				name?: string | null | undefined;
 				type?: LocationType | null | undefined;
 				traits?: Array<string | null | undefined> | null | undefined;
-				x: number;
-				y: number;
+				x?: number | null | undefined;
+				y?: number | null | undefined;
+				dockedShips?: number | null | undefined;
 				marketplace?:
 					| Array<
 							| {
@@ -251,6 +255,19 @@ export type LocationDetailsQuery = {
 							| null
 							| undefined
 					  >
+					| null
+					| undefined;
+				parent?:
+					| {
+							__typename: 'Location';
+							id: string;
+							name?: string | null | undefined;
+					  }
+					| {
+							__typename: 'System';
+							id: string;
+							name?: string | null | undefined;
+					  }
 					| null
 					| undefined;
 		  }
@@ -306,14 +323,18 @@ export type SystemDataQuery = {
 				id: string;
 				name?: string | null | undefined;
 				locations?:
-					| Array<{
-							__typename?: 'Location';
-							id: string;
-							type?: LocationType | null | undefined;
-							name?: string | null | undefined;
-							x: number;
-							y: number;
-					  }>
+					| Array<
+							| {
+									__typename?: 'Location';
+									id: string;
+									type?: LocationType | null | undefined;
+									name?: string | null | undefined;
+									x?: number | null | undefined;
+									y?: number | null | undefined;
+							  }
+							| null
+							| undefined
+					  >
 					| null
 					| undefined;
 		  }
@@ -351,8 +372,8 @@ export type SystemFlightsQuery = {
 												__typename?: 'Location';
 												id: string;
 												type?: LocationType | null | undefined;
-												x: number;
-												y: number;
+												x?: number | null | undefined;
+												y?: number | null | undefined;
 										  }
 										| null
 										| undefined;
@@ -361,8 +382,8 @@ export type SystemFlightsQuery = {
 												__typename?: 'Location';
 												id: string;
 												type?: LocationType | null | undefined;
-												x: number;
-												y: number;
+												x?: number | null | undefined;
+												y?: number | null | undefined;
 										  }
 										| null
 										| undefined;
@@ -382,8 +403,8 @@ export type LocationDataFragment = {
 	id: string;
 	type?: LocationType | null | undefined;
 	name?: string | null | undefined;
-	x: number;
-	y: number;
+	x?: number | null | undefined;
+	y?: number | null | undefined;
 };
 
 export type SystemFlightPlanFragment = {
@@ -404,8 +425,8 @@ export type SystemFlightPlanFragment = {
 				__typename?: 'Location';
 				id: string;
 				type?: LocationType | null | undefined;
-				x: number;
-				y: number;
+				x?: number | null | undefined;
+				y?: number | null | undefined;
 		  }
 		| null
 		| undefined;
@@ -414,8 +435,8 @@ export type SystemFlightPlanFragment = {
 				__typename?: 'Location';
 				id: string;
 				type?: LocationType | null | undefined;
-				x: number;
-				y: number;
+				x?: number | null | undefined;
+				y?: number | null | undefined;
 		  }
 		| null
 		| undefined;
@@ -759,7 +780,61 @@ export const LocationDetailsDocument = {
 								},
 								{ kind: 'Field', name: { kind: 'Name', value: 'traits' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
-								{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
+								{ kind: 'Field', name: { kind: 'Name', value: 'y' } },
+								{
+									kind: 'Field',
+									name: { kind: 'Name', value: 'parent' },
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: '__typename' }
+											},
+											{
+												kind: 'InlineFragment',
+												typeCondition: {
+													kind: 'NamedType',
+													name: { kind: 'Name', value: 'Location' }
+												},
+												selectionSet: {
+													kind: 'SelectionSet',
+													selections: [
+														{
+															kind: 'Field',
+															name: { kind: 'Name', value: 'id' }
+														},
+														{
+															kind: 'Field',
+															name: { kind: 'Name', value: 'name' }
+														}
+													]
+												}
+											},
+											{
+												kind: 'InlineFragment',
+												typeCondition: {
+													kind: 'NamedType',
+													name: { kind: 'Name', value: 'System' }
+												},
+												selectionSet: {
+													kind: 'SelectionSet',
+													selections: [
+														{
+															kind: 'Field',
+															name: { kind: 'Name', value: 'id' }
+														},
+														{
+															kind: 'Field',
+															name: { kind: 'Name', value: 'name' }
+														}
+													]
+												}
+											}
+										]
+									}
+								},
+								{ kind: 'Field', name: { kind: 'Name', value: 'dockedShips' } }
 							]
 						}
 					}

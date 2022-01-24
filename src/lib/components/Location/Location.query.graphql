@@ -12,5 +12,16 @@ query LocationDetails($locationId: ID!) {
 		traits
 		x
 		y
+		parent {
+			__typename
+			... on Location {
+				id
+				name
+			}
+			... on System {
+				id
+				name
+			}
+		}
 	}
 }

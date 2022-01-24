@@ -408,6 +408,18 @@
 						"deprecationReason": null
 					},
 					{
+						"name": "parent",
+						"description": null,
+						"args": [],
+						"type": {
+							"kind": "UNION",
+							"name": "LocationParent",
+							"ofType": null
+						},
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
 						"name": "traits",
 						"description": null,
 						"args": [],
@@ -440,13 +452,9 @@
 						"description": null,
 						"args": [],
 						"type": {
-							"kind": "NON_NULL",
-							"name": null,
-							"ofType": {
-								"kind": "SCALAR",
-								"name": "Int",
-								"ofType": null
-							}
+							"kind": "SCALAR",
+							"name": "Int",
+							"ofType": null
 						},
 						"isDeprecated": false,
 						"deprecationReason": null
@@ -456,13 +464,9 @@
 						"description": null,
 						"args": [],
 						"type": {
-							"kind": "NON_NULL",
-							"name": null,
-							"ofType": {
-								"kind": "SCALAR",
-								"name": "Int",
-								"ofType": null
-							}
+							"kind": "SCALAR",
+							"name": "Int",
+							"ofType": null
 						},
 						"isDeprecated": false,
 						"deprecationReason": null
@@ -472,6 +476,27 @@
 				"interfaces": [],
 				"enumValues": null,
 				"possibleTypes": null
+			},
+			{
+				"kind": "UNION",
+				"name": "LocationParent",
+				"description": null,
+				"fields": null,
+				"inputFields": null,
+				"interfaces": null,
+				"enumValues": null,
+				"possibleTypes": [
+					{
+						"kind": "OBJECT",
+						"name": "Location",
+						"ofType": null
+					},
+					{
+						"kind": "OBJECT",
+						"name": "System",
+						"ofType": null
+					}
+				]
 			},
 			{
 				"kind": "ENUM",
@@ -1073,13 +1098,9 @@
 							"kind": "LIST",
 							"name": null,
 							"ofType": {
-								"kind": "NON_NULL",
-								"name": null,
-								"ofType": {
-									"kind": "OBJECT",
-									"name": "Location",
-									"ofType": null
-								}
+								"kind": "OBJECT",
+								"name": "Location",
+								"ofType": null
 							}
 						},
 						"isDeprecated": false,

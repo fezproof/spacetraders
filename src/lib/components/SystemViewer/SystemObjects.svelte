@@ -1,7 +1,8 @@
 <script lang="ts">
 	import type {
 		LocationDataFragment,
-		LocationType
+		LocationType,
+		Maybe
 	} from '$lib/graphql/generated/operations';
 	import * as SC from 'svelte-cubed';
 	import Asteroid from './SystemObjects/Asteroid.svelte';
@@ -11,7 +12,7 @@
 	import Planet from './SystemObjects/Planet.svelte';
 	import Wormhole from './SystemObjects/Wormhole.svelte';
 
-	export let locations: LocationDataFragment[];
+	export let locations: Maybe<LocationDataFragment>[];
 
 	const SystemObjectMap: Record<LocationType, any> = {
 		PLANET: Planet,
@@ -24,7 +25,9 @@
 </script>
 
 <SC.Group position={[0, 0, 0]}>
-	{#each locations as location (location.id)}
-		<svelte:component this={SystemObjectMap[location.type]} {location} />
+	{#each locations as location}
+		{#if location}
+			<svelte:component this={SystemObjectMap[location.type]} {location} />
+		{/if}
 	{/each}
 </SC.Group>

@@ -11,6 +11,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 	[SubKey in K]: Maybe<T[SubKey]>;
 };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = {
 	[X in Exclude<keyof T, K>]?: T[X];
 } & { [P in K]-?: NonNullable<T[P]> };
@@ -65,11 +66,14 @@ export type Location = {
 	readonly id: Scalars['ID'];
 	readonly marketplace?: Maybe<ReadonlyArray<Maybe<MarketRecord>>>;
 	readonly name?: Maybe<Scalars['String']>;
+	readonly parent?: Maybe<LocationParent>;
 	readonly traits?: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
 	readonly type?: Maybe<LocationType>;
-	readonly x: Scalars['Int'];
-	readonly y: Scalars['Int'];
+	readonly x?: Maybe<Scalars['Int']>;
+	readonly y?: Maybe<Scalars['Int']>;
 };
+
+export type LocationParent = Location | System;
 
 export enum LocationType {
 	Asteroid = 'ASTEROID',
@@ -147,7 +151,7 @@ export type System = {
 	readonly __typename?: 'System';
 	readonly activeFlights?: Maybe<ReadonlyArray<Maybe<FlightPlan>>>;
 	readonly id: Scalars['ID'];
-	readonly locations?: Maybe<ReadonlyArray<Location>>;
+	readonly locations?: Maybe<ReadonlyArray<Maybe<Location>>>;
 	readonly name?: Maybe<Scalars['String']>;
 };
 
@@ -265,7 +269,12 @@ export type ResolversTypes = {
 	Game: ResolverTypeWrapper<Game>;
 	ID: ResolverTypeWrapper<Scalars['ID']>;
 	Int: ResolverTypeWrapper<Scalars['Int']>;
-	Location: ResolverTypeWrapper<Location>;
+	Location: ResolverTypeWrapper<
+		Omit<Location, 'parent'> & {
+			parent?: Maybe<ResolversTypes['LocationParent']>;
+		}
+	>;
+	LocationParent: ResolversTypes['Location'] | ResolversTypes['System'];
 	LocationType: LocationType;
 	MarketRecord: ResolverTypeWrapper<MarketRecord>;
 	Mutation: ResolverTypeWrapper<{}>;
@@ -285,7 +294,12 @@ export type ResolversParentTypes = {
 	Game: Game;
 	ID: Scalars['ID'];
 	Int: Scalars['Int'];
-	Location: Location;
+	Location: Omit<Location, 'parent'> & {
+		parent?: Maybe<ResolversParentTypes['LocationParent']>;
+	};
+	LocationParent:
+		| ResolversParentTypes['Location']
+		| ResolversParentTypes['System'];
 	MarketRecord: MarketRecord;
 	Mutation: {};
 	Query: {};
@@ -387,6 +401,11 @@ export type LocationResolvers<
 		ContextType
 	>;
 	name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	parent?: Resolver<
+		Maybe<ResolversTypes['LocationParent']>,
+		ParentType,
+		ContextType
+	>;
 	traits?: Resolver<
 		Maybe<ReadonlyArray<Maybe<ResolversTypes['String']>>>,
 		ParentType,
@@ -397,9 +416,16 @@ export type LocationResolvers<
 		ParentType,
 		ContextType
 	>;
-	x?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-	y?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+	x?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	y?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type LocationParentResolvers<
+	ContextType = Context,
+	ParentType extends ResolversParentTypes['LocationParent'] = ResolversParentTypes['LocationParent']
+> = {
+	__resolveType: TypeResolveFn<'Location' | 'System', ParentType, ContextType>;
 };
 
 export type MarketRecordResolvers<
@@ -527,7 +553,7 @@ export type SystemResolvers<
 	>;
 	id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
 	locations?: Resolver<
-		Maybe<ReadonlyArray<ResolversTypes['Location']>>,
+		Maybe<ReadonlyArray<Maybe<ResolversTypes['Location']>>>,
 		ParentType,
 		ContextType
 	>;
@@ -541,6 +567,7 @@ export type Resolvers<ContextType = Context> = {
 	FlightPlan?: FlightPlanResolvers<ContextType>;
 	Game?: GameResolvers<ContextType>;
 	Location?: LocationResolvers<ContextType>;
+	LocationParent?: LocationParentResolvers<ContextType>;
 	MarketRecord?: MarketRecordResolvers<ContextType>;
 	Mutation?: MutationResolvers<ContextType>;
 	Query?: QueryResolvers<ContextType>;

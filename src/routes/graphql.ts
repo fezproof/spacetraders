@@ -3,6 +3,7 @@ import { schema } from '$lib/graphql/schema';
 import { locationDataLoader } from '$lib/graphql/services/locations/data';
 import { envelop, useLogger, useSchema } from '@envelop/core';
 import type { RequestHandler } from '@sveltejs/kit';
+import type { CacheMap } from 'dataloader';
 import { getGraphQLParameters, processRequest } from 'graphql-helix';
 import type { Locals } from 'src/hooks';
 
@@ -26,15 +27,51 @@ const getEnveloped = envelop({
 
 const dataLoaderCache = new Map();
 
+const createGraphqlCache = (): CacheMap<string, any> => {
+	const cache: CacheMap<string, any> = {
+		get: (...args) => {
+			LOG_REQUESTS && console.log('get', ...args);
+			return dataLoaderCache.get(...args);
+		},
+		delete: (...args) => {
+			LOG_REQUESTS && console.log('delete', ...args);
+
+			return dataLoaderCache.delete(...args);
+		},
+		clear: (...args) => {
+			LOG_REQUESTS && console.log('clear', ...args);
+
+			return dataLoaderCache.clear(...args);
+		},
+		set: async (key, promisedValue) => {
+			try {
+				const value = await promisedValue;
+
+				if (value instanceof Error || value === null) {
+					return;
+				}
+				LOG_REQUESTS && console.log('set', key, value);
+				dataLoaderCache.set(key, value);
+			} catch (error) {
+				return;
+			}
+		}
+	};
+
+	return cache;
+};
+
 export const post: RequestHandler<Locals> = async ({
 	request: rawRequest,
 	locals: { user }
 }) => {
+	const graphqlCache = createGraphqlCache();
+
 	const { contextFactory, parse, validate, execute, schema } =
 		getEnveloped<Context>({
 			user,
 			dataloaders: {
-				location: locationDataLoader(user?.token, dataLoaderCache)
+				location: locationDataLoader(user?.token, graphqlCache)
 			}
 		});
 

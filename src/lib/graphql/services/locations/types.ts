@@ -22,12 +22,18 @@ export const types = /* GraphQL */ `
 		id: ID!
 		type: LocationType
 		name: String
-		x: Int!
-		y: Int!
+		x: Int
+		y: Int
 		allowsConstruction: Boolean
 		traits: [String]
 		dockedShips: Int
 		marketplace: [MarketRecord]
+	}
+
+	union LocationParent = Location | System
+
+	extend type Location {
+		parent: LocationParent
 	}
 
 	extend type Ship {
@@ -35,7 +41,7 @@ export const types = /* GraphQL */ `
 	}
 
 	extend type System {
-		locations: [Location!]
+		locations: [Location]
 	}
 
 	extend type FlightPlan {

@@ -17,7 +17,8 @@ interface SystemLocationResponse {
 }
 
 interface GetLocationResponse {
-	location: LocationResult;
+	location?: LocationResult;
+	error?: string;
 }
 
 export const getLocation = async (
@@ -44,22 +45,40 @@ export const locationDataLoader = (
 ): DataLoader<string, LocationResult> =>
 	new DataLoader<string, LocationResult>(
 		async (keys) => {
-			const locationPromises: Array<Promise<GetLocationResponse | Error>> = [];
+			const keySet = new Set(keys);
 
-			for (const key of keys) {
+			const locationPromises: Array<
+				Promise<GetLocationResponse['location'] | Error>
+			> = [];
+
+			for (const key of keySet) {
 				locationPromises.push(
-					getLocation(key, token).catch((e) => new Error(e))
+					getLocation(key, token)
+						.then((r) => {
+							return r?.location ? r.location : new Error(r.error);
+						})
+						.catch((e) => new Error(e))
 				);
 			}
 
 			const locationResults = await Promise.all(locationPromises);
 
-			return locationResults.map((result) => {
-				if (result instanceof Error || !result?.location) {
-					return new Error('Failed to get location');
-				}
-				return result.location;
+			return keys.map((key) => {
+				const location =
+					locationResults.find((location) => {
+						if (!(location instanceof Error)) {
+							return location.symbol === key;
+						}
+						return false;
+					}) ?? new Error(`Location ${key} not found`);
+
+				return location;
 			});
 		},
-		{ batchScheduleFn: (callback) => setTimeout(callback), cacheMap }
+		{
+			batchScheduleFn: (callback) => setTimeout(callback),
+			cacheKeyFn: (key) => `Location:${key}`,
+			cacheMap,
+			cache: true
+		}
 	);

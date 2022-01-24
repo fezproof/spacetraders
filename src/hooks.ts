@@ -2,7 +2,7 @@ import { getMe } from '$lib/api';
 import { getTokenFromCookie } from '$lib/auth/cookie';
 import type { GetSession, Handle } from '@sveltejs/kit';
 
-interface UserData {
+export interface UserData {
 	username: string;
 	token: string;
 }
