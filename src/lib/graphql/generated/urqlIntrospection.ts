@@ -717,6 +717,22 @@ export default {
 							name: 'Any'
 						},
 						args: []
+					},
+					{
+						name: 'x',
+						type: {
+							kind: 'SCALAR',
+							name: 'Any'
+						},
+						args: []
+					},
+					{
+						name: 'y',
+						type: {
+							kind: 'SCALAR',
+							name: 'Any'
+						},
+						args: []
 					}
 				],
 				interfaces: []

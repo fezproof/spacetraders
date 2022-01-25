@@ -160,6 +160,8 @@ export type System = {
 	readonly id: Scalars['ID'];
 	readonly locations?: Maybe<ReadonlyArray<Maybe<Location>>>;
 	readonly name?: Maybe<Scalars['String']>;
+	readonly x?: Maybe<Scalars['Int']>;
+	readonly y?: Maybe<Scalars['Int']>;
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -577,6 +579,8 @@ export type SystemResolvers<
 		ContextType
 	>;
 	name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	x?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	y?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

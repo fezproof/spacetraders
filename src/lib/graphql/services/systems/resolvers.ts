@@ -13,6 +13,8 @@ export const resolvers: Resolvers = {
 			const system = await dataloaders.system.load(id);
 
 			return system.name;
-		}
+		},
+		x: () => 0,
+		y: () => 0
 	}
 };

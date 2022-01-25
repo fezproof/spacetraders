@@ -1,5 +1,5 @@
 import { getLocationMarketplace } from '$lib/api';
-import type { Resolvers } from '$lib/graphql/generated/resolvers';
+import { LocationType, Resolvers } from '$lib/graphql/generated/resolvers';
 import { getSystemLocations } from './data';
 
 export const resolvers: Resolvers = {
@@ -55,10 +55,10 @@ export const resolvers: Resolvers = {
 
 			return allowsConstruction;
 		},
-		dockedShips: async ({ id }, _, { dataloaders }) => {
-			const { dockedShips } = await dataloaders.location.load(id);
-			return dockedShips;
-		},
+		// dockedShips: async ({ id }, _, { dataloaders }) => {
+		// 	const { dockedShips } = await dataloaders.location.load(id);
+		// 	return dockedShips;
+		// },
 		x: async ({ id }, _, { dataloaders }) => {
 			const { x } = await dataloaders.location.load(id);
 
@@ -73,9 +73,9 @@ export const resolvers: Resolvers = {
 			const { marketplace } = await getLocationMarketplace(id, user?.token);
 			return marketplace;
 		},
-		parent: async ({ id }) => {
+		parent: async ({ id, type }) => {
 			const segments = id.split('-');
-			if (segments.length === 2)
+			if (segments.length === 2 || type === LocationType.Wormhole)
 				return { id: segments[0], __typename: 'System' as const };
 
 			if (segments.length > 2)
