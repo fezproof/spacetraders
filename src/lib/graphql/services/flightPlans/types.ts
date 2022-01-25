@@ -3,6 +3,7 @@ export const types = /* GraphQL */ `
 		id: ID!
 		createdAt: String
 		arrivesAt: String
+		flightCode: String
 	}
 
 	extend type System {

@@ -48,6 +48,7 @@ export type FlightPlan = {
 	readonly createdAt?: Maybe<Scalars['String']>;
 	readonly departure?: Maybe<Location>;
 	readonly destination?: Maybe<Location>;
+	readonly flightCode?: Maybe<Scalars['String']>;
 	readonly id: Scalars['ID'];
 	readonly owner?: Maybe<Account>;
 	readonly ship?: Maybe<Ship>;
@@ -362,6 +363,11 @@ export type FlightPlanResolvers<
 	>;
 	destination?: Resolver<
 		Maybe<ResolversTypes['Location']>,
+		ParentType,
+		ContextType
+	>;
+	flightCode?: Resolver<
+		Maybe<ResolversTypes['String']>,
 		ParentType,
 		ContextType
 	>;

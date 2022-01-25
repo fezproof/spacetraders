@@ -35,9 +35,12 @@
 		<div
 			class="px-4 pt-4 flex flex-row justify-between align-baseline text-xl font-heading "
 		>
-			<h2 class="font-bold">
-				{planId}
-			</h2>
+			<LoadingText
+				loading={$flightPlanDetails.fetching || $flightPlanDetails.stale}
+				text="Loading flight id"
+			>
+				<h2 in:typewriter>{$flightPlanDetails.data?.flightPlan?.flightCode}</h2>
+			</LoadingText>
 			<a href={`/map/${systemId}`} class="uppercase">back</a>
 		</div>
 		<div class="px-4">

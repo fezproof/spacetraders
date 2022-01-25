@@ -43,6 +43,7 @@ export type FlightPlan = {
 	createdAt?: Maybe<Scalars['String']>;
 	departure?: Maybe<Location>;
 	destination?: Maybe<Location>;
+	flightCode?: Maybe<Scalars['String']>;
 	id: Scalars['ID'];
 	owner?: Maybe<Account>;
 	ship?: Maybe<Ship>;
@@ -161,6 +162,7 @@ export type FlightPlanDetailsQuery = {
 		| {
 				__typename?: 'FlightPlan';
 				id: string;
+				flightCode?: string | null | undefined;
 				owner?:
 					| {
 							__typename?: 'Account';
@@ -242,7 +244,6 @@ export type LocationDetailsQuery = {
 				traits?: Array<string | null | undefined> | null | undefined;
 				x?: number | null | undefined;
 				y?: number | null | undefined;
-				dockedShips?: number | null | undefined;
 				marketplace?:
 					| Array<
 							| {
@@ -582,6 +583,7 @@ export const FlightPlanDetailsDocument = {
 							kind: 'SelectionSet',
 							selections: [
 								{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'flightCode' } },
 								{
 									kind: 'Field',
 									name: { kind: 'Name', value: 'owner' },
@@ -833,8 +835,7 @@ export const LocationDetailsDocument = {
 											}
 										]
 									}
-								},
-								{ kind: 'Field', name: { kind: 'Name', value: 'dockedShips' } }
+								}
 							]
 						}
 					}

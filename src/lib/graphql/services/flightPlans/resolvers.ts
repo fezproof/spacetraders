@@ -1,5 +1,6 @@
 import type { Resolvers } from '$lib/graphql/generated/resolvers';
 import { getSystemFlightPlans } from './data';
+import seedRandom from 'seedrandom';
 
 export const resolvers: Resolvers = {
 	Query: {
@@ -42,6 +43,16 @@ export const resolvers: Resolvers = {
 				}
 			);
 			return activeFlights;
+		}
+	},
+	FlightPlan: {
+		flightCode: async ({ id, ship }) => {
+			const flightCode = ship?.type?.length ? ship.type.substring(0, 2) : 'UK';
+
+			const rng = seedRandom(id);
+			const flightNum = rng() * 9999;
+
+			return flightCode.concat('-', Math.floor(flightNum).toString());
 		}
 	}
 };

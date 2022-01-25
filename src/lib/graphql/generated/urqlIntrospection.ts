@@ -149,6 +149,14 @@ export default {
 						args: []
 					},
 					{
+						name: 'flightCode',
+						type: {
+							kind: 'SCALAR',
+							name: 'Any'
+						},
+						args: []
+					},
+					{
 						name: 'id',
 						type: {
 							kind: 'NON_NULL',

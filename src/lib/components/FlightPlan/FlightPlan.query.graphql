@@ -1,6 +1,7 @@
 query FlightPlanDetails($flightPlanId: ID!, $systemId: ID!) {
 	flightPlan(id: $flightPlanId, systemId: $systemId) {
 		id
+		flightCode
 		owner {
 			username
 			colour
