@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { FlightPlanDetailsDocument } from '$lib/graphql/generated/operations';
-
 	import { offset, target } from '$lib/stores/camera';
-
 	import { shipFlightPosition } from '$lib/stores/ships';
+	import { typewriter } from '$lib/transitions/typewriter';
 	import { operationStore, query } from '@urql/svelte';
 	import LoadingText from '../General/LoadingText.svelte';
 
@@ -55,7 +54,7 @@
 					loading={$flightPlanDetails.stale}
 					text="Loading ship owner"
 				>
-					<h2>
+					<h2 in:typewriter>
 						{$flightPlanDetails.data?.flightPlan?.owner.username}
 					</h2>
 				</LoadingText>
@@ -63,27 +62,27 @@
 					loading={$flightPlanDetails.stale}
 					text="Loading ship type"
 				>
-					<p>{$flightPlanDetails.data?.flightPlan?.ship?.type}</p>
+					<p in:typewriter>{$flightPlanDetails.data?.flightPlan?.ship?.type}</p>
 				</LoadingText>
 				<div>
 					<LoadingText
 						loading={$flightPlanDetails.stale}
 						text="From: loading location"
 					>
-						<p>
-							From: {$flightPlanDetails.data?.flightPlan?.departure.name} at
-							{$flightPlanDetails.data?.flightPlan?.departure.x}
-							{$flightPlanDetails.data?.flightPlan?.departure.y}
+						<p in:typewriter>
+							{`From: ${$flightPlanDetails.data?.flightPlan?.departure.name} at
+							${$flightPlanDetails.data?.flightPlan?.departure.x}
+							${$flightPlanDetails.data?.flightPlan?.departure.y}`}
 						</p>
 					</LoadingText>
 					<LoadingText
 						loading={$flightPlanDetails.stale}
 						text="To: loading location"
 					>
-						<p>
-							To: {$flightPlanDetails.data?.flightPlan?.destination.name} at
-							{$flightPlanDetails.data?.flightPlan?.destination.x}
-							{$flightPlanDetails.data?.flightPlan?.destination.y}
+						<p in:typewriter>
+							{`To: ${$flightPlanDetails.data?.flightPlan?.destination.name} at
+							${$flightPlanDetails.data?.flightPlan?.destination.x}
+							${$flightPlanDetails.data?.flightPlan?.destination.y}`}
 						</p>
 					</LoadingText>
 				</div>
