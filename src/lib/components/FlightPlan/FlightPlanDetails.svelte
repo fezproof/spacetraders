@@ -54,11 +54,17 @@
 			{:else}
 				<LoadingText loading={$flightPlanDetails.stale}>
 					<slot slot="loading">
-						<h2>Loading username</h2>
-						<p>Loading ship type</p>
-						<div>
-							<p>Loading from location</p>
-							<p>Loading to location</p>
+						<div class="h-24">
+							<h2>Loading username</h2>
+							<p>Loading ship type</p>
+							<div>
+								<p>
+									To: <span class="text-orange-300">location</span> loading
+								</p>
+								<p>
+									From: <span class="text-orange-300">location</span> loading
+								</p>
+							</div>
 						</div>
 					</slot>
 					<div in:typewriter class="h-24">
@@ -70,12 +76,25 @@
 						</p>
 						<div>
 							<p>
-								From: {$flightPlanDetails.data?.flightPlan?.departure.name} at
+								From:
+								<a
+									href={`/map/${systemId}/${$flightPlanDetails.data?.flightPlan?.departure?.id}`}
+									class="text-orange-300"
+								>
+									{$flightPlanDetails.data?.flightPlan?.departure.name}</a
+								>
+								at
 								{$flightPlanDetails.data?.flightPlan?.departure.x}
 								{$flightPlanDetails.data?.flightPlan?.departure.y}
 							</p>
 							<p>
-								To: {$flightPlanDetails.data?.flightPlan?.destination.name} at
+								To: <a
+									href={`/map/${systemId}/${$flightPlanDetails.data?.flightPlan?.destination?.id}`}
+									class="text-orange-300"
+								>
+									{$flightPlanDetails.data?.flightPlan?.destination.name}
+								</a>
+								at
 								{$flightPlanDetails.data?.flightPlan?.destination.x}
 								{$flightPlanDetails.data?.flightPlan?.destination.y}
 							</p>
