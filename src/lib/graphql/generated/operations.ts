@@ -151,6 +151,8 @@ export type System = {
 	id: Scalars['ID'];
 	locations?: Maybe<Array<Maybe<Location>>>;
 	name?: Maybe<Scalars['String']>;
+	x?: Maybe<Scalars['Int']>;
+	y?: Maybe<Scalars['Int']>;
 };
 
 export type FlightPlanDetailsQueryVariables = Exact<{
