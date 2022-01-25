@@ -1,4 +1,8 @@
-import type { GraphQLResolveInfo } from 'graphql';
+import type {
+	GraphQLResolveInfo,
+	GraphQLScalarType,
+	GraphQLScalarTypeConfig
+} from 'graphql';
 import type { Context } from '$lib/graphql/schema';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -22,6 +26,8 @@ export type Scalars = {
 	Boolean: boolean;
 	Int: number;
 	Float: number;
+	/** The `BigInt` scalar type represents non-fractional signed whole numeric values. */
+	BigInt: any;
 };
 
 export type Account = {
@@ -125,7 +131,7 @@ export type QuerySystemArgs = {
 
 export type Rank = {
 	readonly __typename?: 'Rank';
-	readonly netWorth?: Maybe<Scalars['Int']>;
+	readonly netWorth?: Maybe<Scalars['BigInt']>;
 	readonly rank?: Maybe<Scalars['Int']>;
 	readonly username?: Maybe<Scalars['String']>;
 };
@@ -264,6 +270,7 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
 	Account: ResolverTypeWrapper<Account>;
+	BigInt: ResolverTypeWrapper<Scalars['BigInt']>;
 	Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 	Cargo: ResolverTypeWrapper<Cargo>;
 	FlightPlan: ResolverTypeWrapper<FlightPlan>;
@@ -289,6 +296,7 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
 	Account: Account;
+	BigInt: Scalars['BigInt'];
 	Boolean: Scalars['Boolean'];
 	Cargo: Cargo;
 	FlightPlan: FlightPlan;
@@ -331,6 +339,11 @@ export type AccountResolvers<
 	username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
+
+export interface BigIntScalarConfig
+	extends GraphQLScalarTypeConfig<ResolversTypes['BigInt'], any> {
+	name: 'BigInt';
+}
 
 export type CargoResolvers<
 	ContextType = Context,
@@ -505,7 +518,7 @@ export type RankResolvers<
 	ContextType = Context,
 	ParentType extends ResolversParentTypes['Rank'] = ResolversParentTypes['Rank']
 > = {
-	netWorth?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	netWorth?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
 	rank?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -569,6 +582,7 @@ export type SystemResolvers<
 
 export type Resolvers<ContextType = Context> = {
 	Account?: AccountResolvers<ContextType>;
+	BigInt?: GraphQLScalarType;
 	Cargo?: CargoResolvers<ContextType>;
 	FlightPlan?: FlightPlanResolvers<ContextType>;
 	Game?: GameResolvers<ContextType>;

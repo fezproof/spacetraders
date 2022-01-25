@@ -1,7 +1,9 @@
 export const types = /* GraphQL */ `
+	scalar BigInt
+
 	type Rank {
 		username: String
-		netWorth: Int
+		netWorth: BigInt
 		rank: Int
 	}
 

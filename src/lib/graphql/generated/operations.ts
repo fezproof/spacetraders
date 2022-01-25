@@ -17,6 +17,8 @@ export type Scalars = {
 	Boolean: boolean;
 	Int: number;
 	Float: number;
+	/** The `BigInt` scalar type represents non-fractional signed whole numeric values. */
+	BigInt: any;
 };
 
 export type Account = {
@@ -120,7 +122,7 @@ export type QuerySystemArgs = {
 
 export type Rank = {
 	__typename?: 'Rank';
-	netWorth?: Maybe<Scalars['Int']>;
+	netWorth?: Maybe<Scalars['BigInt']>;
 	rank?: Maybe<Scalars['Int']>;
 	username?: Maybe<Scalars['String']>;
 };
@@ -222,7 +224,7 @@ export type LeaderboardQuery = {
 					__typename?: 'Rank';
 					rank?: number | null | undefined;
 					username?: string | null | undefined;
-					netWorth?: number | null | undefined;
+					netWorth?: any | null | undefined;
 			  }>
 			| null
 			| undefined;
