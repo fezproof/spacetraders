@@ -151,6 +151,8 @@ export type System = {
 	id: Scalars['ID'];
 	locations?: Maybe<Array<Maybe<Location>>>;
 	name?: Maybe<Scalars['String']>;
+	x?: Maybe<Scalars['Int']>;
+	y?: Maybe<Scalars['Int']>;
 };
 
 export type FlightPlanDetailsQueryVariables = Exact<{
@@ -334,6 +336,21 @@ export type SystemDataQuery = {
 									name?: string | null | undefined;
 									x?: number | null | undefined;
 									y?: number | null | undefined;
+									parent?:
+										| {
+												__typename?: 'Location';
+												id: string;
+												x?: number | null | undefined;
+												y?: number | null | undefined;
+										  }
+										| {
+												__typename?: 'System';
+												id: string;
+												x?: number | null | undefined;
+												y?: number | null | undefined;
+										  }
+										| null
+										| undefined;
 							  }
 							| null
 							| undefined
@@ -408,6 +425,21 @@ export type LocationDataFragment = {
 	name?: string | null | undefined;
 	x?: number | null | undefined;
 	y?: number | null | undefined;
+	parent?:
+		| {
+				__typename?: 'Location';
+				id: string;
+				x?: number | null | undefined;
+				y?: number | null | undefined;
+		  }
+		| {
+				__typename?: 'System';
+				id: string;
+				x?: number | null | undefined;
+				y?: number | null | undefined;
+		  }
+		| null
+		| undefined;
 };
 
 export type SystemFlightPlanFragment = {
@@ -462,7 +494,46 @@ export const LocationDataFragmentDoc = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'type' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
-					{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
+					{ kind: 'Field', name: { kind: 'Name', value: 'y' } },
+					{
+						kind: 'Field',
+						name: { kind: 'Name', value: 'parent' },
+						selectionSet: {
+							kind: 'SelectionSet',
+							selections: [
+								{
+									kind: 'InlineFragment',
+									typeCondition: {
+										kind: 'NamedType',
+										name: { kind: 'Name', value: 'Location' }
+									},
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
+										]
+									}
+								},
+								{
+									kind: 'InlineFragment',
+									typeCondition: {
+										kind: 'NamedType',
+										name: { kind: 'Name', value: 'System' }
+									},
+									selectionSet: {
+										kind: 'SelectionSet',
+										selections: [
+											{ kind: 'Field', name: { kind: 'Name', value: 'id' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
+											{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
+										]
+									}
+								}
+							]
+						}
+					}
 				]
 			}
 		}

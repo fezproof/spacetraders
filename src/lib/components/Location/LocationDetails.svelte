@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { LocationDetailsDocument } from '$lib/graphql/generated/operations';
 	import { enablePanning, offset, target } from '$lib/stores/camera';
+	import { getLocationPosition } from '$lib/stores/locations';
 	import { typewriter } from '$lib/transitions/typewriter';
 	import { isPosition } from '$lib/utils/position';
 	import { operationStore, query } from '@urql/svelte';
@@ -20,14 +21,10 @@
 
 	query(locationDetails);
 
-	$: position = [
-		$locationDetails.data?.location?.x,
-		0,
-		$locationDetails.data?.location?.y
-	];
+	let position = getLocationPosition(locationId);
 
-	$: if (isPosition(position)) {
-		target.set(position);
+	$: if (isPosition($position)) {
+		target.set($position);
 		offset.set([10, 3, 10]);
 		enablePanning.set(false);
 	}

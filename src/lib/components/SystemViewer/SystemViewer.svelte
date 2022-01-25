@@ -67,6 +67,10 @@
 				<SystemObjects locations={$system.data.system.locations} />
 			{/if}
 
+			<SC.Mesh
+				geometry={new THREE.SphereGeometry(1)}
+				material={new THREE.MeshBasicMaterial({ color: 0xffff00 })}
+			/>
 			<SystemFlights {systemId} />
 
 			<SC.PerspectiveCamera position={$cameraPosition} target={$softTarget} />

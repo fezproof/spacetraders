@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { SystemFlightsDocument } from '$lib/graphql/generated/operations';
+	import { getLocationPosition } from '$lib/stores/locations';
 	import { operationStore, query } from '@urql/svelte';
 	import { onDestroy } from 'svelte';
 	import * as SC from 'svelte-cubed';
@@ -33,8 +34,8 @@
 		{#if departure && destination}
 			<SystemFlightShip
 				flightId={id}
-				startPos={[departure.x, 0, departure.y]}
-				endPos={[destination.x, 0, destination.y]}
+				startId={departure.id}
+				endId={destination.id}
 				startedAt={new Date(createdAt)}
 				endsAt={new Date(arrivesAt)}
 				colour={owner.colour}

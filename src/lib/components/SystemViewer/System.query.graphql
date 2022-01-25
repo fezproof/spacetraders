@@ -23,6 +23,18 @@ fragment LocationData on Location {
 	name
 	x
 	y
+	parent {
+		... on Location {
+			id
+			x
+			y
+		}
+		... on System {
+			id
+			x
+			y
+		}
+	}
 }
 
 fragment SystemFlightPlan on FlightPlan {

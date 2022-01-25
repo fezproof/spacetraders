@@ -17,7 +17,7 @@
 	};
 </script>
 
-<SC.Group position={[location.x, 0, location.y]}>
+<SC.Group>
 	<HoverSphere radius={1} on:click={clickHandler}>
 		<SC.Mesh
 			geometry={new THREE.BoxGeometry(

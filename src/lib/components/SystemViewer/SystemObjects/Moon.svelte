@@ -33,7 +33,7 @@
 	});
 </script>
 
-<SC.Group position={[location.x, 0, location.y]}>
+<SC.Group>
 	<HoverSphere radius={0.75} on:click={clickHandler}>
 		<SC.Mesh
 			{rotation}

@@ -8,6 +8,5 @@
 
 <SC.Mesh
 	geometry={new THREE.SphereGeometry(1)}
-	position={[location.x, 0, location.y]}
 	material={new THREE.MeshBasicMaterial({ color: 'white' })}
 />

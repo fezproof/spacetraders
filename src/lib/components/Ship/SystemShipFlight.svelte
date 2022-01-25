@@ -1,20 +1,23 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { getLocationPosition } from '$lib/stores/locations';
+	import { shipFlightPosition } from '$lib/stores/ships';
 	import { inverseLerp, lerpPosition } from '$lib/utils/lerp';
 	import { isEqual } from 'lodash-es';
 	import * as SC from 'svelte-cubed';
-	import type { Position } from 'svelte-cubed/types/common';
 	import * as THREE from 'three';
 	import HoverSphere from '../ScExtends/HoverSphere.svelte';
-	import { shipFlightPosition } from '$lib/stores/ships';
 
 	export let flightId: string;
-	export let startPos: Position;
-	export let endPos: Position;
+	export let startId: string;
+	export let endId: string;
 	export let startedAt: Date;
 	export let endsAt: Date;
 	export let colour: number | undefined;
+
+	let startPos = getLocationPosition(startId);
+	let endPos = getLocationPosition(endId);
 
 	const getTimeAlpha = () => {
 		const result = inverseLerp(
@@ -31,18 +34,18 @@
 
 	const position = shipFlightPosition(flightId);
 
-	$: $position = lerpPosition(startPos, endPos, getTimeAlpha());
+	$: $position = lerpPosition($startPos, $endPos, getTimeAlpha());
 
 	SC.onFrame(() => {
-		$position = lerpPosition(startPos, endPos, getTimeAlpha());
+		$position = lerpPosition($startPos, $endPos, getTimeAlpha());
 	});
 
 	$: rotation = new THREE.Euler()
 		.setFromQuaternion(
 			new THREE.Quaternion().setFromUnitVectors(
 				new THREE.Vector3(0, 1, 0),
-				new THREE.Vector3(...endPos)
-					.sub(new THREE.Vector3(...startPos))
+				new THREE.Vector3(...$endPos)
+					.sub(new THREE.Vector3(...$startPos))
 					.normalize()
 			)
 		)
