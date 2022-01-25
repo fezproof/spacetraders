@@ -2,11 +2,14 @@
 	import { typewriter } from '$lib/transitions/typewriter';
 
 	export let loading: boolean;
-	export let text: string = 'This text is loading...';
 </script>
 
 {#if loading}
-	<div class="font-block" in:typewriter>{text}</div>
+	<div class="font-block" in:typewriter>
+		<slot name="loading">
+			<p>This text is loading</p>
+		</slot>
+	</div>
 {:else}
 	<slot />
 {/if}

@@ -37,7 +37,6 @@
 		>
 			<LoadingText
 				loading={$flightPlanDetails.fetching || $flightPlanDetails.stale}
-				text="Loading flight id"
 			>
 				<h2 in:typewriter>{$flightPlanDetails.data?.flightPlan?.flightCode}</h2>
 			</LoadingText>
@@ -53,42 +52,36 @@
 			{#if $flightPlanDetails.fetching}
 				<div>Loading...</div>
 			{:else}
-				<LoadingText
-					loading={$flightPlanDetails.stale}
-					text="Loading ship owner"
-				>
-					<h2 in:typewriter>
-						{$flightPlanDetails.data?.flightPlan?.owner.username}
-					</h2>
-				</LoadingText>
-				<LoadingText
-					loading={$flightPlanDetails.stale}
-					text="Loading ship type"
-				>
-					<p in:typewriter>{$flightPlanDetails.data?.flightPlan?.ship?.type}</p>
-				</LoadingText>
-				<div>
-					<LoadingText
-						loading={$flightPlanDetails.stale}
-						text="From: loading location"
-					>
-						<p in:typewriter>
-							{`From: ${$flightPlanDetails.data?.flightPlan?.departure.name} at
-							${$flightPlanDetails.data?.flightPlan?.departure.x}
-							${$flightPlanDetails.data?.flightPlan?.departure.y}`}
+				<LoadingText loading={$flightPlanDetails.stale}>
+					<slot slot="loading">
+						<h2>Loading username</h2>
+						<p>Loading ship type</p>
+						<div>
+							<p>Loading from location</p>
+							<p>Loading to location</p>
+						</div>
+					</slot>
+					<div in:typewriter class="h-24">
+						<h2>
+							{$flightPlanDetails.data?.flightPlan?.owner.username}
+						</h2>
+						<p>
+							{$flightPlanDetails.data?.flightPlan?.ship?.type}
 						</p>
-					</LoadingText>
-					<LoadingText
-						loading={$flightPlanDetails.stale}
-						text="To: loading location"
-					>
-						<p in:typewriter>
-							{`To: ${$flightPlanDetails.data?.flightPlan?.destination.name} at
-							${$flightPlanDetails.data?.flightPlan?.destination.x}
-							${$flightPlanDetails.data?.flightPlan?.destination.y}`}
-						</p>
-					</LoadingText>
-				</div>
+						<div>
+							<p>
+								From: {$flightPlanDetails.data?.flightPlan?.departure.name} at
+								{$flightPlanDetails.data?.flightPlan?.departure.x}
+								{$flightPlanDetails.data?.flightPlan?.departure.y}
+							</p>
+							<p>
+								To: {$flightPlanDetails.data?.flightPlan?.destination.name} at
+								{$flightPlanDetails.data?.flightPlan?.destination.x}
+								{$flightPlanDetails.data?.flightPlan?.destination.y}
+							</p>
+						</div>
+					</div>
+				</LoadingText>
 			{/if}
 		</div>
 	</div>
