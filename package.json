@@ -48,6 +48,8 @@
 	"dependencies": {
 		"@envelop/core": "^1.7.1",
 		"@graphql-tools/schema": "^8.3.1",
+		"@miniflare/kv": "^2.2.0",
+		"@miniflare/storage-memory": "^2.2.0",
 		"@urql/devtools": "^2.0.3",
 		"@urql/exchange-graphcache": "^4.3.6",
 		"@urql/exchange-retry": "^0.3.2",

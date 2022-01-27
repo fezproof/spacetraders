@@ -7,7 +7,7 @@ export interface UserData {
 }
 
 export interface Platform {
-	env: {
+	env?: {
 		CACHE: KVNamespace;
 	};
 }
@@ -21,8 +21,7 @@ export interface Session {
 }
 
 export const handle: Handle<Locals, Platform> = async ({ event, resolve }) => {
-	const { request, locals, platform } = event;
-	await platform?.env?.CACHE?.put('HELLO', 'WORLD');
+	const { request, locals } = event;
 	try {
 		const token = getTokenFromCookie(request.headers.get('cookie'));
 		locals.user = undefined;

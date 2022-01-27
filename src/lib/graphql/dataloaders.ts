@@ -30,48 +30,91 @@ export const createDataLoaders = (
 	};
 };
 
-interface Cacheable<Value> {
+interface Cacheable<Value extends any = any> {
 	ttl: number;
 	value: Value;
+	key: string;
 }
 
-const dataLoaderCache = new Map();
+export type AsyncCacheMap<K, V> = {
+	get(key: K): Promise<V | void>;
+	set(key: K, value: V): Promise<V | void>;
+	delete(key: K): Promise<void>;
+	clear(): Promise<void>;
+};
 
 export const createGraphqlCache = (
 	kv: KVNamespace,
 	LOG_REQUESTS: boolean
-): CacheMap<string, Cacheable<any>> => {
-	const cache: CacheMap<string, Cacheable<any>> = {
-		get: (...args) => {
-			LOG_REQUESTS && console.log('get', ...args);
-			return dataLoaderCache.get(...args);
-		},
-		delete: (...args) => {
-			LOG_REQUESTS && console.log('delete', ...args);
+): AsyncCacheMap<string, Cacheable> => ({
+	get: async (key) => {
+		try {
+			const value = await kv.get<Cacheable>(key, { type: 'json' });
+			LOG_REQUESTS && console.log('get', key, value);
+			if (value !== null) return value;
+			console.log('miss', key);
+			return undefined;
+		} catch (error) {
+			console.error('error getting', error);
 
-			return dataLoaderCache.delete(...args);
-		},
-		clear: (...args) => {
-			LOG_REQUESTS && console.log('clear', ...args);
+			return;
+		}
+	},
+	delete: async (key) => {
+		LOG_REQUESTS && console.log('delete', key);
 
-			return dataLoaderCache.clear(...args);
-		},
-		set: async (key, promisedValue) => {
-			try {
-				const value = await promisedValue;
+		return kv.delete(key);
+	},
+	clear: async () => {
+		// Cannot call clear with KV
+		console.log('clear');
+		return;
+	},
+	set: async (key, promisedValue) => {
+		try {
+			const cacheable = await promisedValue;
+			LOG_REQUESTS && console.log('set', key, cacheable);
 
-				if (value instanceof Error || value === null) {
-					return;
-				}
-				LOG_REQUESTS && console.log('set', key, value);
-				dataLoaderCache.set(key, value);
-			} catch (error) {
+			if (cacheable instanceof Error || cacheable === null) {
 				return;
 			}
-		}
-	};
+			const { ttl } = cacheable;
 
-	return cache;
+			kv.put(key, JSON.stringify(cacheable), { expirationTtl: ttl });
+			return cacheable;
+		} catch (error) {
+			console.error('error setting', error);
+			return;
+		}
+	}
+});
+
+const cacheKeyFn = <T extends string = string>(type: string, key: string): T =>
+	`${type}:${key}` as T;
+
+const getCachedValues = async <K extends string = string>(
+	keys: Readonly<K[]>,
+	type: string,
+	cache: AsyncCacheMap<string, Cacheable>
+) => {
+	const cacheResults: Promise<Cacheable | void>[] = [];
+	for (const key of keys) {
+		const cacheKey = cacheKeyFn(type, key);
+		cacheResults.push(cache.get(cacheKey));
+	}
+
+	const results = await Promise.all(cacheResults);
+
+	return {
+		hits: results.reduce<Record<string, Cacheable>>((acc, result) => {
+			if (result) acc[result.key] = result;
+			return acc;
+		}, {}),
+		misses: results.reduce<K[]>((acc, result, index) => {
+			if (!result) acc.push(keys[index]);
+			return acc;
+		}, [])
+	};
 };
 
 const createCacheableDataloader = <
@@ -80,24 +123,51 @@ const createCacheableDataloader = <
 >(
 	type: string,
 	batchLoadFunction: (keys: Readonly<Key[]>) => Promise<(Value | Error)[]>,
-	cacheMap: CacheMap<Key, Promise<Cacheable<Value>>>,
+	cacheMap: AsyncCacheMap<Key, Cacheable<Value>>,
 	ttl: number
 ): DataLoader<Key, Value> => {
 	const loader = new DataLoader<Key, Cacheable<Value>>(
 		async (keys) => {
-			const results = await batchLoadFunction(keys);
+			const uniqueKeys = [...new Set(keys).values()];
 
-			return results.map((result) => {
-				if (result instanceof Error) {
-					return result;
-				}
-				return { value: result, ttl };
+			const { hits, misses } = await getCachedValues(
+				uniqueKeys,
+				type,
+				cacheMap
+			);
+
+			const results = await batchLoadFunction(misses);
+
+			await Promise.all(
+				results.map((result, index) => {
+					const key = misses[index];
+					if (!(result instanceof Error)) {
+						return cacheMap.set(cacheKeyFn(type, key), {
+							value: result,
+							ttl,
+							key
+						});
+					}
+				})
+			);
+
+			const missMap = results.reduce<Map<Key, Cacheable>>(
+				(acc, result, index) => {
+					const key = misses[index];
+					if (result) {
+						acc.set(key, { value: result, ttl, key });
+					}
+					return acc;
+				},
+				new Map()
+			);
+
+			return keys.map((key) => {
+				return hits[key] ?? missMap.get(key);
 			});
 		},
 		{
-			cacheMap,
 			cache: true,
-			cacheKeyFn: (key) => `${type}:${key}` as Key,
 			batchScheduleFn: (callback) => setTimeout(callback)
 		}
 	);
@@ -113,6 +183,7 @@ const createCacheableDataloader = <
 		},
 		load: async (key) => {
 			const result = await loader.load(key);
+			if (!result) return null;
 
 			return result.value;
 		},
@@ -127,7 +198,7 @@ const createCacheableDataloader = <
 			});
 		},
 		prime: (key, value) => {
-			if (!(value instanceof Error)) loader.prime(key, { value, ttl });
+			if (!(value instanceof Error)) loader.prime(key, { value, ttl, key });
 			return this;
 		}
 	};

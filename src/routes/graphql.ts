@@ -27,12 +27,21 @@ const getEnveloped = envelop({
 	]
 });
 
+const inMemCache: KVNamespace = {
+	get: () => undefined,
+	getWithMetadata: () => undefined,
+	put: () => undefined,
+	delete: () => undefined,
+	list: () => undefined
+};
+
 export const post: RequestHandler<Locals, Platform> = async ({
 	request: rawRequest,
 	locals: { user },
-	platform: { env }
+	platform
 }) => {
-	const graphqlCache = createGraphqlCache(env.CACHE, LOG_REQUESTS);
+	const kvCache = platform?.env?.CACHE ?? inMemCache;
+	const graphqlCache = createGraphqlCache(kvCache, false);
 
 	const { contextFactory, parse, validate, execute, schema } =
 		getEnveloped<Context>({
