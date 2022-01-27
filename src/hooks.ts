@@ -20,7 +20,7 @@ export interface Session {
 	user?: UserData;
 }
 
-export const handle: Handle<Locals> = async ({ event, resolve }) => {
+export const handle: Handle<Locals, Platform> = async ({ event, resolve }) => {
 	const { request, locals } = event;
 	try {
 		const token = getTokenFromCookie(request.headers.get('cookie'));
@@ -42,7 +42,9 @@ export const handle: Handle<Locals> = async ({ event, resolve }) => {
 	}
 };
 
-export const getSession: GetSession<Locals, Session> = async (request) => {
+export const getSession: GetSession<Locals, Platform, Session> = async (
+	request
+) => {
 	return {
 		user: request.locals.user
 	};
