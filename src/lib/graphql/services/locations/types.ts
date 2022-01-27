@@ -36,10 +36,6 @@ export const types = /* GraphQL */ `
 		parent: LocationParent
 	}
 
-	extend type Ship {
-		location: Location
-	}
-
 	extend type System {
 		locations: [Location]
 	}

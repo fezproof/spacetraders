@@ -135,17 +135,17 @@ export type Ship = {
 	flightPlanId?: Maybe<Scalars['ID']>;
 	id: Scalars['ID'];
 	loadingSpeed?: Maybe<Scalars['Int']>;
-	location?: Maybe<Location>;
 	manufacturer?: Maybe<Scalars['String']>;
 	maxCargo?: Maybe<Scalars['Int']>;
 	plating?: Maybe<Scalars['Int']>;
+	position?: Maybe<ShipPosition>;
 	spaceAvailable?: Maybe<Scalars['Int']>;
 	speed?: Maybe<Scalars['Int']>;
 	type?: Maybe<Scalars['String']>;
 	weapons?: Maybe<Scalars['Int']>;
-	x?: Maybe<Scalars['Int']>;
-	y?: Maybe<Scalars['Int']>;
 };
+
+export type ShipPosition = FlightPlan | Location;
 
 export type System = {
 	__typename?: 'System';
@@ -292,6 +292,20 @@ export type MyShipsQuery = {
 												quantity?: number | null | undefined;
 												totalVolume?: number | null | undefined;
 										  }>
+										| null
+										| undefined;
+									position?:
+										| {
+												__typename?: 'FlightPlan';
+												id: string;
+												arrivesAt?: string | null | undefined;
+										  }
+										| {
+												__typename?: 'Location';
+												id: string;
+												x?: number | null | undefined;
+												y?: number | null | undefined;
+										  }
 										| null
 										| undefined;
 							  }
@@ -837,6 +851,59 @@ export const MyShipsDocument = {
 											{
 												kind: 'Field',
 												name: { kind: 'Name', value: 'spaceAvailable' }
+											},
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'position' },
+												selectionSet: {
+													kind: 'SelectionSet',
+													selections: [
+														{
+															kind: 'InlineFragment',
+															typeCondition: {
+																kind: 'NamedType',
+																name: { kind: 'Name', value: 'Location' }
+															},
+															selectionSet: {
+																kind: 'SelectionSet',
+																selections: [
+																	{
+																		kind: 'Field',
+																		name: { kind: 'Name', value: 'id' }
+																	},
+																	{
+																		kind: 'Field',
+																		name: { kind: 'Name', value: 'x' }
+																	},
+																	{
+																		kind: 'Field',
+																		name: { kind: 'Name', value: 'y' }
+																	}
+																]
+															}
+														},
+														{
+															kind: 'InlineFragment',
+															typeCondition: {
+																kind: 'NamedType',
+																name: { kind: 'Name', value: 'FlightPlan' }
+															},
+															selectionSet: {
+																kind: 'SelectionSet',
+																selections: [
+																	{
+																		kind: 'Field',
+																		name: { kind: 'Name', value: 'id' }
+																	},
+																	{
+																		kind: 'Field',
+																		name: { kind: 'Name', value: 'arrivesAt' }
+																	}
+																]
+															}
+														}
+													]
+												}
 											}
 										]
 									}

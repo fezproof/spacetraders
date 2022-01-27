@@ -11,6 +11,17 @@ query MyShips {
 				totalVolume
 			}
 			spaceAvailable
+			position {
+				... on Location {
+					id
+					x
+					y
+				}
+				... on FlightPlan {
+					id
+					arrivesAt
+				}
+			}
 		}
 	}
 }

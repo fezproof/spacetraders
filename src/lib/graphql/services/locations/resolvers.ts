@@ -11,12 +11,6 @@ export const resolvers: Resolvers = {
 		}
 	},
 	Mutation: {},
-	Ship: {
-		location: async ({ location: { id } }, _, { dataloaders }) => {
-			const location = await dataloaders.location.load(id);
-			return { ...location, id: location.symbol };
-		}
-	},
 	System: {
 		locations: async ({ id }, _, { user, dataloaders }) => {
 			const { locations } = await getSystemLocations(id, user?.token);

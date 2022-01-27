@@ -4,6 +4,7 @@ export const types = /* GraphQL */ `
 		quantity: Int
 		totalVolume: Int
 	}
+	union ShipPosition = Location | FlightPlan
 
 	type Ship {
 		id: ID!
@@ -18,8 +19,7 @@ export const types = /* GraphQL */ `
 		type: String
 		weapons: Int
 		loadingSpeed: Int
-		x: Int
-		y: Int
+		position: ShipPosition
 	}
 
 	extend type FlightPlan {

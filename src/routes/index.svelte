@@ -1,4 +1,6 @@
 <script lang="ts">
+	import MyShips from '$lib/components/MyShips/MyShips.svelte';
+
 	// import SystemViewer from '$lib/components/SystemViewer/SystemViewer.svelte';
 </script>
 
@@ -6,4 +8,5 @@
 	<a href="/map/OE" sveltekit:prefetch>Goto OE system</a>
 </main>
 
+<MyShips />
 <!-- <SystemViewer systemId="OE" /> -->

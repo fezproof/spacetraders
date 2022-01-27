@@ -8,10 +8,7 @@ export const resolvers: Resolvers = {
 		ships: async (_, __, { user }) => {
 			const { ships } = await getMyShips(user?.token);
 
-			return ships.map((ship) => ({
-				...ship,
-				location: { id: ship.location }
-			}));
+			return ships;
 		}
 	},
 	Location: {
@@ -22,7 +19,7 @@ export const resolvers: Resolvers = {
 					.filter(({ location }) => location === locationId)
 					.map(({ id, location, ...rest }) => ({
 						id,
-						location: { id: location },
+						position: { id: location, __typename: 'Location' },
 						...rest
 					}));
 			}
@@ -64,6 +61,14 @@ export const resolvers: Resolvers = {
 			const ship = await dataloaders.shipInfo.load(type);
 
 			return ship.weapons;
+		},
+		position: async (parent) => {
+			console.log(parent);
+			if (parent.location)
+				return { id: parent.location, __typename: 'Location' };
+			if (parent.flightPlanId)
+				return { id: parent.flightPlanId, __typename: 'FlightPlan' };
+			return null;
 		}
 	}
 };

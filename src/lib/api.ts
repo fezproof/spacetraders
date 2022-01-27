@@ -83,7 +83,8 @@ export const getLeaderboard = async (
 
 interface ShipInfo {
 	id: string;
-	location: string;
+	location?: string;
+	flightPlanId?: string;
 }
 
 export const getShip = async (id: string, token: string): Promise<ShipInfo> =>

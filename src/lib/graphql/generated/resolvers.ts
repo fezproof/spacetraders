@@ -144,17 +144,17 @@ export type Ship = {
 	readonly flightPlanId?: Maybe<Scalars['ID']>;
 	readonly id: Scalars['ID'];
 	readonly loadingSpeed?: Maybe<Scalars['Int']>;
-	readonly location?: Maybe<Location>;
 	readonly manufacturer?: Maybe<Scalars['String']>;
 	readonly maxCargo?: Maybe<Scalars['Int']>;
 	readonly plating?: Maybe<Scalars['Int']>;
+	readonly position?: Maybe<ShipPosition>;
 	readonly spaceAvailable?: Maybe<Scalars['Int']>;
 	readonly speed?: Maybe<Scalars['Int']>;
 	readonly type?: Maybe<Scalars['String']>;
 	readonly weapons?: Maybe<Scalars['Int']>;
-	readonly x?: Maybe<Scalars['Int']>;
-	readonly y?: Maybe<Scalars['Int']>;
 };
+
+export type ShipPosition = FlightPlan | Location;
 
 export type System = {
 	readonly __typename?: 'System';
@@ -292,7 +292,12 @@ export type ResolversTypes = {
 	Mutation: ResolverTypeWrapper<{}>;
 	Query: ResolverTypeWrapper<{}>;
 	Rank: ResolverTypeWrapper<Rank>;
-	Ship: ResolverTypeWrapper<Ship>;
+	Ship: ResolverTypeWrapper<
+		Omit<Ship, 'position'> & {
+			position?: Maybe<ResolversTypes['ShipPosition']>;
+		}
+	>;
+	ShipPosition: ResolversTypes['FlightPlan'] | ResolversTypes['Location'];
 	String: ResolverTypeWrapper<Scalars['String']>;
 	System: ResolverTypeWrapper<System>;
 };
@@ -317,7 +322,12 @@ export type ResolversParentTypes = {
 	Mutation: {};
 	Query: {};
 	Rank: Rank;
-	Ship: Ship;
+	Ship: Omit<Ship, 'position'> & {
+		position?: Maybe<ResolversParentTypes['ShipPosition']>;
+	};
+	ShipPosition:
+		| ResolversParentTypes['FlightPlan']
+		| ResolversParentTypes['Location'];
 	String: Scalars['String'];
 	System: System;
 };
@@ -550,11 +560,6 @@ export type ShipResolvers<
 		ParentType,
 		ContextType
 	>;
-	location?: Resolver<
-		Maybe<ResolversTypes['Location']>,
-		ParentType,
-		ContextType
-	>;
 	manufacturer?: Resolver<
 		Maybe<ResolversTypes['String']>,
 		ParentType,
@@ -562,6 +567,11 @@ export type ShipResolvers<
 	>;
 	maxCargo?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	plating?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	position?: Resolver<
+		Maybe<ResolversTypes['ShipPosition']>,
+		ParentType,
+		ContextType
+	>;
 	spaceAvailable?: Resolver<
 		Maybe<ResolversTypes['Int']>,
 		ParentType,
@@ -570,9 +580,18 @@ export type ShipResolvers<
 	speed?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	weapons?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-	x?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-	y?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ShipPositionResolvers<
+	ContextType = Context,
+	ParentType extends ResolversParentTypes['ShipPosition'] = ResolversParentTypes['ShipPosition']
+> = {
+	__resolveType: TypeResolveFn<
+		'FlightPlan' | 'Location',
+		ParentType,
+		ContextType
+	>;
 };
 
 export type SystemResolvers<
@@ -609,5 +628,6 @@ export type Resolvers<ContextType = Context> = {
 	Query?: QueryResolvers<ContextType>;
 	Rank?: RankResolvers<ContextType>;
 	Ship?: ShipResolvers<ContextType>;
+	ShipPosition?: ShipPositionResolvers<ContextType>;
 	System?: SystemResolvers<ContextType>;
 };

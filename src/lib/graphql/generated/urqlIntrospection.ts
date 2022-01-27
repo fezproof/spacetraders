@@ -608,15 +608,6 @@ export default {
 						args: []
 					},
 					{
-						name: 'location',
-						type: {
-							kind: 'OBJECT',
-							name: 'Location',
-							ofType: null
-						},
-						args: []
-					},
-					{
 						name: 'manufacturer',
 						type: {
 							kind: 'SCALAR',
@@ -637,6 +628,15 @@ export default {
 						type: {
 							kind: 'SCALAR',
 							name: 'Any'
+						},
+						args: []
+					},
+					{
+						name: 'position',
+						type: {
+							kind: 'UNION',
+							name: 'ShipPosition',
+							ofType: null
 						},
 						args: []
 					},
@@ -671,25 +671,23 @@ export default {
 							name: 'Any'
 						},
 						args: []
-					},
-					{
-						name: 'x',
-						type: {
-							kind: 'SCALAR',
-							name: 'Any'
-						},
-						args: []
-					},
-					{
-						name: 'y',
-						type: {
-							kind: 'SCALAR',
-							name: 'Any'
-						},
-						args: []
 					}
 				],
 				interfaces: []
+			},
+			{
+				kind: 'UNION',
+				name: 'ShipPosition',
+				possibleTypes: [
+					{
+						kind: 'OBJECT',
+						name: 'FlightPlan'
+					},
+					{
+						kind: 'OBJECT',
+						name: 'Location'
+					}
+				]
 			},
 			{
 				kind: 'OBJECT',
