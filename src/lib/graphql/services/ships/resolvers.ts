@@ -1,6 +1,5 @@
 import { getMyShips } from '$lib/api';
 import type { Resolvers } from '$lib/graphql/generated/resolvers';
-import { getShipData } from './data';
 
 export const resolvers: Resolvers = {
 	Query: {},
@@ -31,87 +30,38 @@ export const resolvers: Resolvers = {
 		}
 	},
 	Ship: {
-		loadingSpeed: async ({ type }, _, { user }) => {
-			const response = await getShipData(user.token);
-			if (!response.ships) return null;
-
-			const ship = response.ships.find(
-				({ type: shipType }) => shipType === type
-			);
-
-			if (!ship) return null;
+		loadingSpeed: async ({ type }, _, { dataloaders }) => {
+			const ship = await dataloaders.shipInfo.load(type);
 
 			return ship.loadingSpeed;
 		},
-		class: async ({ type }, _, { user }) => {
-			const response = await getShipData(user.token);
-			if (!response.ships) return null;
-
-			const ship = response.ships.find(
-				({ type: shipType }) => shipType === type
-			);
-
-			if (!ship) return null;
+		class: async ({ type }, _, { dataloaders }) => {
+			const ship = await dataloaders.shipInfo.load(type);
 
 			return ship.class;
 		},
-		maxCargo: async ({ type }, _, { user }) => {
-			const response = await getShipData(user.token);
-			if (!response.ships) return null;
-
-			const ship = response.ships.find(
-				({ type: shipType }) => shipType === type
-			);
-
-			if (!ship) return null;
+		maxCargo: async ({ type }, _, { dataloaders }) => {
+			const ship = await dataloaders.shipInfo.load(type);
 
 			return ship.maxCargo;
 		},
-		speed: async ({ type }, _, { user }) => {
-			const response = await getShipData(user.token);
-			if (!response.ships) return null;
-
-			const ship = response.ships.find(
-				({ type: shipType }) => shipType === type
-			);
-
-			if (!ship) return null;
+		speed: async ({ type }, _, { dataloaders }) => {
+			const ship = await dataloaders.shipInfo.load(type);
 
 			return ship.speed;
 		},
-		manufacturer: async ({ type }, _, { user }) => {
-			const response = await getShipData(user.token);
-			if (!response.ships) return null;
-
-			const ship = response.ships.find(
-				({ type: shipType }) => shipType === type
-			);
-
-			if (!ship) return null;
+		manufacturer: async ({ type }, _, { dataloaders }) => {
+			const ship = await dataloaders.shipInfo.load(type);
 
 			return ship.manufacturer;
 		},
-		plating: async ({ type }, _, { user }) => {
-			const response = await getShipData(user.token);
-			if (!response.ships) return null;
-
-			const ship = response.ships.find(
-				({ type: shipType }) => shipType === type
-			);
-
-			if (!ship) return null;
+		plating: async ({ type }, _, { dataloaders }) => {
+			const ship = await dataloaders.shipInfo.load(type);
 
 			return ship.plating;
 		},
-		weapons: async ({ type }, _, { user }) => {
-			const response = await getShipData(user.token);
-			if (!response.ships) return null;
-
-			const ship = response.ships.find(
-				({ type: shipType }) => shipType === type
-			);
-
-			if (!ship) return null;
+		weapons: async ({ type }, _, { dataloaders }) => {
+			const ship = await dataloaders.shipInfo.load(type);
 
 			return ship.weapons;
 		}

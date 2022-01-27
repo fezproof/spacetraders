@@ -1,6 +1,7 @@
 import type { CacheMap } from 'dataloader';
 import DataLoader from 'dataloader';
 import { batchGetLocations, LocationResult } from './services/locations/data';
+import { BasicShipInfo, batchGetBasicShipInfo } from './services/ships/data';
 import { batchGetSystems, SystemResult } from './services/systems/data';
 
 const DAY = 60 * 60 * 24;
@@ -8,6 +9,7 @@ const DAY = 60 * 60 * 24;
 export interface Dataloaders {
 	location: DataLoader<string, LocationResult>;
 	system: DataLoader<string, SystemResult>;
+	shipInfo: DataLoader<string, BasicShipInfo>;
 }
 
 export const createDataLoaders = (
@@ -24,6 +26,12 @@ export const createDataLoaders = (
 		system: createCacheableDataloader(
 			'System',
 			batchGetSystems(token),
+			cache,
+			DAY
+		),
+		shipInfo: createCacheableDataloader(
+			'ShipInfo',
+			batchGetBasicShipInfo(token),
 			cache,
 			DAY
 		)
