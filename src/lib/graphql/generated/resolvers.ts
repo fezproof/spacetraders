@@ -72,6 +72,7 @@ export type Location = {
 	readonly dockedShips?: Maybe<Scalars['Int']>;
 	readonly id: Scalars['ID'];
 	readonly marketplace?: Maybe<ReadonlyArray<Maybe<MarketRecord>>>;
+	readonly myShips?: Maybe<ReadonlyArray<Maybe<Ship>>>;
 	readonly name?: Maybe<Scalars['String']>;
 	readonly parent?: Maybe<LocationParent>;
 	readonly traits?: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
@@ -142,6 +143,7 @@ export type Ship = {
 	readonly class?: Maybe<Scalars['String']>;
 	readonly flightPlanId?: Maybe<Scalars['ID']>;
 	readonly id: Scalars['ID'];
+	readonly loadingSpeed?: Maybe<Scalars['Int']>;
 	readonly location?: Maybe<Location>;
 	readonly manufacturer?: Maybe<Scalars['String']>;
 	readonly maxCargo?: Maybe<Scalars['Int']>;
@@ -421,6 +423,11 @@ export type LocationResolvers<
 		ParentType,
 		ContextType
 	>;
+	myShips?: Resolver<
+		Maybe<ReadonlyArray<Maybe<ResolversTypes['Ship']>>>,
+		ParentType,
+		ContextType
+	>;
 	name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	parent?: Resolver<
 		Maybe<ResolversTypes['LocationParent']>,
@@ -538,6 +545,11 @@ export type ShipResolvers<
 	class?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	flightPlanId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
 	id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+	loadingSpeed?: Resolver<
+		Maybe<ResolversTypes['Int']>,
+		ParentType,
+		ContextType
+	>;
 	location?: Resolver<
 		Maybe<ResolversTypes['Location']>,
 		ParentType,

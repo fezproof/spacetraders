@@ -265,6 +265,18 @@ export default {
 						args: []
 					},
 					{
+						name: 'myShips',
+						type: {
+							kind: 'LIST',
+							ofType: {
+								kind: 'OBJECT',
+								name: 'Ship',
+								ofType: null
+							}
+						},
+						args: []
+					},
+					{
 						name: 'name',
 						type: {
 							kind: 'SCALAR',
@@ -584,6 +596,14 @@ export default {
 								kind: 'SCALAR',
 								name: 'Any'
 							}
+						},
+						args: []
+					},
+					{
+						name: 'loadingSpeed',
+						type: {
+							kind: 'SCALAR',
+							name: 'Any'
 						},
 						args: []
 					},

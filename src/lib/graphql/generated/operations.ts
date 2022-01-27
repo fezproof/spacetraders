@@ -63,6 +63,7 @@ export type Location = {
 	dockedShips?: Maybe<Scalars['Int']>;
 	id: Scalars['ID'];
 	marketplace?: Maybe<Array<Maybe<MarketRecord>>>;
+	myShips?: Maybe<Array<Maybe<Ship>>>;
 	name?: Maybe<Scalars['String']>;
 	parent?: Maybe<LocationParent>;
 	traits?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -133,6 +134,7 @@ export type Ship = {
 	class?: Maybe<Scalars['String']>;
 	flightPlanId?: Maybe<Scalars['ID']>;
 	id: Scalars['ID'];
+	loadingSpeed?: Maybe<Scalars['Int']>;
 	location?: Maybe<Location>;
 	manufacturer?: Maybe<Scalars['String']>;
 	maxCargo?: Maybe<Scalars['Int']>;
@@ -260,19 +262,6 @@ export type LocationDetailsQuery = {
 							| null
 							| undefined
 					  >
-					| null
-					| undefined;
-				parent?:
-					| {
-							__typename: 'Location';
-							id: string;
-							name?: string | null | undefined;
-					  }
-					| {
-							__typename: 'System';
-							id: string;
-							name?: string | null | undefined;
-					  }
 					| null
 					| undefined;
 		  }
@@ -786,60 +775,7 @@ export const LocationDetailsDocument = {
 								},
 								{ kind: 'Field', name: { kind: 'Name', value: 'traits' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
-								{ kind: 'Field', name: { kind: 'Name', value: 'y' } },
-								{
-									kind: 'Field',
-									name: { kind: 'Name', value: 'parent' },
-									selectionSet: {
-										kind: 'SelectionSet',
-										selections: [
-											{
-												kind: 'Field',
-												name: { kind: 'Name', value: '__typename' }
-											},
-											{
-												kind: 'InlineFragment',
-												typeCondition: {
-													kind: 'NamedType',
-													name: { kind: 'Name', value: 'Location' }
-												},
-												selectionSet: {
-													kind: 'SelectionSet',
-													selections: [
-														{
-															kind: 'Field',
-															name: { kind: 'Name', value: 'id' }
-														},
-														{
-															kind: 'Field',
-															name: { kind: 'Name', value: 'name' }
-														}
-													]
-												}
-											},
-											{
-												kind: 'InlineFragment',
-												typeCondition: {
-													kind: 'NamedType',
-													name: { kind: 'Name', value: 'System' }
-												},
-												selectionSet: {
-													kind: 'SelectionSet',
-													selections: [
-														{
-															kind: 'Field',
-															name: { kind: 'Name', value: 'id' }
-														},
-														{
-															kind: 'Field',
-															name: { kind: 'Name', value: 'name' }
-														}
-													]
-												}
-											}
-										]
-									}
-								}
+								{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
 							]
 						}
 					}

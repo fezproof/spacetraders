@@ -17,6 +17,7 @@ export const types = /* GraphQL */ `
 		speed: Int
 		type: String
 		weapons: Int
+		loadingSpeed: Int
 		x: Int
 		y: Int
 	}
@@ -27,5 +28,9 @@ export const types = /* GraphQL */ `
 
 	extend type Account {
 		ships: [Ship]
+	}
+
+	extend type Location {
+		myShips: [Ship]
 	}
 `;

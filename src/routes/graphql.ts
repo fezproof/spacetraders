@@ -5,6 +5,8 @@ import {
 import type { Context } from '$lib/graphql/schema';
 import { schema } from '$lib/graphql/schema';
 import { envelop, useLogger, useSchema } from '@envelop/core';
+import { KVNamespace } from '@miniflare/kv';
+import { MemoryStorage } from '@miniflare/storage-memory';
 import type { RequestHandler } from '@sveltejs/kit';
 import { getGraphQLParameters, processRequest } from 'graphql-helix';
 import type { Locals, Platform } from 'src/hooks';
@@ -27,13 +29,15 @@ const getEnveloped = envelop({
 	]
 });
 
-const inMemCache: KVNamespace = {
-	get: () => undefined,
-	getWithMetadata: () => undefined,
-	put: () => undefined,
-	delete: () => undefined,
-	list: () => undefined
-};
+// const inMemCache: KVNamespace = {
+// 	get: () => undefined,
+// 	getWithMetadata: () => undefined,
+// 	put: () => undefined,
+// 	delete: () => undefined,
+// 	list: () => undefined
+// };
+
+const inMemCache = new KVNamespace(new MemoryStorage());
 
 export const post: RequestHandler<Locals, Platform> = async ({
 	request: rawRequest,
