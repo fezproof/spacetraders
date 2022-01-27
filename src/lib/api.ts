@@ -32,7 +32,7 @@ export const fetchSpacetraders = async <T = unknown>({
 
 	const result = await response.json();
 
-	return result;
+	return result as T;
 };
 
 export interface SpacetradersError {

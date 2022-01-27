@@ -7,7 +7,7 @@ import { schema } from '$lib/graphql/schema';
 import { envelop, useLogger, useSchema } from '@envelop/core';
 import type { RequestHandler } from '@sveltejs/kit';
 import { getGraphQLParameters, processRequest } from 'graphql-helix';
-import type { Locals } from 'src/hooks';
+import type { Locals, Platform } from 'src/hooks';
 
 const LOG_REQUESTS = false;
 
@@ -27,11 +27,12 @@ const getEnveloped = envelop({
 	]
 });
 
-export const post: RequestHandler<Locals> = async ({
+export const post: RequestHandler<Locals, Platform> = async ({
 	request: rawRequest,
-	locals: { user }
+	locals: { user },
+	platform: { env }
 }) => {
-	const graphqlCache = createGraphqlCache(LOG_REQUESTS);
+	const graphqlCache = createGraphqlCache(env.CACHE, LOG_REQUESTS);
 
 	const { contextFactory, parse, validate, execute, schema } =
 		getEnveloped<Context>({

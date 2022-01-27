@@ -38,6 +38,7 @@ interface Cacheable<Value> {
 const dataLoaderCache = new Map();
 
 export const createGraphqlCache = (
+	kv: KVNamespace,
 	LOG_REQUESTS: boolean
 ): CacheMap<string, Cacheable<any>> => {
 	const cache: CacheMap<string, Cacheable<any>> = {
