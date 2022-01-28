@@ -1,6 +1,7 @@
 export const types = /* GraphQL */ `
 	type MarketRecord {
-		symbol: String
+		symbol: String!
+		name: String
 		volumePerUnit: Int
 		pricePerUnit: Int
 		spread: Int

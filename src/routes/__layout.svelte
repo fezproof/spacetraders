@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
 	import type { LoadFn } from '$lib/globals';
 	import { client } from '$lib/graphql/client';
+	import { mouseCoords } from '$lib/stores/mouse';
 	import { setClient } from '@urql/svelte';
 	import '../app.css';
 

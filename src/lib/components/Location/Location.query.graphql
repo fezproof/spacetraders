@@ -5,9 +5,12 @@ query LocationDetails($locationId: ID!) {
 		type
 		marketplace {
 			symbol
+			name
 			volumePerUnit
 			pricePerUnit
 			quantityAvailable
+			sellPricePerUnit
+			purchasePricePerUnit
 		}
 		traits
 		x

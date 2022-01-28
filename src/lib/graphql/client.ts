@@ -38,6 +38,6 @@ export const client = createClient({
 	fetchOptions: {
 		credentials: 'same-origin'
 	},
-	requestPolicy: 'cache-first',
+	requestPolicy: 'cache-and-network',
 	exchanges
 });

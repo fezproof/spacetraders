@@ -96,12 +96,13 @@ export enum LocationType {
 
 export type MarketRecord = {
 	readonly __typename?: 'MarketRecord';
+	readonly name?: Maybe<Scalars['String']>;
 	readonly pricePerUnit?: Maybe<Scalars['Int']>;
 	readonly purchasePricePerUnit?: Maybe<Scalars['Int']>;
 	readonly quantityAvailable?: Maybe<Scalars['Int']>;
 	readonly sellPricePerUnit?: Maybe<Scalars['Int']>;
 	readonly spread?: Maybe<Scalars['Int']>;
-	readonly symbol?: Maybe<Scalars['String']>;
+	readonly symbol: Scalars['String'];
 	readonly volumePerUnit?: Maybe<Scalars['Int']>;
 };
 
@@ -501,6 +502,7 @@ export type MarketRecordResolvers<
 	ContextType = Context,
 	ParentType extends ResolversParentTypes['MarketRecord'] = ResolversParentTypes['MarketRecord']
 > = {
+	name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	pricePerUnit?: Resolver<
 		Maybe<ResolversTypes['Int']>,
 		ParentType,
@@ -522,7 +524,7 @@ export type MarketRecordResolvers<
 		ContextType
 	>;
 	spread?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-	symbol?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	symbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 	volumePerUnit?: Resolver<
 		Maybe<ResolversTypes['Int']>,
 		ParentType,

@@ -1,5 +1,6 @@
 import { getLocationMarketplace } from '$lib/api';
 import { LocationType, Resolvers } from '$lib/graphql/generated/resolvers';
+import { lowerCase, upperFirst } from 'lodash-es';
 import { getSystemLocations } from './data';
 
 export const resolvers: Resolvers = {
@@ -26,6 +27,11 @@ export const resolvers: Resolvers = {
 				}
 				return null;
 			});
+		}
+	},
+	MarketRecord: {
+		name: ({ symbol }) => {
+			return upperFirst(lowerCase(symbol));
 		}
 	},
 	Location: {

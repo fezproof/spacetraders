@@ -86,12 +86,13 @@ export enum LocationType {
 
 export type MarketRecord = {
 	__typename?: 'MarketRecord';
+	name?: Maybe<Scalars['String']>;
 	pricePerUnit?: Maybe<Scalars['Int']>;
 	purchasePricePerUnit?: Maybe<Scalars['Int']>;
 	quantityAvailable?: Maybe<Scalars['Int']>;
 	sellPricePerUnit?: Maybe<Scalars['Int']>;
 	spread?: Maybe<Scalars['Int']>;
-	symbol?: Maybe<Scalars['String']>;
+	symbol: Scalars['String'];
 	volumePerUnit?: Maybe<Scalars['Int']>;
 };
 
@@ -251,10 +252,13 @@ export type LocationDetailsQuery = {
 					| Array<
 							| {
 									__typename?: 'MarketRecord';
-									symbol?: string | null | undefined;
+									symbol: string;
+									name?: string | null | undefined;
 									volumePerUnit?: number | null | undefined;
 									pricePerUnit?: number | null | undefined;
 									quantityAvailable?: number | null | undefined;
+									sellPricePerUnit?: number | null | undefined;
+									purchasePricePerUnit?: number | null | undefined;
 							  }
 							| null
 							| undefined
@@ -772,6 +776,7 @@ export const LocationDetailsDocument = {
 												kind: 'Field',
 												name: { kind: 'Name', value: 'symbol' }
 											},
+											{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
 											{
 												kind: 'Field',
 												name: { kind: 'Name', value: 'volumePerUnit' }
@@ -783,6 +788,14 @@ export const LocationDetailsDocument = {
 											{
 												kind: 'Field',
 												name: { kind: 'Name', value: 'quantityAvailable' }
+											},
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'sellPricePerUnit' }
+											},
+											{
+												kind: 'Field',
+												name: { kind: 'Name', value: 'purchasePricePerUnit' }
 											}
 										]
 									}

@@ -358,6 +358,14 @@ export default {
 				name: 'MarketRecord',
 				fields: [
 					{
+						name: 'name',
+						type: {
+							kind: 'SCALAR',
+							name: 'Any'
+						},
+						args: []
+					},
+					{
 						name: 'pricePerUnit',
 						type: {
 							kind: 'SCALAR',
@@ -400,8 +408,11 @@ export default {
 					{
 						name: 'symbol',
 						type: {
-							kind: 'SCALAR',
-							name: 'Any'
+							kind: 'NON_NULL',
+							ofType: {
+								kind: 'SCALAR',
+								name: 'Any'
+							}
 						},
 						args: []
 					},

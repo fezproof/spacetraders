@@ -16,6 +16,6 @@
 	export let systemId: string;
 </script>
 
-<main class="fixed bottom-4 left-4 right-4">
+<main class="fixed bottom-4 left-4 right-4 top-24">
 	<LocationDetails {locationId} {systemId} />
 </main>
