@@ -19,7 +19,6 @@
 		moonTexture = getMoonTexture();
 	});
 
-	const moonScale = 0.5;
 	const clickHandler = () => {
 		goto(`/map/${$page.params.systemId}/${location.id}`);
 	};
@@ -34,10 +33,10 @@
 </script>
 
 <SC.Group position={[location.x, 0, location.y]}>
-	<HoverSphere radius={0.75} on:click={clickHandler}>
+	<HoverSphere radius={location.size * 1.25} on:click={clickHandler}>
 		<SC.Mesh
 			{rotation}
-			geometry={new THREE.SphereGeometry(moonScale)}
+			geometry={new THREE.SphereGeometry(location.size)}
 			material={new THREE.MeshBasicMaterial({
 				map: moonTexture
 			})}

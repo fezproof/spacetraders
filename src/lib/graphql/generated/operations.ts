@@ -66,6 +66,7 @@ export type Location = {
 	myShips?: Maybe<Array<Maybe<Ship>>>;
 	name?: Maybe<Scalars['String']>;
 	parent?: Maybe<LocationParent>;
+	size?: Maybe<Scalars['Float']>;
 	traits?: Maybe<Array<Maybe<Scalars['String']>>>;
 	type?: Maybe<LocationType>;
 	x?: Maybe<Scalars['Int']>;
@@ -245,6 +246,7 @@ export type LocationDetailsQuery = {
 				traits?: Array<string | null | undefined> | null | undefined;
 				x?: number | null | undefined;
 				y?: number | null | undefined;
+				size?: number | null | undefined;
 				marketplace?:
 					| Array<
 							| {
@@ -334,6 +336,7 @@ export type SystemDataQuery = {
 									name?: string | null | undefined;
 									x?: number | null | undefined;
 									y?: number | null | undefined;
+									size?: number | null | undefined;
 							  }
 							| null
 							| undefined
@@ -408,6 +411,7 @@ export type LocationDataFragment = {
 	name?: string | null | undefined;
 	x?: number | null | undefined;
 	y?: number | null | undefined;
+	size?: number | null | undefined;
 };
 
 export type SystemFlightPlanFragment = {
@@ -462,7 +466,8 @@ export const LocationDataFragmentDoc = {
 					{ kind: 'Field', name: { kind: 'Name', value: 'type' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'name' } },
 					{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
-					{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
+					{ kind: 'Field', name: { kind: 'Name', value: 'y' } },
+					{ kind: 'Field', name: { kind: 'Name', value: 'size' } }
 				]
 			}
 		}
@@ -784,7 +789,8 @@ export const LocationDetailsDocument = {
 								},
 								{ kind: 'Field', name: { kind: 'Name', value: 'traits' } },
 								{ kind: 'Field', name: { kind: 'Name', value: 'x' } },
-								{ kind: 'Field', name: { kind: 'Name', value: 'y' } }
+								{ kind: 'Field', name: { kind: 'Name', value: 'y' } },
+								{ kind: 'Field', name: { kind: 'Name', value: 'size' } }
 							]
 						}
 					}

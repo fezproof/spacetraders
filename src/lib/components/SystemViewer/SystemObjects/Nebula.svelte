@@ -7,7 +7,7 @@
 </script>
 
 <SC.Mesh
-	geometry={new THREE.SphereGeometry(1)}
+	geometry={new THREE.SphereGeometry(location.size)}
 	position={[location.x, 0, location.y]}
 	material={new THREE.MeshBasicMaterial({ color: 'white' })}
 />

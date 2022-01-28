@@ -8,7 +8,12 @@
 </script>
 
 <SC.Mesh
-	geometry={new THREE.TorusGeometry(1, 0.3, 24, 24)}
+	geometry={new THREE.TorusGeometry(
+		location.size,
+		location.size * 0.25,
+		32,
+		32
+	)}
 	position={[location.x, 0, location.y]}
 	material={new THREE.MeshBasicMaterial({ color: 0x0000ff })}
 	rotation={[-Math.PI / 2, 0, 0]}

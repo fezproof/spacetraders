@@ -28,6 +28,7 @@ export const types = /* GraphQL */ `
 		traits: [String]
 		dockedShips: Int
 		marketplace: [MarketRecord]
+		size: Float
 	}
 
 	union LocationParent = Location | System

@@ -76,6 +76,7 @@ export type Location = {
 	readonly myShips?: Maybe<ReadonlyArray<Maybe<Ship>>>;
 	readonly name?: Maybe<Scalars['String']>;
 	readonly parent?: Maybe<LocationParent>;
+	readonly size?: Maybe<Scalars['Float']>;
 	readonly traits?: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
 	readonly type?: Maybe<LocationType>;
 	readonly x?: Maybe<Scalars['Int']>;
@@ -289,6 +290,7 @@ export type ResolversTypes = {
 			ship?: Maybe<ResolversTypes['Ship']>;
 		}
 	>;
+	Float: ResolverTypeWrapper<Scalars['Float']>;
 	Game: ResolverTypeWrapper<Game>;
 	ID: ResolverTypeWrapper<Scalars['ID']>;
 	Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -332,6 +334,7 @@ export type ResolversParentTypes = {
 		owner?: Maybe<ResolversParentTypes['Account']>;
 		ship?: Maybe<ResolversParentTypes['Ship']>;
 	};
+	Float: Scalars['Float'];
 	Game: Game;
 	ID: Scalars['ID'];
 	Int: Scalars['Int'];
@@ -471,6 +474,7 @@ export type LocationResolvers<
 		ParentType,
 		ContextType
 	>;
+	size?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
 	traits?: Resolver<
 		Maybe<ReadonlyArray<Maybe<ResolversTypes['String']>>>,
 		ParentType,

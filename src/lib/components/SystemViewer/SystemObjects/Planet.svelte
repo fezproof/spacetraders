@@ -35,7 +35,7 @@
 </script>
 
 <SC.Group position={[location.x, 0, location.y]}>
-	<HoverSphere radius={1.5} on:click={clickHandler}>
+	<HoverSphere radius={location.size * 1.25} on:click={clickHandler}>
 		<SC.Mesh
 			rotation={cloudRotaion}
 			geometry={new THREE.SphereGeometry(1.05, 32, 32)}
@@ -46,7 +46,7 @@
 		/>
 		<SC.Mesh
 			{rotation}
-			geometry={new THREE.SphereGeometry(1, 32, 32)}
+			geometry={new THREE.SphereGeometry(location.size, 32, 32)}
 			material={new THREE.MeshBasicMaterial({
 				map: planetTexture
 			})}

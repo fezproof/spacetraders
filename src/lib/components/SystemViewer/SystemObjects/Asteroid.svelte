@@ -11,14 +11,14 @@
 
 	export let location: LocationDataFragment;
 
-	const asteroidScale = 0.6;
+	$: asteroidScale = location.size;
 	const clickHandler = () => {
 		goto(`/map/${$page.params.systemId}/${location.id}`);
 	};
 </script>
 
 <SC.Group position={[location.x, 0, location.y]}>
-	<HoverSphere radius={1} on:click={clickHandler}>
+	<HoverSphere radius={location.size * 1.25} on:click={clickHandler}>
 		<SC.Mesh
 			geometry={new THREE.BoxGeometry(
 				asteroidScale,

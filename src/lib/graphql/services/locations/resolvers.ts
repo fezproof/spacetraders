@@ -79,6 +79,21 @@ export const resolvers: Resolvers = {
 				};
 
 			throw new Error(`Failed to find parent for location ${id}`);
+		},
+		size: async ({ id }, _, { dataloaders }) => {
+			const { type } = await dataloaders.location.load(id);
+			if (!type) return 1;
+
+			return LOCATION_SIZES[type];
 		}
 	}
+};
+
+export const LOCATION_SIZES: Record<LocationType, number> = {
+	ASTEROID: 0.5,
+	MOON: 0.5,
+	GAS_GIANT: 3,
+	PLANET: 1,
+	NEBULA: 5,
+	WORMHOLE: 1
 };

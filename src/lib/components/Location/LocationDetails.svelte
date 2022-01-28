@@ -28,7 +28,11 @@
 
 	$: if (isPosition(position)) {
 		target.set(position);
-		offset.set([10, 3, 10]);
+		offset.set([
+			$locationDetails.data?.location?.size * 5,
+			$locationDetails.data?.location?.size,
+			$locationDetails.data?.location?.size * 5
+		]);
 		enablePanning.set(false);
 	}
 </script>

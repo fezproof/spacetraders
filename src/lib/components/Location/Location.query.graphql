@@ -12,5 +12,6 @@ query LocationDetails($locationId: ID!) {
 		traits
 		x
 		y
+		size
 	}
 }

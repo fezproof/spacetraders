@@ -23,6 +23,7 @@ fragment LocationData on Location {
 	name
 	x
 	y
+	size
 }
 
 fragment SystemFlightPlan on FlightPlan {

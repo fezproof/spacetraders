@@ -294,6 +294,14 @@ export default {
 						args: []
 					},
 					{
+						name: 'size',
+						type: {
+							kind: 'SCALAR',
+							name: 'Any'
+						},
+						args: []
+					},
+					{
 						name: 'traits',
 						type: {
 							kind: 'LIST',
