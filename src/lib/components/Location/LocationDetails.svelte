@@ -65,7 +65,7 @@
 </div>
 
 <div
-	class="grid grid-cols-3 grid-rows-3 absolute top-28 right-0 left-0 bottom-0 items-stretch"
+	class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 grid-rows-3 absolute top-28 right-0 left-0 bottom-0 items-stretch"
 >
 	<div
 		class="col-span-1 place-self-stretch self-stretch panel"
@@ -75,18 +75,18 @@
 	</div>
 
 	<div
-		class="col-start-[-2] row-span-3 place-self-stretch self-center panel min-h-[20rem]"
+		class="col-start-[-2] row-span-1 md:row-span-3 place-self-stretch self-center panel"
 		transition:scale
 	>
 		<h3 class="font-heading mb-2">Marketplace</h3>
 		<table class="w-full table-fixed text-left">
 			<thead class="font-heading ">
 				<tr>
-					<th class="w-48">Name</th>
-					<th>Volume</th>
-					<th>Buy</th>
-					<th>Sell</th>
-					<th>Available</th>
+					<th class="w-32">Name</th>
+					<th>V</th>
+					<th>B</th>
+					<th>S</th>
+					<th>Count</th>
 				</tr>
 			</thead>
 			<LoadingText
@@ -127,7 +127,7 @@
 							</tr>
 						{/each}
 					{:else}
-						<td>No ships at market</td>
+						<td colspan="4">No ships at market</td>
 					{/if}
 				</tbody>
 			</LoadingText>
@@ -168,7 +168,7 @@
 
 <style lang="postcss">
 	.panel {
-		@apply backdrop-filter backdrop-blur-xl bg-cyan-900/30 p-4 border-y-2 border-cyan-200;
+		@apply backdrop-filter backdrop-blur-xl bg-cyan-900/30 p-4 border-y-2 border-cyan-200 max-h-full overflow-auto;
 	}
 
 	th {
