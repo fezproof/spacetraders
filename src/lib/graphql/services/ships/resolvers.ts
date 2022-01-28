@@ -57,7 +57,6 @@ export const resolvers: Resolvers = {
 			return ship.weapons;
 		},
 		position: async (parent) => {
-			console.log(parent);
 			if (parent.location)
 				return { id: parent.location, __typename: 'Location' };
 			if (parent.flightPlanId)

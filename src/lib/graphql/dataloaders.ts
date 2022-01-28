@@ -60,7 +60,7 @@ export const createGraphqlCache = (
 			const value = await kv.get<Cacheable>(key, { type: 'json' });
 			LOG_REQUESTS && console.log('get', key, value);
 			if (value !== null) return value;
-			console.log('miss', key);
+			LOG_REQUESTS && console.log('miss', key);
 			return undefined;
 		} catch (error) {
 			console.error('error getting', error);
@@ -75,7 +75,7 @@ export const createGraphqlCache = (
 	},
 	clear: async () => {
 		// Cannot call clear with KV
-		console.log('clear');
+		LOG_REQUESTS && console.log('clear');
 		return;
 	},
 	set: async (key, promisedValue) => {
