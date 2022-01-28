@@ -8,17 +8,16 @@ export const types = /* GraphQL */ `
 
 	type Ship {
 		id: ID!
-		cargo: [Cargo!]
-		class: String
-		flightPlanId: ID
+		type: String!
 		manufacturer: String
+		class: String
+		cargo: [Cargo!]
 		maxCargo: Int
-		plating: Int
 		spaceAvailable: Int
-		speed: Int
-		type: String
-		weapons: Int
 		loadingSpeed: Int
+		speed: Int
+		plating: Int
+		weapons: Int
 		position: ShipPosition
 	}
 

@@ -3,6 +3,7 @@ import type {
 	GraphQLScalarType,
 	GraphQLScalarTypeConfig
 } from 'graphql';
+import type { MyShipInfo } from '$lib/graphql/services/ships/data';
 import type { Context } from '$lib/graphql/schema';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -141,7 +142,6 @@ export type Ship = {
 	readonly __typename?: 'Ship';
 	readonly cargo?: Maybe<ReadonlyArray<Cargo>>;
 	readonly class?: Maybe<Scalars['String']>;
-	readonly flightPlanId?: Maybe<Scalars['ID']>;
 	readonly id: Scalars['ID'];
 	readonly loadingSpeed?: Maybe<Scalars['Int']>;
 	readonly manufacturer?: Maybe<Scalars['String']>;
@@ -150,7 +150,7 @@ export type Ship = {
 	readonly position?: Maybe<ShipPosition>;
 	readonly spaceAvailable?: Maybe<Scalars['Int']>;
 	readonly speed?: Maybe<Scalars['Int']>;
-	readonly type?: Maybe<Scalars['String']>;
+	readonly type: Scalars['String'];
 	readonly weapons?: Maybe<Scalars['Int']>;
 };
 
@@ -273,16 +273,28 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-	Account: ResolverTypeWrapper<Account>;
+	Account: ResolverTypeWrapper<
+		Omit<Account, 'ships'> & {
+			ships?: Maybe<ReadonlyArray<Maybe<ResolversTypes['Ship']>>>;
+		}
+	>;
 	BigInt: ResolverTypeWrapper<Scalars['BigInt']>;
 	Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 	Cargo: ResolverTypeWrapper<Cargo>;
-	FlightPlan: ResolverTypeWrapper<FlightPlan>;
+	FlightPlan: ResolverTypeWrapper<
+		Omit<FlightPlan, 'departure' | 'destination' | 'owner' | 'ship'> & {
+			departure?: Maybe<ResolversTypes['Location']>;
+			destination?: Maybe<ResolversTypes['Location']>;
+			owner?: Maybe<ResolversTypes['Account']>;
+			ship?: Maybe<ResolversTypes['Ship']>;
+		}
+	>;
 	Game: ResolverTypeWrapper<Game>;
 	ID: ResolverTypeWrapper<Scalars['ID']>;
 	Int: ResolverTypeWrapper<Scalars['Int']>;
 	Location: ResolverTypeWrapper<
-		Omit<Location, 'parent'> & {
+		Omit<Location, 'myShips' | 'parent'> & {
+			myShips?: Maybe<ReadonlyArray<Maybe<ResolversTypes['Ship']>>>;
 			parent?: Maybe<ResolversTypes['LocationParent']>;
 		}
 	>;
@@ -292,27 +304,39 @@ export type ResolversTypes = {
 	Mutation: ResolverTypeWrapper<{}>;
 	Query: ResolverTypeWrapper<{}>;
 	Rank: ResolverTypeWrapper<Rank>;
-	Ship: ResolverTypeWrapper<
-		Omit<Ship, 'position'> & {
-			position?: Maybe<ResolversTypes['ShipPosition']>;
-		}
-	>;
+	Ship: ResolverTypeWrapper<MyShipInfo>;
 	ShipPosition: ResolversTypes['FlightPlan'] | ResolversTypes['Location'];
 	String: ResolverTypeWrapper<Scalars['String']>;
-	System: ResolverTypeWrapper<System>;
+	System: ResolverTypeWrapper<
+		Omit<System, 'activeFlights' | 'locations'> & {
+			activeFlights?: Maybe<ReadonlyArray<Maybe<ResolversTypes['FlightPlan']>>>;
+			locations?: Maybe<ReadonlyArray<Maybe<ResolversTypes['Location']>>>;
+		}
+	>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-	Account: Account;
+	Account: Omit<Account, 'ships'> & {
+		ships?: Maybe<ReadonlyArray<Maybe<ResolversParentTypes['Ship']>>>;
+	};
 	BigInt: Scalars['BigInt'];
 	Boolean: Scalars['Boolean'];
 	Cargo: Cargo;
-	FlightPlan: FlightPlan;
+	FlightPlan: Omit<
+		FlightPlan,
+		'departure' | 'destination' | 'owner' | 'ship'
+	> & {
+		departure?: Maybe<ResolversParentTypes['Location']>;
+		destination?: Maybe<ResolversParentTypes['Location']>;
+		owner?: Maybe<ResolversParentTypes['Account']>;
+		ship?: Maybe<ResolversParentTypes['Ship']>;
+	};
 	Game: Game;
 	ID: Scalars['ID'];
 	Int: Scalars['Int'];
-	Location: Omit<Location, 'parent'> & {
+	Location: Omit<Location, 'myShips' | 'parent'> & {
+		myShips?: Maybe<ReadonlyArray<Maybe<ResolversParentTypes['Ship']>>>;
 		parent?: Maybe<ResolversParentTypes['LocationParent']>;
 	};
 	LocationParent:
@@ -322,14 +346,17 @@ export type ResolversParentTypes = {
 	Mutation: {};
 	Query: {};
 	Rank: Rank;
-	Ship: Omit<Ship, 'position'> & {
-		position?: Maybe<ResolversParentTypes['ShipPosition']>;
-	};
+	Ship: MyShipInfo;
 	ShipPosition:
 		| ResolversParentTypes['FlightPlan']
 		| ResolversParentTypes['Location'];
 	String: Scalars['String'];
-	System: System;
+	System: Omit<System, 'activeFlights' | 'locations'> & {
+		activeFlights?: Maybe<
+			ReadonlyArray<Maybe<ResolversParentTypes['FlightPlan']>>
+		>;
+		locations?: Maybe<ReadonlyArray<Maybe<ResolversParentTypes['Location']>>>;
+	};
 };
 
 export type AccountResolvers<
@@ -553,7 +580,6 @@ export type ShipResolvers<
 		ContextType
 	>;
 	class?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-	flightPlanId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
 	id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
 	loadingSpeed?: Resolver<
 		Maybe<ResolversTypes['Int']>,
@@ -578,7 +604,7 @@ export type ShipResolvers<
 		ContextType
 	>;
 	speed?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-	type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 	weapons?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

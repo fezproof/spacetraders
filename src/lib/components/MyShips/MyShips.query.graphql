@@ -14,12 +14,12 @@ query MyShips {
 			position {
 				... on Location {
 					id
-					x
-					y
+					name
 				}
 				... on FlightPlan {
 					id
 					arrivesAt
+					flightCode
 				}
 			}
 		}

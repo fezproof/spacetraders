@@ -20,7 +20,11 @@ export const resolvers: Resolvers = {
 				destination: {
 					id: destination
 				},
-				ship: { id: flightPlan.shipId, type: flightPlan.shipType }
+				ship: {
+					id: flightPlan.shipId,
+					type: flightPlan.shipType,
+					flightPlanId: flightPlan.id
+				}
 			};
 		}
 	},

@@ -23,6 +23,18 @@
 				<div>
 					{ship.spaceAvailable}
 				</div>
+				<div>
+					<h4>Position</h4>
+					{#if ship.position?.__typename === 'Location'}
+						<div>
+							<h5>{ship.position.name}</h5>
+						</div>
+					{:else if ship.position?.__typename === 'FlightPlan'}
+						<div>
+							<h5>{ship.position.flightCode}</h5>
+						</div>
+					{/if}
+				</div>
 			</li>
 		{/each}
 	</ul>

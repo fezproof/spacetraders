@@ -132,7 +132,6 @@ export type Ship = {
 	__typename?: 'Ship';
 	cargo?: Maybe<Array<Cargo>>;
 	class?: Maybe<Scalars['String']>;
-	flightPlanId?: Maybe<Scalars['ID']>;
 	id: Scalars['ID'];
 	loadingSpeed?: Maybe<Scalars['Int']>;
 	manufacturer?: Maybe<Scalars['String']>;
@@ -141,7 +140,7 @@ export type Ship = {
 	position?: Maybe<ShipPosition>;
 	spaceAvailable?: Maybe<Scalars['Int']>;
 	speed?: Maybe<Scalars['Int']>;
-	type?: Maybe<Scalars['String']>;
+	type: Scalars['String'];
 	weapons?: Maybe<Scalars['Int']>;
 };
 
@@ -178,11 +177,7 @@ export type FlightPlanDetailsQuery = {
 					| null
 					| undefined;
 				ship?:
-					| {
-							__typename?: 'Ship';
-							id: string;
-							type?: string | null | undefined;
-					  }
+					| { __typename?: 'Ship'; id: string; type: string }
 					| null
 					| undefined;
 				destination?:
@@ -283,7 +278,7 @@ export type MyShipsQuery = {
 									__typename?: 'Ship';
 									id: string;
 									class?: string | null | undefined;
-									type?: string | null | undefined;
+									type: string;
 									spaceAvailable?: number | null | undefined;
 									cargo?:
 										| Array<{
@@ -299,12 +294,12 @@ export type MyShipsQuery = {
 												__typename?: 'FlightPlan';
 												id: string;
 												arrivesAt?: string | null | undefined;
+												flightCode?: string | null | undefined;
 										  }
 										| {
 												__typename?: 'Location';
 												id: string;
-												x?: number | null | undefined;
-												y?: number | null | undefined;
+												name?: string | null | undefined;
 										  }
 										| null
 										| undefined;
@@ -873,11 +868,7 @@ export const MyShipsDocument = {
 																	},
 																	{
 																		kind: 'Field',
-																		name: { kind: 'Name', value: 'x' }
-																	},
-																	{
-																		kind: 'Field',
-																		name: { kind: 'Name', value: 'y' }
+																		name: { kind: 'Name', value: 'name' }
 																	}
 																]
 															}
@@ -898,6 +889,10 @@ export const MyShipsDocument = {
 																	{
 																		kind: 'Field',
 																		name: { kind: 'Name', value: 'arrivesAt' }
+																	},
+																	{
+																		kind: 'Field',
+																		name: { kind: 'Name', value: 'flightCode' }
 																	}
 																]
 															}

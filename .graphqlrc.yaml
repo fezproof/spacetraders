@@ -13,6 +13,8 @@ generates:
       useTypeImports: true
       immutableTypes: true
       contextType: $lib/graphql/schema#Context
+      mappers:
+        Ship: $lib/graphql/services/ships/data#MyShipInfo
   ./graphql.schema.json:
     plugins:
       - 'introspection'

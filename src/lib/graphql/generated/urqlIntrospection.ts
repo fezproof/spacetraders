@@ -581,14 +581,6 @@ export default {
 						args: []
 					},
 					{
-						name: 'flightPlanId',
-						type: {
-							kind: 'SCALAR',
-							name: 'Any'
-						},
-						args: []
-					},
-					{
 						name: 'id',
 						type: {
 							kind: 'NON_NULL',
@@ -659,8 +651,11 @@ export default {
 					{
 						name: 'type',
 						type: {
-							kind: 'SCALAR',
-							name: 'Any'
+							kind: 'NON_NULL',
+							ofType: {
+								kind: 'SCALAR',
+								name: 'Any'
+							}
 						},
 						args: []
 					},

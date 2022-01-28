@@ -1,5 +1,5 @@
-import { getMyShips } from '$lib/api';
 import type { Resolvers } from '$lib/graphql/generated/resolvers';
+import { getMyShips } from './data';
 
 export const resolvers: Resolvers = {
 	Query: {},
@@ -15,13 +15,7 @@ export const resolvers: Resolvers = {
 		myShips: async ({ id: locationId }, _, { user }) => {
 			const { ships } = await getMyShips(user.token);
 			if (ships) {
-				return ships
-					.filter(({ location }) => location === locationId)
-					.map(({ id, location, ...rest }) => ({
-						id,
-						position: { id: location, __typename: 'Location' },
-						...rest
-					}));
+				return ships.filter(({ location }) => location === locationId);
 			}
 			return null;
 		}

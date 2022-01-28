@@ -36,3 +36,38 @@ export const batchGetBasicShipInfo =
 			);
 		});
 	};
+
+interface CargoInfo {
+	good: string;
+	quantity: number;
+	totalVolume: number;
+}
+
+export interface MyShipInfo {
+	id: string;
+	type: string;
+	location?: string;
+	flightPlanId?: string;
+	x?: number;
+	y?: number;
+	cargo?: CargoInfo[];
+	spaceAvailable?: number;
+	class?: string;
+	maxCargo?: number;
+	loadingSpeed?: number;
+	speed?: number;
+	manufacturer?: string;
+	plating?: number;
+	weapons?: number;
+}
+
+interface ShipsResponse {
+	ships?: Array<MyShipInfo>;
+	error?: SpacetradersError;
+}
+
+export const getMyShips = async (token: string): Promise<ShipsResponse> =>
+	fetchSpacetraders({
+		path: '/my/ships',
+		headers: { Authorization: `Bearer ${token}` }
+	});
