@@ -54,7 +54,7 @@
 			{:else}
 				<LoadingText loading={$flightPlanDetails.stale}>
 					<slot slot="loading">
-						<div class="h-24">
+						<div class="h-24 font-block">
 							<h2>Loading username</h2>
 							<p>Loading ship type</p>
 							<div>
